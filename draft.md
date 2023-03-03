@@ -2,17 +2,16 @@
 
 The question ‘Is it a big number?’ is often raised on the BBC radio programme _More or Less_ when probing eye-catching statistics. A figure of several million pounds may initially seem large but may represent a small proportion of total government spending. In data visualisation, the presence of contextual information is uncertain. It can be displayed, but is often ommited by default. In this study, we investigate how this design choice impacts interpretations of numbers’ magnitudes. We observe that extending an axis beyond the range of plotted values to accomodate a denominator causes the magnitude of these values to be interpreted as smaller. Thus, effect of the default setting for data visualisation software to ignore denominators is quantified. 
 
-examines the numbers in current affairs
-
 # Related Work
 
+# Experiment 1 - Overview
 
+Experiment 1 investigates the influence of y-axis upper bounds on interpretations of plotted values’ magnitude. Participants viewed bar charts with y-axes which either terminated just above the bars, or extended to a denominator value well above the bars. Thus, the same data is displayed with and without its surrounding context. Comparing participants’ interpretations captures the influence of y-axis limits on magnitude judgements.
 
-# Experiment 1
+# Pre-Registration
 
 # Materials
 
-Denominator present vs. denominator absent
 Extended vs. default
 
 For the truncated charts, we exploited ggplot2’s default axis settings. Based on the data, an appropriate set of breaks is selected, on the basis of easily divisible values. Then, per the default expansion factor, 5% of this axis range was added to the upper axis limit, slightly extending the plot area to a small degree. Contrary to the default settings, a smaller expansion factor of 0.01 was applied to the lower axis limit, avoiding visible space below the 0 baseline. 
@@ -21,9 +20,39 @@ Gplot2’s algorithm for selecting axis limits produces some variability in a ch
 
 ggplot_build(plotname)$layout$panel_params[[1]]$y$continuous_range
 
+In all experimental items, plotted values were significantly smaller than the denominator specified in the accompanying text. Due to concern that participants would consistently respond in this manner, and not consider the data properly, we developed filler trials with plotted values that were only marginally smaller than the specified denominator. Here, we used a proportion of 90%. 
+
+We also included six attention check trials to assess participants’ engagement with the task. These trials appeared similar to experimental and filler trials, comprising of text, a bar chart, question and visual analogue scale. However, participants were instructed to ignore the bar chart and provide a specified response on the visual analogue scale. 
+
+# Procedure
+
+Participants were instructed to carry out the experiment using a laptop or desktop computer (not a mobile phone or tablet). After providing informed consent, participants completed a demographic questionnaire and Garcia-Retamero et al.’s (2016) subjective data visualisation literacy measure. Participants were asked to image they were a researcher tasked with determining the outcome of experiments and surveys. They were instructed to make an overall assessment of all data presented in the graph after studying the text, graph, and question. Items were presented in a random order.
+
+Questions were tailored to specific scenarios, but each question required participants to make a judgement about the data’s magnitude, along a given spectrum. For example, if the chart showed the number of people using public transport regularly, participants were asked to assess the popularity of public transport, on a scale from “very unpopular” to “very popular”. 
+
+Participants were permitted to move the response marker as many times as they liked before proceeding to the next trial, but could not return to previous trials. Finally, they were informed that all data presented was fictitious and were given the option to provide comments on the experiment and describe any strategies used. Average completion time was x minutes. 
+
+# Design
+
+We employed a within-participants design: participants viewed 16 different charts in each of the two conditions (32 experimental trials total). We also included eight filler items and six attention check items.
+
+# Participants
+
+Participants were recruited from Prolific.co. The experiment was advertised to fluent English speakers, who had normal-or-corrected to normal vision, who had previously participated in more than 100 studies on Prolific. 
+
+Per our pre-registeration, we recruited participants until 150 had successfully completed the experiment, excluding those who answered more than 1 AC item incorrectly. Participants with accepted submissions received £3.50. 
+
+For those in the final sample, The average age was x, the avergae graph literacy score was x. The participnats were x%female, y% male, z%non-binary. j% had completed at least high school education. 
+
+This experiment was approved by the University of Manchester’s Division of Neuroscience and Experimental Psychology Ethics Committee (ethics code: 2022-11115-24245). 
+
 # Discussion
 
-This experiment found that truncated charts elicited higher magnitude ratings than extended charts. Changes in the appearance of plotted datasets’ variability could be seen as a confound. However, there is no way avoiding this whilst truncating an axis. It’s not really a confound because we’re not just comparing the resulting height of the two datasets, we’re comparing the entire effect of truncating.
+In this experiment, we explored the role of y-axis upper bounds in bar charts. We found that axes which extended beyond the plotted data were associated with greater magnitudes, compared to axes which terminated just above the plotted data.  Axes change the appearance of plotted data, add visual signifier of context, biasing interpretations of those values. 
+
+Changes in the appearance of plotted datasets’ variability could be seen as a confound. However, there is no way avoiding this whilst truncating an axis. It’s not really a confound because we’re not just comparing the resulting height of the two datasets, we’re comparing the entire effect of truncating. It’s about the scope/conceptualisation of what falls in the remit of axis manipulation.
+
+Participants ratings had a systematic pattern. When the sampling distribution for the mean was 20% of the denominator value, participants’ ratings were approximately one fifth along the visual analogue scale; when it was 40%, ratings were at the 40% mark. Despite this, the placement of the response marker was still biased by the axis manipulation. However, looking at exactly how the chart designs affected judgments reveals a more complex picture. Overall, there seems to be little difference in the response patterns: truncated charts do not have ratings suggesting perceptions of enormous magnitude. However, in a smaller number of cases, they do -
 
 However, Figure XX illustrates that the degree of difference between extended and truncated conditions was varied. In some cases, there was a marginal difference between ratings for the extended and truncated conditions (horizontal lines), in other cases there was a more stark difference (diagonal lines). 
 
@@ -50,5 +79,6 @@ Becuase filler trials should seem similar
 # Materials
 
 An additional 24 filler items were created, thus there were 32 experimental items, 32 filler items, and 6 attention check questions.
+Denominator present vs. denominator absent
 
 
