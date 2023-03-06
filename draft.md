@@ -1,11 +1,10 @@
-# Introduction1895-2695
+# Introduction
 
-The question ‘Is it a big number?’ is often raised on the BBC radio programme _More or Less_ when probing eye-catching statistics. A figure of several million pounds may initially seem large but may represent a small proportion of total government spending. In data visualisation, the presence of contextual information is uncertain. It can be displayed, but is often ommited by default. In this study, we investigate how this design choice impacts interpretations of numbers’ magnitudes. We observe that extending an axis beyond the range of plotted values to accomodate a denominator causes the magnitude of these values to be interpreted as smaller. Thus, effect of the default setting for data visualisation software to ignore denominators is quantified. 
+The question ‘Is it a big number?’ is often raised on the BBC radio programme _More or Less_ when probing eye-catching statistics. A figure of several million pounds may initially seem large but may represent a small proportion of total government spending. In data visualisation, this contextual information can be displayed, but is often ommited by default. In this study, we investigate how *this design choice* affects interpretations of numbers’ magnitudes. The magnitude of plotted values is interpreted as larger when the y-axis terminates close to these values, and fails to accomodate a denominator. Thus, we evaluate the consequences of default settings in data visualisation software. 
 
-
-Monday Meeting
 truncated -> default? even though truncated is technically correct, don’t want to confuse readers with the typical use of the term. Also don’t want to overplay the default setting, given that we were selective here. Could go with ‘denominator present/absent’ but this will be confusing when it comes to experiment 2. 
-How to perform the analysis separating high and low for the truncated charts. Where to cut the line, or is there a more complex way of doing it?
+
+AE2: in no-denominator condition, should there be a 2nd sentence explaining that the denominator is *the same* for all x, even if it’s doesn’t state the number?
 
 # Related Work
 
@@ -15,13 +14,18 @@ Experiment 1 investigates the influence of y-axis upper bounds on interpretation
 
 # Pre-Registration
 
+We predicted that bat charts with truncated axes would elicit greater magnitude ratings than bar charts with extended axes. Pre-registration is available at https://osf.io/e9j43. 
+
 # Materials
 
-Extended vs. default
+We generated bar charts using ggplot2 in R.
 
-For the truncated charts, we exploited ggplot2’s default axis settings. Based on the data, an appropriate set of breaks is selected, on the basis of easily divisible values. Then, per the default expansion factor, 5% of this axis range was added to the upper axis limit, slightly extending the plot area to a small degree. Contrary to the default settings, a smaller expansion factor of 0.01 was applied to the lower axis limit, avoiding visible space below the 0 baseline. 
+For each scenario/chart, we generated two versions, but these had the same five values. The difference was the number used for the y-axis upper bound. In extended charts, the y-axis upper bound was 400, 500 or 600. In truncated charts, the upper bound depended on the data, which was generated from a normal distribution, with a mean of either 20% or 40% of the upper bound value. The standard deviation was 1% of the upper bound value. 
 
-Gplot2’s algorithm for selecting axis limits produces some variability in a chart’s appearance. In the majority of cases, the highest axis break will be below the highest plotted value. In a minority, the highest axis break will be above the highest plotted value. To avoid this additional source of complexity in our experimental design/stimuli, when the latter, rarer case occured, we automatically generated an alternative dataset where the highest value would exceed the highest axis break. Naturally, the highest axis break in the extended condition was always higher than the maximum plotted value. Rather than consider this difference a confound, we retained this difference in order to properly compare the custom designs with the typical defaults. 
+The y-axis upper bound in truncated charts was decided by ggplot2’s default axis settings. Based on the data, an appropriate set of breaks is selected, on the basis of easily divisible values. Then, per the default expansion factor, 5% of this axis range was added to the upper axis limit, slightly extending the plot area to a small degree. Therefore, the upper bound is exactly what you’d get if you just entered the data without changing the axis settings. However, contrary to the default settings, a smaller expansion factor of 0.01 was applied to the lower axis limit, avoiding visible space below the 0 baseline. 
+
+Gplot2’s algorithm for selecting axis limits produces some variability in a chart’s appearance. In the majority of cases, the highest axis break will be below the highest plotted value. In a minority, the highest axis break will be above the highest plotted value. To avoid this additional source of complexity in our experimental design/stimuli, when the latter, rarer case occured, we automatically generated an alternative dataset where the highest value would exceed the highest axis break. Control favoured over ecological validity. Use the exact dataset for axis change example.
+Naturally, the highest axis break in the extended condition was always higher than the maximum plotted value. Rather than consider this difference a confound, we retained this difference in order to properly compare the custom designs with the typical defaults. 
 
 ggplot_build(plotname)$layout$panel_params[[1]]$y$continuous_range
 
@@ -43,11 +47,11 @@ We employed a within-participants design: participants viewed 16 different chart
 
 # Participants
 
-Participants were recruited from Prolific.co. The experiment was advertised to fluent English speakers, who had normal-or-corrected to normal vision, who had previously participated in more than 100 studies on Prolific. 
+Participants were recruited from Prolific.co. The experiment was advertised to fluent English speakers, who had normal-or-corrected to normal vision, who had previously participated in at least 100 studies on Prolific. 
 
-Per our pre-registeration, we recruited participants until 150 had successfully completed the experiment, excluding those who answered more than 1 AC item incorrectly. Participants with accepted submissions received £3.50. 
+Per our pre-registeration, we recruited participants until 150 had successfully completed the experiment, excluding seven individuals who answered more than 1 attention check item incorrectly. Participants with accepted submissions received £3.50. 
 
-For those in the final sample, The average age was x, the avergae graph literacy score was x. The participnats were x%female, y% male, z% non-binary. j% had completed at least high school education. 
+For those in the final sample, The average age was x, the average graph literacy score was x. The participnats were x%female, y% male, z% non-binary. j% had completed at least high school education. 
 
 This experiment was approved by the University of Manchester’s Division of Neuroscience and Experimental Psychology Ethics Committee (ethics code: 2022-11115-24245). 
 
@@ -65,14 +69,15 @@ Inconsistency in responses to truncated charts indicates variation in their infl
 
 # Introduction
 
-The results from Experiment 1 suggest that bar chart’s upper bounds influence magnitude judgements. However, the amount of bias is unclear. Ratings for truncated charts were ocassionally much more extreme than for extended charts, but often only marginally greater. Extreme ratings for truncated charts reflect a visual bias; the axis upper bound is treated as a denominator. In contrast, less extreme ratings for truncated charts indicate use of the denominator specified in text. 
+Experiment 1’s results suggest that bar charts’ upper bounds influence magnitude judgements. However, the amount of bias is unclear. Ratings for truncated charts were ocassionally much more extreme than for extended charts, but often only marginally greater. Extreme ratings for truncated charts reflect the assumption that the axis upper bound represents the denominator. In contrast, less extreme ratings for truncated charts indicate a visual bias in combination with use of the denominator specified in text. 
 
-The selection of denominator information from charts or text seems to distinguish the larger and smaller effects observed. To experimentally manipulate this factor, we conducted an additional experiment. Denominator information was omitted from the text in half of trials. In these cases, participants would be unaware of whether the upper limit corresponded to the denominator: unaware whether the appearance of bars was an honest or misleading account of magnitude. 
+Whether denominator information is selected from charts or text seems to distinguish the larger and smaller effects observed in E1. To experimentally manipulate this factor, we conducted an additional experiment in which denominator information was omitted from the text in half of trials. Ambiguity about the denominator will cause participants to rely on other information when judging magnitude, such as the appearance of data. However, whilst this should occur in an isolated case, how will other trials affect it? Exposure to charts which do and do not display denominators, could prompt various other strategies. This may obscure the true effect which would occur in the real world. 
+
+In these cases, participants would be unaware of whether the upper limit corresponded to the denominator: unaware whether the appearance of bars was an honest or misleading account of magnitude.  
 
 In Experiment 1, there was no real ambiguity about the true denominator. Whilst the design of the bar charts may have hinted at something, it was always stated in text. In Experiment 2, however, this ambiguity is real. As a consequence of the greater uncertainty, participants will rely more on other information (e.g. fillers) and may notice patterns. Therefore, we need to update some aspects of Experiment 1 in order to avoid influencing people’s ratings through this surrounding information.
 
-Fillers
-
+Fillers - reduce the explanation word count
 
 In Experiment 1, there was an imbalance of (experimental) trials where the denominator was always much higher than the highest plotted value, and (filler) trials where the denominator was only marginally higher than the highest plotted value. Thus, participants may be biased towards assuming that the denominator is much higher than the presented values, even when they are not given this information. This would prevent us from properly identifying the effect of the denominator information. What we want is a case where they genuinely do not know. This means that high and low denominators have to be just as likely. Consequently, even though we will still only analyse experimental trials, the fillers become more important. Additionally, by paying attention to what the actual denominators are in the denominator-present trials, participants may build up a picture and use this understanding in the denominator-absent trials. Thus, we need it to be harder for participants to guess the denominators. This requires a wider range of denominator values than in E1. 
 
@@ -80,22 +85,35 @@ Participants are likely to make additional assumptions about the denominator. Th
 
 Data Means
 
-
 Becuase filler trials should seem similar 
 
 The absence of visual cues to numerical context in truncated charts did not totally prohibit recognition of this context. 
 
 
-# Method
-# Overview
+# Experiment 2 - Overview
+
 # Pre-Registration
+
+# Method
 # Materials
 
-An additional 24 filler items were created, thus there were 32 experimental items, 32 filler items, and 6 attention check questions.
-Denominator present vs. denominator absent
+Bar charts were generated using the same method as E1.
+Data means were different 
+We produced an additional 24 filler scenarios.
+
+Denominator present vs. denominator absent - omission or replacement?
+Gridlines for filler trials
+How did we decide denominator values for fillers. 
 
 # Procedure
+
+The procedure was identical to Experiment 1. Average completion time was x minutes.
+
 # Design
+
+We employed a 2x2 Latin-squared design with two factors: axis upper bound and denominator presence. Participants viewed 8 different charts for each combination of conditions (32 experimental trials total). We also included 32 filler items and six attention check items.
+
 # Participants
 
+We recruited __ participants. 
 
