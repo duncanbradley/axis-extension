@@ -66,23 +66,15 @@ Inconsistency in responses to truncated charts indicates variation in their infl
 
 # Introduction
 
-Experiment 1’s results suggest that bar charts’ upper bounds influence magnitude judgements. However, the amount of bias is unclear. Ratings for truncated charts were ocassionally much more extreme than for extended charts, but often only marginally greater. Extreme ratings for truncated charts reflect the assumption that the axis upper bound represents the denominator. In contrast, less extreme ratings for truncated charts indicate a visual bias in combination with use of the denominator specified in text. 
+Experiment 1’s results suggest that bar charts’ upper bounds influence magnitude judgements. However, the source of this bias is unclear. Ratings for truncated charts were often in the same ballpark as extended charts, but were ocassionally much more extreme. Extreme ratings for truncated charts reflect the assumption that the axis upper bound represents the denominator. In contrast, less extreme ratings for truncated charts suggest use of the denominator specified in text. 
 
-Whether denominator information is selected from charts or text seems to distinguish the larger and smaller effects observed in E1. To experimentally manipulate this factor, we conducted an additional experiment in which denominator information was omitted from the text in half of trials. Ambiguity about the denominator will cause participants to rely on other information when judging magnitude, such as the appearance of data. However, whilst this should occur in an isolated case, how will other trials affect it? Exposure to charts which do and do not display denominators, could prompt various other strategies. This may obscure the true effect which would occur in the real world. 
+Whether denominator information is selected from charts or text seems to distinguish the larger and smaller effects observed in E1. To experimentally manipulate this factor, we conducted an additional experiment in which denominator information was omitted from the text in half of trials. Ambiguity about the denominator will cause participants to rely on other information when judging magnitude, such as the appearance of data. 
 
 In these cases, participants would be unaware of whether the upper limit corresponded to the denominator: unaware whether the appearance of bars was an honest or misleading account of magnitude.  
 
-In Experiment 1, there was no real ambiguity about the true denominator. Whilst the design of the bar charts may have hinted at something, it was always stated in text. In Experiment 2, however, this ambiguity is real. As a consequence of the greater uncertainty, participants will rely more on other information (e.g. fillers) and may notice patterns. Therefore, we need to update some aspects of Experiment 1 in order to avoid influencing people’s ratings through this surrounding information.
+In the denominator’s absence, participants may use previous trials’ (present) denominator values to inform their judgements. A limited range of denominator values (as in E1) would artificially diminish uncertainty concerning possible values, preventing/concealing authentic/spontaneous approaches to the task. Thus, we expand the range in E2. 
 
-Fillers - reduce the explanation word count
-
-In Experiment 1, there was an imbalance of (experimental) trials where the denominator was always much higher than the highest plotted value, and (filler) trials where the denominator was only marginally higher than the highest plotted value. Thus, participants may be biased towards assuming that the denominator is much higher than the presented values, even when they are not given this information. This would prevent us from properly identifying the effect of the denominator information. What we want is a case where they genuinely do not know. This means that high and low denominators have to be just as likely. Consequently, even though we will still only analyse experimental trials, the fillers become more important. Additionally, by paying attention to what the actual denominators are in the denominator-present trials, participants may build up a picture and use this understanding in the denominator-absent trials. Thus, we need it to be harder for participants to guess the denominators. This requires a wider range of denominator values than in E1. 
-
-Participants are likely to make additional assumptions about the denominator. Thus, the fillers now serve to balance the probabilities of high and low values, not just provide variety (as in E1).
-
-Data Means
-
-Becuase filler trials should seem similar 
+Similarly, participants may be biased by the proportion of previous trials where the chart’s appearance reflects true magnitude. An imbalance of honest and dishonest appearances (as in E1) could influence responses, thus we add more fillers, to create an equal number of trials with honest and dishonest appearances. 
 
 The absence of visual cues to numerical context in truncated charts did not totally prohibit recognition of this context. 
 
