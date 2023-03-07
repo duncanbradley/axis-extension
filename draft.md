@@ -76,6 +76,12 @@ In the denominator’s absence, participants may use previous trials’ (present
 
 Similarly, participants may be biased by the proportion of previous trials where the chart’s appearance reflects true magnitude. An imbalance of honest and dishonest appearances (as in E1) could influence responses, thus we add more fillers, to create an equal number of trials with honest and dishonest appearances. 
 
+match/mismatch
+
+In E1’s experimental items, half of trials showed small proportions that looked small, half showed small proportions that looked large
+In E1’s filler items, all trials showed large proportions and looked large
+E2’s fillers will resemble E1’s experimental items: half of trials will show large proportions that look large, half will show large proportions that look small. This necessitates extending the axis beyond the denominator.
+
 The absence of visual cues to numerical context in truncated charts did not totally prohibit recognition of this context. 
 
 
@@ -91,8 +97,11 @@ Data means were different
 We produced an additional 24 filler scenarios.
 
 Denominator present vs. denominator absent - omission or replacement?
-Gridlines for filler trials
 How did we decide denominator values for fillers. 
+
+Highest axis break in filler trials. 
+
+
 
 # Procedure
 
