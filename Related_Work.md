@@ -10,3 +10,6 @@ Naturally, the highest axis break in the extended condition was always higher th
 
 ggplot_build(plotname)$layout$panel_params[[1]]$y$continuous_range
 
+The absence of visual cues to numerical context in truncated charts did not totally prohibit recognition of this context. 
+
+truncated -> default? even though truncated is technically correct, don’t want to confuse readers with the typical use of the term. Also don’t want to overplay the default setting, given that we were selective here. Could go with ‘denominator present/absent’ but this will be confusing when it comes to experiment 2. 
