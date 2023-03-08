@@ -2,10 +2,6 @@
 
 The question ‘Is it a big number?’ is often raised on the BBC radio programme _More or Less_ when probing eye-catching statistics. A figure of several million pounds may initially seem large but may represent a small proportion of total government spending. In data visualisation, this contextual information can be displayed, but is often ommited by default. In this study, we investigate how *this design choice* affects interpretations of numbers’ magnitudes. The magnitude of plotted values is interpreted as larger when the y-axis terminates close to these values, and fails to accomodate a denominator. Thus, we evaluate the consequences of default settings in data visualisation software. 
 
-truncated -> default? even though truncated is technically correct, don’t want to confuse readers with the typical use of the term. Also don’t want to overplay the default setting, given that we were selective here. Could go with ‘denominator present/absent’ but this will be confusing when it comes to experiment 2. 
-
-AE2: in no-denominator condition, should there be a 2nd sentence explaining that the denominator is *the same* for all x, even if it’s doesn’t state the number?
-
 # Related Work
 
 # Experiment 1 - Overview
@@ -26,21 +22,19 @@ In truncated charts, the y-axis upper bound was dictated by ggplot2’s default 
 
 The default settings tended to produce charts where the highest axis break fell below the tallest bar. For the purposes of consistency, when the opposite situation occured, we automatically generated an alternative dataset to ensure the highest axis break appeared below the tallest bar. This dataset was used in both conditions. In our stimuli set, x alternative datasets were generated in this way. 
 
-In experimental trials, plotted values consisted of relatively small proportions of the denominator value specified in the accompanying text (around 20% or 40%). To introduce variety and encourage attention, eight filler trials showed plotted values which were around 90% of their denominator value. 
+In experimental trials, plotted values consisted of relatively small proportions of the denominator value specified in the accompanying text (roughly 20% or 40%). To introduce variety and encourage attention, eight filler trials showed plotted values which were around 90% of the corresponding denominator value. 
 
 We included six attention check trials to assess participants’ engagement. These trials were similar to experimental and filler trials, comprising of text, a bar chart, question and visual analogue scale. However, participants were instructed to ignore the bar chart and provide a specified response on the visual analogue scale. 
 
 # Procedure
 
-Participants were instructed to carry out the experiment using a laptop or desktop computer (not a mobile phone or tablet). After providing informed consent, participants completed a demographic questionnaire and Garcia-Retamero et al.’s (2016) subjective data visualisation literacy measure. Participants were asked to image they were a researcher tasked with determining the outcome of experiments and surveys. They were instructed to make an overall assessment of all data presented in the graph after studying the text, graph, and question. Items were presented in a random order.
-
-Questions were tailored to specific scenarios, but each question required participants to make a judgement about the data’s magnitude, along a given spectrum. For example, if the chart showed the number of people using public transport regularly, participants were asked to assess the popularity of public transport, on a scale from “very unpopular” to “very popular”. 
+Participants were instructed to carry out the experiment using a laptop or desktop computer (not a mobile phone or tablet). After providing informed consent, participants completed a demographic questionnaire and Garcia-Retamero et al.’s (2016) subjective data visualisation literacy measure. Participants were asked to image they were a researcher tasked with determining the outcome of experiments and surveys. They were instructed to make an overall assessment of all data presented in the graph after studying the text, graph, and question. Items were presented in a random order. There was a total of 46 trials.
 
 Participants were permitted to move the response marker as many times as they liked before proceeding to the next trial, but could not return to previous trials. Finally, they were informed that all data presented was fictitious and were given the option to provide comments on the experiment and describe any strategies used. Average completion time was x minutes. 
 
 # Design
 
-We employed a within-participants design: participants viewed 16 different charts in each of the two conditions (32 experimental trials total). We also included eight filler items and six attention check items.
+We employed a within-participants design: participants viewed 16 different charts in each of the two conditions (32 experimental trials total). The correspondence between scenarios and conditions was counterbalanced using two lists. However, all participants saw the same versions of the eight filler items and six attention check items. 
 
 # Participants
 
@@ -56,11 +50,11 @@ This experiment was approved by the University of Manchester’s Division of Neu
 
 In this experiment, we explored the role of y-axis upper bounds in bar charts. We found that axes which extended beyond the plotted data were associated with greater magnitudes, compared to axes which terminated just above the plotted data. Axes change the appearance of plotted data, add visual cues to context, biasing interpretations of those values. 
 
-On the whole, participants’ responded to truncated and extended charts with broadly similar approaches. Ratings tended to correspond to the proportion of the denominator taken up by the plotted values. For example, when plotted values roughly equalled 20% of the denominator value, markers were placed approximately at the scale’s 20% point. Yet, in some cases, truncated charts’ tall bars and lack of denominator were particularly influential, eliciting extreme ratings not replicated for extended charts. However, these extreme ratings were not the only difference between conditions. Even ratings below the visual analogue scale’s midpoint are influenced by axis upper bounds. This reveals a complex picture, with a strong bias in a minority of cases, and a subtle bias in a majority. 
+On the whole, participants’ responded to truncated and extended charts with broadly similar approaches. Ratings tended to correspond to the proportion of the denominator taken up by the plotted values. For example, when plotted values roughly equalled 20% of the denominator value, markers were placed approximately at the scale’s 20% point. Yet, in some cases, truncated charts’ tall bars and lack of denominator were particularly influential, eliciting extreme ratings not replicated for extended charts. This reveals a complex picture, with variation in the amount of bias observed. 
 
-In the extended trials, denominator information was available through the text and the axis. Thus we cannot know which source (or sources) participants used to make their judgements. In the truncated trials, however, denominator information was only available through the text: the axis upper limit was bounded by the highest plotted value. In some of the truncated trials, we can see that this denominator information is used, since they follow approximately the bimodal pattern of the proportions of the data themselves. Despite following this pattern, they still exhibited a slight bias. This suggests that tall bars in truncated charts biased participants’ *calculation* of the percentage/judgements of proportion (could be behavioural rather than cognitive). However, in other trials, it seems that the denominator information was not used, with high ratings awarded in response to the high bars. This suggests the responses were driven purely by the appearance of the values. Participants may have assumed that the upper limit was the denominator. 
+In the extended trials, denominator information was available through the text and the axis. Thus we cannot know which source (or sources) participants used to make their judgements. In the truncated trials, however, denominator information was only available through the text: the axis upper limit did not exceed the highest plotted value. In some of the truncated trials, we can see that this denominator information is used, since they approximately follow the bimodal pattern of the proportions of the data themselves. However, in other trials, it seems that the denominator information was not used, with high ratings awarded in response to the high bars. This suggests the responses were driven purely by the appearance of the values. Participants may have assumed that the upper limit was the denominator. 
 
-Inconsistency in responses to truncated charts indicates variation in their influence on magnitude judgements. Identifying the source of this variation is necessary for accurately predicting/understanding how these designs will influence viewers. Experiment 2 seeks to understand this inconsistency. We hypothesise that the influence of the appearance of values in a visualisation will be affected by whether the upper limit is seen as the denominator or not.
+Inconsistency in responses to truncated charts indicates variation in their influence on magnitude judgements. Identifying the source of this variation is necessary for understanding how these designs will influence viewers. Experiment 2 seeks to understand this inconsistency. We hypothesise that the influence of the appearance of values in a visualisation will be affected by whether the upper limit is seen as the denominator or not.
 
 # Experiment 2
 
@@ -68,22 +62,9 @@ Inconsistency in responses to truncated charts indicates variation in their infl
 
 Experiment 1’s results suggest that bar charts’ upper bounds influence magnitude judgements. However, the source of this bias is unclear. Ratings for truncated charts were often in the same ballpark as extended charts, but were ocassionally much more extreme. Extreme ratings for truncated charts reflect the assumption that the axis upper bound represents the denominator. In contrast, less extreme ratings for truncated charts suggest use of the denominator specified in text. 
 
-Whether denominator information is selected from charts or text seems to distinguish the larger and smaller effects observed in E1. To experimentally manipulate this factor, we conducted an additional experiment in which denominator information was omitted from the text in half of trials. Ambiguity about the denominator will cause participants to rely on other information when judging magnitude, such as the appearance of data. 
+Whether denominator information is selected from charts or text seems to distinguish the two types of responses to truncated charts observed in E1. To experimentally manipulate this behaviour, we conducted an additional experiment in which denominator information was omitted from the text in half of trials. This allows us to test whether viewers’ assumptions about the denominator moderate the influence of a bar chart’s appearance. 
 
-In these cases, participants would be unaware of whether the upper limit corresponded to the denominator: unaware whether the appearance of bars was an honest or misleading account of magnitude.  
-
-In the denominator’s absence, participants may use previous trials’ (present) denominator values to inform their judgements. A limited range of denominator values (as in E1) would artificially diminish uncertainty concerning possible values, preventing/concealing authentic/spontaneous approaches to the task. Thus, we expand the range in E2. 
-
-Similarly, participants may be biased by the proportion of previous trials where the chart’s appearance reflects true magnitude. An imbalance of honest and dishonest appearances (as in E1) could influence responses, thus we add more fillers, to create an equal number of trials with honest and dishonest appearances. 
-
-match/mismatch
-
-In E1’s experimental items, half of trials showed small proportions that looked small, half showed small proportions that looked large
-In E1’s filler items, all trials showed large proportions and looked large
-E2’s fillers will resemble E1’s experimental items: half of trials will show large proportions that look large, half will show large proportions that look small. This necessitates extending the axis beyond the denominator.
-
-The absence of visual cues to numerical context in truncated charts did not totally prohibit recognition of this context. 
-
+To effectively explore this question, some changes to the materials are necessary.  In the denominator’s absence, participants may use denominator values stated in the text of previous trials to inform their judgements. A limited range of denominators (as in E1) would artificially diminish uncertainty regarding possible values, inhibiting authentic, spontaneous judgements. Therefore, we expand the range of denominators in E2. 
 
 # Experiment 2 - Overview
 
@@ -92,16 +73,7 @@ The absence of visual cues to numerical context in truncated charts did not tota
 # Method
 # Materials
 
-Bar charts were generated using the same method as E1.
-Data means were different 
-We produced an additional 24 filler scenarios.
-
-Denominator present vs. denominator absent - omission or replacement?
-How did we decide denominator values for fillers. 
-
-Highest axis break in filler trials. 
-
-
+The same scenarios were used as in E1 and bar charts were generated using the same method. We expanded the range of denominators, employing the following values: Consequently, the values plotted in the charts and on the axes, differed from E1.
 
 # Procedure
 
@@ -109,7 +81,7 @@ The procedure was identical to Experiment 1. Average completion time was x minut
 
 # Design
 
-We employed a 2x2 Latin-squared design with two factors: axis upper bound and denominator presence. Participants viewed 8 different charts for each combination of conditions (32 experimental trials total). We also included 32 filler items and six attention check items.
+We employed a 2x2 Latin-squared design with two factors: axis upper bound and denominator presence. Participants viewed 8 different charts for each combination of conditions (32 experimental trials total). We also included xx filler items and six attention check items.
 
 # Participants
 
