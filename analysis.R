@@ -28,6 +28,14 @@ dataset  %>%
   group_by(item_type)  %>%
   summarise(count = n(), mean = mean(slider.response), sd = sd(slider.response))
 
+# experiment duration
+dataset %>%
+  dplyr::select(participant, total_duration) %>%
+  mutate(dup = duplicated(.)) %>%
+  filter(dup == "FALSE") %>%
+  summarise(duration_mean = mean(total_duration/60), 
+            duration_sd = sd(total_duration/60))
+
 
 # VISUALISATION ----
 # visusalising distribution of responses across conditions
