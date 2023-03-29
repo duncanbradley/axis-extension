@@ -10,13 +10,13 @@ Experiment 1 investigates the influence of y-axis upper bounds on interpretation
 
 # Pre-Registration
 
-We predicted that bat charts with truncated axes would elicit greater magnitude ratings than bar charts with extended axes. Pre-registration is available at https://osf.io/e9j43. 
+We predicted that bar charts with truncated axes would elicit greater magnitude ratings than bar charts with extended axes. Pre-registration is available at https://osf.io/e9j43. 
 
 # Materials
 
 We developed 40 scenarios relating to fictitious surveys and experiments. Each scenario described a study evaluating a specific outcome in each of five categories (e.g., the number of employees achieving performance targets, in five finance companies). The denominator (e.g., total number of employees) was identical for each category. Participants were asked to  make judgements about overall magnitude (e.g., How well did the employees perform?), responding on a visual analogue scale with anchors at the extremes (e.g., ‘very poorly’, ‘very well’).
 
-We generated bar charts using ggplot2 in R. Both versions of each chart displayed the same five values, but employed different y-axis upper bounds. For extended charts, the denominator from the text description (400, 500, or 600) was used as the y-axis upper bound. The denominators were also used in the generation of the datasets, which employed a normal distribution with a mean equal to 20% or 40% of a given denominator value, and a standard deviation equal to 1% of a given denominator value. 
+We generated bar charts using ggplot2 in R (version 4.1.2), using tidyverse version 1.3.1 and ggh4x version 0.2.1. Both versions of each chart displayed the same five values, but employed different y-axis upper bounds. For extended charts, the denominator from the text description (400, 500, or 600) was used as the y-axis upper bound. The denominators were also used in the generation of the datasets, which employed a normal distribution with a mean equal to 20% or 40% of a given denominator value, and a standard deviation equal to 1% of a given denominator value. 
 
 In truncated charts, the y-axis upper bound was dictated by ggplot2’s default axis settings. These settings automatically identify a set of convenient breaks for each dataset, then slightly extend the plot area, adding 5% of the axis range to the upper axis limit. In both conditions, contrary to the default settings, a smaller expansion factor of 1% was applied to the lower axis limit, eliminating visible space below the 0 baseline.
 
@@ -79,7 +79,7 @@ Finally, repeated exposure to relatively low magnitudes in experimental trials m
 # Method
 # Materials
 
-The same scenarios were used as in E1 and bar charts were generated using the same method. We expanded the range of denominators, employing the following values: Consequently, the values plotted in the charts and on the axes, differed from E1.
+We generated bar charts using ggplot2 in R (version ), using tidyverse version  and ggh4x version . The same scenarios were used as in E1 and bar charts were generated using the same method. We expanded the range of denominators, employing the following values: Consequently, the values plotted in the charts and on the axes, differed from E1.
 
 # Procedure
 
