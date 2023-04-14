@@ -22,7 +22,7 @@ In truncated charts, the y-axis upper bound was dictated by ggplot2’s default 
 
 The default settings tended to produce charts where the highest axis break fell below the tallest bar. For the purposes of consistency, when the opposite situation occured, we automatically generated an alternative dataset to ensure the highest axis break appeared below the tallest bar. This dataset was used in both conditions. In our stimuli set, x alternative datasets were generated in this way. 
 
-In experimental trials, plotted values consisted of relatively small proportions of the denominator value specified in the accompanying text (roughly 20% or 40%). To introduce variety and encourage attention, eight filler trials showed plotted values which were around 90% of the corresponding denominator value. The denominators were selected so that values appearing on the axis resembled either extended or truncated experimental trials.
+In experimental trials, plotted values consisted of relatively small proportions of the denominator value specified in the accompanying text (roughly 20% or 40%). To introduce variety and encourage attention, eight filler trials showed plotted values which were around 90% of the corresponding denominator value. The denominators were selected so that numerical labels on the y-axis roughly resembled either extended or truncated experimental trials.
 
 We included six attention check trials to assess participants’ engagement. These trials were similar to experimental and filler trials, comprising of text, a bar chart, question and visual analogue scale. However, participants were instructed to ignore the bar chart and provide a specified response on the visual analogue scale. 
 
@@ -48,7 +48,7 @@ This experiment was approved by the University of Manchester’s Division of Neu
 
 # Discussion
 
-In this experiment, we explored the role of y-axis upper bounds in bar charts. We found that axes which extended beyond the plotted data were associated with greater magnitudes, compared to axes which terminated just above the plotted data. Axes change the appearance of plotted data, add visual cues to context, biasing interpretations of those values. 
+In this experiment, we explored the role of y-axis upper bounds in bar charts. We found that axes which extended beyond the plotted data were associated with greater magnitudes, compared to axes which terminated just above the plotted data. Axes change the appearance of plotted data, adding a visual cues to context, which biases interpretations of plotted values. 
 
 On the whole, participants’ responded to truncated and extended charts with broadly similar approaches. Ratings tended to correspond to the proportion of the denominator taken up by the plotted values. For example, when plotted values roughly equalled 20% of the denominator value, markers were placed approximately at the scale’s 20% point. Yet, in some cases, truncated charts’ tall bars and lack of denominator were particularly influential, eliciting extreme ratings not replicated for extended charts. This reveals a complex picture, with variation in the amount of bias observed. 
 
@@ -79,7 +79,9 @@ Finally, repeated exposure to relatively low magnitudes in experimental trials m
 # Method
 # Materials
 
-We generated bar charts using ggplot2 in R (version ), using tidyverse version  and ggh4x version . The same scenarios were used as in E1 and bar charts were generated using the same method. We expanded the range of denominators, employing the following values: Consequently, the values plotted in the charts and on the axes, differed from E1.
+We generated bar charts using ggplot2 in R (version ), using tidyverse version xxx and ggh4x version xxx. The same scenarios were used as in E1 and bar charts were generated using the same method. We expanded the range of denominators, employing the following values: Consequently, the values plotted in the charts and on the axes, differed from E1.
+
+We added the word ‘surveyed’ or ‘assessed’ to [x] accompanying sentences in items, that were unclear in the absence of a denominator. 
 
 # Procedure
 
