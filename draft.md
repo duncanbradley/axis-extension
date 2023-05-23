@@ -2,6 +2,8 @@
 
 The question ‘Is it a big number?’ is often raised on the BBC radio programme _More or Less_ when probing eye-catching statistics. A figure of several million pounds may initially seem large but may represent a small proportion of total government spending. In data visualisation, this contextual information can be displayed, but is often ommited by default. In this study, we investigate how *this design choice* affects interpretations of numbers’ magnitudes. The magnitude of plotted values is interpreted as larger when the y-axis terminates close to these values, and fails to accomodate a denominator. Thus, we evaluate the consequences of default settings in data visualisation software. 
 
+# Overview
+
 # Related Work
 
 # Experiment 1 - Overview
@@ -38,7 +40,7 @@ We employed a within-participants design: participants viewed 16 different chart
 
 # Participants
 
-Participants were recruited from Prolific.co. The experiment was advertised to fluent English speakers, who had normal-or-corrected to normal vision, who had previously participated in at least 100 studies on Prolific. 
+Participants were recruited from Prolific.co. The experiment was advertised to fluent English speakers, who had normal-or-corrected to normal vision, who had previously participated in at least 100 studies on Prolific (ref). 
 
 Per our pre-registeration, we recruited participants until 150 had successfully completed the experiment, excluding seven individuals who answered more than 1 attention check item incorrectly. Participants with accepted submissions received £3.50. 
 
@@ -79,7 +81,7 @@ Finally, repeated exposure to relatively low magnitudes in experimental trials m
 # Method
 # Materials
 
-We generated bar charts using ggplot2 in R (version ), using tidyverse version xxx and ggh4x version xxx. The same scenarios were used as in E1 and bar charts were generated using the same method. We expanded the range of denominators, employing the following values: Consequently, the values plotted in the charts and on the axes, differed from E1.
+We generated bar charts using ggplot2 in R (version 4.2.1), using tidyverse version 1.3.2 and ggh4x version 0.2.3. The same scenarios were used as in E1 and bar charts were generated using the same method. We expanded the range of denominators, employing the following values: Consequently, the values plotted in the charts and on the axes, differed from E1.
 
 We added the word ‘surveyed’ or ‘assessed’ to [x] accompanying sentences in items, that were unclear in the absence of a denominator. 
 
