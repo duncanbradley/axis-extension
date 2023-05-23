@@ -1,0 +1,211 @@
+---
+title: "axis-extension"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: load-packages
+library(tidyverse)
+library(lme4)
+library(buildmer)
+library(qwraps2)
+```
+
+```{r}
+#| label: comparison-function
+
+# this function takes a model and creates a nested model with one fixed effects term removed, for anova comparison
+# the default is to remove the last fixed effects term
+# but a particular term can be specified use 'remove = '
+comparison <- function(model, remove = NULL) {
+  
+  form <- formula(model)
+  
+  reducefixed <- function(form) {
+    
+    fixedfx <- 
+      remove.terms(form,"placeholder") %>% # generate full formula (expand '*')
+      nobars() # get formula for fixed effects only
+    
+    fixedterms <-  
+      terms.formula(fixedfx) %>% # get terms for fixed effects
+      attr("term.labels") # get character vector of fixed effects terms
+    
+    out <- remove.terms(fixedfx, tail(fixedterms, n=1))
+    
+    # remove will only take a single character string, not a character vector
+    if(!is.null(remove))
+      out <- remove.terms(fixedfx, remove)
+    
+    return(out)
+  }
+  
+  getrandom <- function(form) {
+    
+    parens <- function(x) {paste0("(",x,")")}
+    onlyBars <- function(form) {
+      reformulate(
+        sapply(
+          findbars(form), # list of character vector for each random effect
+          function(x)  parens(deparse(x))), # put each character vector in brackets
+        response = form[[2]]) 
+    }
+    
+    out <- onlyBars(form)
+    return(out)
+  }
+  
+  merge.formula <- function(form1, form2, ...){
+    # adapted from https://stevencarlislewalker.wordpress.com/2012/08/06/merging-combining-adding-together-two-formula-objects-in-r/
+    
+    # get character strings of the names for the responses 
+    # (i.e. left hand sides, lhs)
+    lhs1 <- deparse(form1[[2]])
+    #print(lhs1)
+    lhs2 <- deparse(form2[[2]])
+    #print(lhs2)
+    if(lhs1 != lhs2) stop('both formulas must have the same response')
+    
+    # get character strings of the right hand sides
+    rhs1 <- strsplit(paste(form1[3]), " \\+ ")[[1]] 
+    rhs2 <- strsplit(paste(form2[3]), " \\+ ")[[1]] 
+    
+    # put the two sides together with the amazing 
+    # reformulate function
+    out <- reformulate(termlabels = c(rhs1, rhs2), 
+                       response = lhs1)
+    
+    # set the environment of the formula (i.e. where should
+    # R look for variables when data aren't specified?)
+    #environment(out) <- parent.frame()
+    return(out)
+  }
+  
+  newfixedfx <- reducefixed(form)
+  fullranfx <- getrandom(form)
+  merge.formula(newfixedfx, fullranfx)
+  
+}
+```
+
+```{r}
+#| label: anova-results-function
+
+# this function takes two nested models, runs an anova, and the outputs the Likelihood Ratio Statistic, degrees of freedom, and p value to the global environment
+anova_results <- function(model, cmpr_model) {
+  
+  # first argument 
+  model_name <- deparse(substitute(model))
+  
+  if (class(model) == "buildmer") model <- model@model
+  if (class(cmpr_model) == "buildmer") cmpr_model <- cmpr_model@model
+      
+  anova_output <- anova(model, cmpr_model)
+  
+  assign(paste0(model_name, ".LR"),
+         anova_output$Chisq[2],
+         envir = .GlobalEnv)
+  assign(paste0(model_name, ".df"),
+         anova_output$Df[2],
+         envir = .GlobalEnv)
+  assign(paste0(model_name, ".p"),
+         anova_output$`Pr(>Chisq)`[2],
+         envir = .GlobalEnv)
+}
+```
+
+```{r}
+#| label: wrangle
+anon_data2 <- read_csv('data/anon_data2.csv')
+
+e2 <- anon_data2 %>%
+  filter(item_type == "E") %>%
+  mutate(across(c("axis", "denominator"), as_factor)) %>%
+  mutate(across(c("participant", "item_no"), as.character))
+
+# set sum contrasts
+contrasts(e2$axis) <- contr.sum(2)
+contrasts(e2$denominator) <- contr.sum(2)
+```
+
+```{r}
+#| label: lazyload-cache
+
+lazyload_cache_dir('axis-extension_cache/html')
+```
+
+## Experiment 2
+
+```{r}
+#| label: e2-plot
+
+denom_labs <- c("Denominator Present in Text", 
+                 "Denominator Absent from Text")
+names(denom_labs) <- c("pres", "abs")
+
+e2 %>%
+  ggplot(aes(x = mag_slider.response, y = axis)) +
+  geom_jitter(width = 0,
+              height = 0.2,
+              alpha = 0.3) +
+  scale_y_discrete(breaks = c("trunc", "full"),
+                   labels = c("Truncated", "Extended")) + 
+  labs(title = 'Experiment 2',
+      y = NULL,
+       x = NULL) + 
+  scale_x_continuous(labels = c('Very low\nmagnitude', 'Very high\nmagnitude'),
+    breaks = c(1,2),
+    minor_breaks = c()) + 
+  facet_wrap(vars(denominator), ncol = 1, labeller = labeller(denominator = denom_labs)) +
+  theme_minimal()
+  
+```
+
+```{r}
+#| label: e2-magnitude
+#| cache: true
+
+e2_mag <- buildmer(mag_slider.response ~ axis*denominator +
+                     (1 + axis*denominator | participant) + 
+                     (1 + axis*denominator | item_no),
+                   data = e2)
+```
+
+```{r}
+#| label: e2-magnitude-cmpr
+#| cache: true
+
+e2_mag_cmpr <- lmer(comparison(e2_mag),
+                    data = e2)
+```
+
+```{r}
+formula(e2_mag@model)
+formula(e2_mag_cmpr)
+```
+
+```{r}
+#| label: e2-mag-anova
+
+anova_results(e2_mag, e2_mag_cmpr)
+```
+
+p value `r print(e2_mag.p)`
+
+Chisq `r print(e2_mag.LR)`
+
+df `r print(e2_mag.df)`
+
+```{r}
+
+# extract estimated marginal means for the interaction model - severity ratings
+e2_mag_emm <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sidak')$emmeans
+
+e2_mag_contrast <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sidak')$contrasts
+
+#generate contrasts
+e2_mag_contrast <- contrast(e2_mag, "consec", simple = "each", combine = TRUE, adjust = "sidak")
+
+emmip(e2_mag@model, axis ~ denominator)
+```
