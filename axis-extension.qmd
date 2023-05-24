@@ -10,6 +10,13 @@ library(tidyverse)
 library(lme4)
 library(buildmer)
 library(qwraps2)
+library(emmeans)
+```
+
+```{r}
+#| label: lazyload-cache
+
+lazyload_cache_dir('axis-extension_cache/html')
 ```
 
 ```{r}
@@ -129,16 +136,12 @@ contrasts(e2$axis) <- contr.sum(2)
 contrasts(e2$denominator) <- contr.sum(2)
 ```
 
-```{r}
-#| label: lazyload-cache
-
-lazyload_cache_dir('axis-extension_cache/html')
-```
-
 ## Experiment 2
 
+### Magnitude Ratings
+
 ```{r}
-#| label: e2-plot
+#| label: e2-mag-plot
 
 denom_labs <- c("Denominator Present in Text", 
                  "Denominator Absent from Text")
@@ -148,7 +151,7 @@ e2 %>%
   ggplot(aes(x = mag_slider.response, y = axis)) +
   geom_jitter(width = 0,
               height = 0.2,
-              alpha = 0.3) +
+              alpha = 0.1) +
   scale_y_discrete(breaks = c("trunc", "full"),
                    labels = c("Truncated", "Extended")) + 
   labs(title = 'Experiment 2',
@@ -204,8 +207,86 @@ e2_mag_emm <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sid
 
 e2_mag_contrast <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sidak')$contrasts
 
-#generate contrasts
-e2_mag_contrast <- contrast(e2_mag, "consec", simple = "each", combine = TRUE, adjust = "sidak")
-
-emmip(e2_mag@model, axis ~ denominator)
+emmip(e2_mag@model, axis ~ denominator, CIs = T) +
+  scale_x_discrete(labels = c('Absent from text', 'Present in text')) +
+  scale_color_discrete(labels = c('Truncated', 'Extended'))
 ```
+
+### Confidence Ratings
+
+```{r}
+#| label: e2-con-plot
+
+denom_labs <- c("Denominator Present in Text", 
+                 "Denominator Absent from Text")
+names(denom_labs) <- c("pres", "abs")
+
+e2 %>%
+  ggplot(aes(x = con_slider.response, y = axis)) +
+  geom_jitter(width = 0,
+              height = 0.2,
+              alpha = 0.1) +
+  scale_y_discrete(breaks = c("trunc", "full"),
+                   labels = c("Truncated", "Extended")) + 
+  labs(title = 'Experiment 2',
+      y = NULL,
+       x = NULL) + 
+  scale_x_continuous(labels = c('Not very\nconfident', 'Very\nconfident'),
+    breaks = c(1,2),
+    minor_breaks = c()) + 
+  facet_wrap(vars(denominator), ncol = 1, labeller = labeller(denominator = denom_labs)) +
+  theme_minimal()
+  
+```
+
+```{r}
+#| label: e2-con
+#| cache: true
+
+e2_con <- buildmer(con_slider.response ~ axis*denominator +
+                     (1 + axis*denominator | participant) + 
+                     (1 + axis*denominator | item_no),
+                   data = e2)
+```
+
+```{r}
+#| label: e2-confidence-cmpr
+#| cache: true
+
+e2_con_cmpr <- lmer(comparison(e2_con),
+                    data = e2)
+```
+
+```{r}
+formula(e2_con@model)
+formula(e2_con_cmpr)
+```
+
+```{r}
+#| label: e2-con-anova
+
+anova_results(e2_con, e2_con_cmpr)
+```
+
+p value `r print(e2_con.p)`
+
+Chisq `r print(e2_con.LR)`
+
+df `r print(e2_con.df)`
+
+```{r}
+
+# extract estimated marginal means for the interaction model - severity ratings
+e2_con_emm <- emmeans(e2_con@model, pairwise ~ axis * denominator, adjust = 'sidak')$emmeans
+
+e2_con_contrast <- emmeans(e2_con@model, pairwise ~ axis * denominator, adjust = 'sidak')$contrasts
+
+emmip(e2_con@model, axis ~ denominator, CIs = T) +
+  scale_x_discrete(labels = c('Absent from text', 'Present in text')) +
+  scale_color_discrete(labels = c('Truncated', 'Extended'))
+```
+
+Add effect sizes
+
+# Magnitude Ratings and Literacy 
+
