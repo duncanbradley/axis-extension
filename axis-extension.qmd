@@ -11,6 +11,9 @@ library(lme4)
 library(buildmer)
 library(qwraps2)
 library(emmeans)
+library(broom.mixed)
+library(effectsize)
+library(papaja)
 ```
 
 ```{r}
@@ -123,6 +126,63 @@ anova_results <- function(model, cmpr_model) {
 ```
 
 ```{r}
+#| label: summary-extract-function
+
+# this function extracts test statistics and p values from model summaries
+summary_extract <- function(model, key_term) {
+  
+  params <- c("statistic", "p.value", "df")
+
+  model_name <- deparse(substitute(model))
+  
+  if (class(model) == "buildmer") model <- model@model
+  
+  # get the row for the chosen fixed effect term
+  one_row <- tidy(model) %>% filter(term == key_term)
+
+    get_cols <- function(param) {
+
+    assign(value = one_row %>% pull(param),
+           envir = .GlobalEnv,
+           paste0(model_name, ".", param))
+    }
+
+    lapply(params, get_cols)
+    
+    es <- eta_squared(model, partial = TRUE) 
+  
+    es %>% pull(Parameter) %>%
+      map(function(x) assign(paste0(model_name, 
+                                  ".eta.", 
+                                  str_replace(x, ":", "_")),
+                           es %>%
+                             filter(Parameter == x) %>% 
+                             pull(Eta2_partial),
+                           envir = .GlobalEnv))
+}
+```
+
+```{r}
+#| label: random-str-function
+
+# this function creates a table which displays the random effects structure (intercepts and slopes) for a given model
+random_str <- function(model) {
+  model <- model@model
+  terms <- model %>% find_random %>% unlist() %>% unname()
+  mylist <- model %>% formula %>% findbars() %>% as.character()
+  slopes <- lapply(mylist, str_extract, "(?<=\\+ )(.*)(?= \\| )") %>% 
+    unlist()
+  tibble(terms, slopes)
+}
+```
+
+```{r}
+#| label: print-es-function
+# for dealing with effect sizes less than .001
+print_es <- function(x) {ifelse(x<.01, "< 0.01", paste("=", printnum(x)))}
+```
+
+```{r}
 #| label: wrangle
 anon_data1 <- read_csv('data/anon_data2.csv')
 anon_data2 <- read_csv('data/anon_data2.csv')
@@ -219,7 +279,7 @@ contrasts(e2$denominator) <- contr.sum(2)
 ### Magnitude Ratings
 
 ```{r}
-#| label: e2-mag-plot
+#| label: fig-e2-mag
 
 denom_labs <- c("Denominator Present in Text", 
                  "Denominator Absent from Text")
@@ -270,13 +330,17 @@ formula(e2_mag_cmpr)
 #| label: e2-mag-anova
 
 anova_results(e2_mag, e2_mag_cmpr)
+summary_extract(e2_mag, "axis1:denominator1")
 ```
 
-p value `r print(e2_mag.p)`
+p value `r print(e2_mag.p)`.
 
-Chisq `r print(e2_mag.LR)`
+Chisq `r print(e2_mag.LR)`.
 
-df `r print(e2_mag.df)`
+df `r print(e2_mag.df)`.
+
+eta2 `r printnum(e2_mag.eta.axis_denominator)`.
+
 
 ```{r}
 
@@ -369,10 +433,22 @@ Add effect sizes
 # Magnitude Ratings and Data Visualisation Literacy
 
 ```{r}
-#| label: e2_magnitude_lit
+#| label: e2-lit
 #| cache: true
 
 e2_mag_l <- lmer(add.terms(formula(e2_mag),
 "literacy"),
               data = e2)
+e2_con_l <- lmer(add.terms(formula(e2_con),
+"literacy"),
+              data = e2)
 ```
+
+```{r}
+#| label: e2-lit-results
+
+summary_extract(e2_mag_l, "axis1:denominator1")
+summary_extract(e2_con_l, "denominator1:axis1")
+
+```
+
