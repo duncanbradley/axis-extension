@@ -124,12 +124,90 @@ anova_results <- function(model, cmpr_model) {
 
 ```{r}
 #| label: wrangle
+anon_data1 <- read_csv('data/anon_data2.csv')
 anon_data2 <- read_csv('data/anon_data2.csv')
 
-e2 <- anon_data2 %>%
+# perform necessary data wrangling
+wrangle <- function(anon_file, .y) {
+  # .y captures the index of the file in the list supplied to iwalk
+
+# extract literacy data
+# calculate literacy score (sum of five responses)
+literacy <- anon_file %>%
+  filter(!is.na(q1_slider.response)) %>%
+  rowwise() %>%
+  mutate(literacy = sum(c(q1_slider.response, 
+                          q2_slider.response, 
+                          q3_slider.response, 
+                          q4_slider.response, 
+                          q5_slider.response))) %>%
+  select(participant,
+         literacy)
+
+# define education categories 
+edu_labels <- set_names(c('No formal qualications',
+                          'Secondary education (e.g. GED/GCSE)',
+                          'High school diploma/A-levels',
+                          'Technical/community college',
+                          'Undergraduate degree (BA/BSc/other)',
+                          'Graduate degree (MA/MSc/MPhil/other)',
+                          'Doctorate degree (PhD/other)',
+                          'Don\'t know / not applicable'),
+                        seq(8,1,-1))
+
+# define gender categories
+gender_labels <- set_names(c("Prefer not to say", 
+                             "In another way:",
+                             "Non-binary", 
+                             "Man", 
+                             "Woman"),
+                           1:5)
+# extract demographics
+# link slider response numbers to gender categories 
+# link slider response numbers to education categories
+demographics <- anon_file %>%
+  filter(!is.na(genderResp1.response)) %>%
+  mutate(genderResp1.response = 
+           recode(genderResp1.response, !!!gender_labels)) %>%
+  mutate(edu_slider.response =
+           recode(edu_slider.response, !!!edu_labels)) %>%
+  select(participant,
+         ageResp.text,
+         genderResp1.response,
+         edu_slider.response)
+
+# extract duration data (in seconds)
+durations <- anon_file %>%
+  filter(!is.na(total_duration)) %>%
+  select(participant, total_duration)
+  
+# select relevant columns
+# select only experimental items
+# add literacy and demographic data
+# change data types where appropriate
+# output this file with suffix 'tidy'
+  anon_file %>% 
   filter(item_type == "E") %>%
-  mutate(across(c("axis", "denominator"), as_factor)) %>%
-  mutate(across(c("participant", "item_no"), as.character))
+  select("participant",
+         "item_no",
+         "item_type",
+         "axis",
+         "denominator",
+         "mag_slider.response",
+         "con_slider.response",
+         ) %>% 
+    inner_join(literacy, by = "participant") %>%
+    inner_join(demographics, by = "participant") %>%
+    inner_join(durations, by = "participant") %>%
+    mutate(total_duration = total_duration / 60) %>%
+    mutate(across(c("axis", "denominator"), as_factor)) %>%
+    mutate(across(c("participant", "item_no"), as.character)) %>%
+    assign(paste0("e", .y),
+           value = ., envir = .GlobalEnv)
+}
+
+iwalk(list(anon_data1, anon_data2), wrangle)
+
 
 # set sum contrasts
 contrasts(e2$axis) <- contr.sum(2)
@@ -288,5 +366,13 @@ emmip(e2_con@model, axis ~ denominator, CIs = T) +
 
 Add effect sizes
 
-# Magnitude Ratings and Literacy 
+# Magnitude Ratings and Data Visualisation Literacy
 
+```{r}
+#| label: e2_magnitude_lit
+#| cache: true
+
+e2_mag_l <- lmer(add.terms(formula(e2_mag),
+"literacy"),
+              data = e2)
+```
