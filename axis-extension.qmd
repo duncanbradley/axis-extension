@@ -4,12 +4,12 @@ format: html
 editor: visual
 
 params: 
-  eval_models: false
+  eval_models: true
     
 execute:
   echo: false
-  warning: false
-  message: false
+  warning: true
+  message: true
   include: false
 ---
 
@@ -131,6 +131,17 @@ anova_results <- function(model, cmpr_model) {
   assign(paste0(model_name, ".p"),
          anova_output$`Pr(>Chisq)`[2],
          envir = .GlobalEnv)
+  
+  es <- eta_squared(anova(model), partial = TRUE) 
+  
+  es %>% pull(Parameter) %>%
+    map(function(x) assign(paste0(model_name, 
+                                  ".eta.", 
+                                  str_replace(x, ":", "_")),
+                           es %>%
+                             filter(Parameter == x) %>% 
+                             pull(Eta2_partial),
+                           envir = .GlobalEnv))
 }
 ```
 
@@ -289,6 +300,7 @@ contrasts(e2$denominator) <- contr.sum(2)
 
 ```{r}
 #| label: fig-e2-mag
+#| include: true
 
 denom_labs <- c("Denominator Present in Text", 
                  "Denominator Absent from Text")
@@ -312,6 +324,8 @@ e2 %>%
   
 ```
 
+@fig-e2-mag shows the raw data.
+
 ```{r}
 #| label: e2-mag
 #| eval: !expr params$eval_models
@@ -333,33 +347,44 @@ e2_mag_cmpr <- lmer(comparison(e2_mag),
 ```
 
 ```{r}
+#| label: e2-mag-anova
+
+anova_results(e2_mag, e2_mag_cmpr)
+```
+
+For magnitude ratings, a likelihood ratio test revealed a significant interaction between axis upper bound and denominator information: $\chi^2$(`r in_paren(e2_mag.df)`) = `r printnum(e2_mag.LR)`, p `r printp(e2_mag.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis_denominator)`.
+
+Pairwise comparisons reveal that charts with extended and truncated axes were rated differently when the denominator was present, replicating the effect from E1, and when the denominator was absent. Therefore, the interaction indicates that the degree of difference in magnitude ratings was affected by whether the denominator was present or absent.
+
+```{r}
+knitr::knit_exit()
+```
+
+```{r}
 formula(e2_mag@model)
 formula(e2_mag_cmpr)
 ```
 
 ```{r}
-#| label: e2-mag-anova
-
-anova_results(e2_mag, e2_mag_cmpr)
-summary_extract(e2_mag, "axis1:denominator1")
-```
-
-p value `r print(e2_mag.p)`.
-
-Chisq `r print(e2_mag.LR)`.
-
-df `r print(e2_mag.df)`.
-
-eta2 `r printnum(e2_mag.eta.axis_denominator)`.
-
-```{r}
 
 # extract estimated marginal means for the interaction model - severity ratings
-e2_mag_emm <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sidak')$emmeans
+e2_mag_emm <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sidak') 
 
-e2_mag_contrast <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sidak')$contrasts
 
-emmip(e2_mag@model, axis ~ denominator, CIs = T) +
+
+get_contrasts <- function(emm, fctor){
+  
+  contrast(emm, "consec", simple = "each", combine = TRUE, adjust = "sidak") %>%
+  as_tibble()  %>%
+  filter({{ fctor }} != ".")
+  
+  
+}
+
+get_contrasts(e2_mag_emm, "axis")
+
+
+emmip(e2_mag@model, denominator ~ axis, CIs = T) +
   scale_x_discrete(labels = c('Absent from text', 'Present in text')) +
   scale_color_discrete(labels = c('Truncated', 'Extended'))
 ```
@@ -439,8 +464,6 @@ emmip(e2_con@model, axis ~ denominator, CIs = T) +
   scale_x_discrete(labels = c('Absent from text', 'Present in text')) +
   scale_color_discrete(labels = c('Truncated', 'Extended'))
 ```
-
-Add effect sizes
 
 # Magnitude Ratings and Data Visualisation Literacy
 
