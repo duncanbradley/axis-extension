@@ -2,6 +2,15 @@
 title: "axis-extension"
 format: html
 editor: visual
+
+params: 
+  eval_models: false
+    
+execute:
+  echo: false
+  warning: false
+  message: false
+  include: false
 ---
 
 ```{r}
@@ -18,8 +27,8 @@ library(papaja)
 
 ```{r}
 #| label: lazyload-cache
-
-lazyload_cache_dir('axis-extension_cache/html')
+if (!params$eval_models){
+lazyload_cache_dir('axis-extension_cache/html')}
 ```
 
 ```{r}
@@ -274,7 +283,7 @@ contrasts(e2$axis) <- contr.sum(2)
 contrasts(e2$denominator) <- contr.sum(2)
 ```
 
-## Experiment 2
+## Experiment 2 - Analysis
 
 ### Magnitude Ratings
 
@@ -304,8 +313,9 @@ e2 %>%
 ```
 
 ```{r}
-#| label: e2-magnitude
-#| cache: true
+#| label: e2-mag
+#| eval: !expr params$eval_models
+#| cache: !expr params$eval_models
 
 e2_mag <- buildmer(mag_slider.response ~ axis*denominator +
                      (1 + axis*denominator | participant) + 
@@ -314,8 +324,9 @@ e2_mag <- buildmer(mag_slider.response ~ axis*denominator +
 ```
 
 ```{r}
-#| label: e2-magnitude-cmpr
-#| cache: true
+#| label: e2-mag-cmpr
+#| eval: !expr params$eval_models
+#| cache: !expr params$eval_models
 
 e2_mag_cmpr <- lmer(comparison(e2_mag),
                     data = e2)
@@ -340,7 +351,6 @@ Chisq `r print(e2_mag.LR)`.
 df `r print(e2_mag.df)`.
 
 eta2 `r printnum(e2_mag.eta.axis_denominator)`.
-
 
 ```{r}
 
@@ -383,7 +393,8 @@ e2 %>%
 
 ```{r}
 #| label: e2-con
-#| cache: true
+#| eval: !expr params$eval_models
+#| cache: !expr params$eval_models
 
 e2_con <- buildmer(con_slider.response ~ axis*denominator +
                      (1 + axis*denominator | participant) + 
@@ -392,8 +403,9 @@ e2_con <- buildmer(con_slider.response ~ axis*denominator +
 ```
 
 ```{r}
-#| label: e2-confidence-cmpr
-#| cache: true
+#| label: e2-con-cmpr
+#| eval: !expr params$eval_models
+#| cache: !expr params$eval_models
 
 e2_con_cmpr <- lmer(comparison(e2_con),
                     data = e2)
@@ -434,7 +446,8 @@ Add effect sizes
 
 ```{r}
 #| label: e2-lit
-#| cache: true
+#| eval: !expr params$eval_models
+#| cache: !expr params$eval_models
 
 e2_mag_l <- lmer(add.terms(formula(e2_mag),
 "literacy"),
@@ -451,4 +464,3 @@ summary_extract(e2_mag_l, "axis1:denominator1")
 summary_extract(e2_con_l, "denominator1:axis1")
 
 ```
-
