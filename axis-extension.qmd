@@ -33,30 +33,26 @@ lazyload_cache_dir('axis-extension_cache/html')}
 
 ```{r}
 #| label: comparison-function
-
-# this function takes a model and creates a nested model with one fixed effects term removed, for anova comparison
-# the default is to remove the last fixed effects term
-# but a particular term can be specified use 'remove = '
-comparison <- function(model, remove = NULL) {
+# this function takes a model and creates a new model for anova comparison
+# a new set of fixed effects will be specified, but the same random effects structure will be used
+comparison <- function(model, fixed) {
   
   form <- formula(model)
   
-  reducefixed <- function(form) {
-    
-    fixedfx <- 
+  newfixed <- function(form, fixed) {
+
+    fixedfx <-
       remove.terms(form,"placeholder") %>% # generate full formula (expand '*')
       nobars() # get formula for fixed effects only
-    
-    fixedterms <-  
+
+    fixedterms <-
       terms.formula(fixedfx) %>% # get terms for fixed effects
       attr("term.labels") # get character vector of fixed effects terms
-    
-    out <- remove.terms(fixedfx, tail(fixedterms, n=1))
-    
-    # remove will only take a single character string, not a character vector
-    if(!is.null(remove))
-      out <- remove.terms(fixedfx, remove)
-    
+
+    # remove all terms to get only the response
+    response <- remove.terms(fixedfx, fixedterms) %>% remove.terms(fixedterms)
+
+    out <- add.terms(response, fixed)
     return(out)
   }
   
@@ -101,7 +97,7 @@ comparison <- function(model, remove = NULL) {
     return(out)
   }
   
-  newfixedfx <- reducefixed(form)
+  newfixedfx <- newfixed(form, fixed)
   fullranfx <- getrandom(form)
   merge.formula(newfixedfx, fullranfx)
   
@@ -110,32 +106,32 @@ comparison <- function(model, remove = NULL) {
 
 ```{r}
 #| label: anova-results-function
-
 # this function takes two nested models, runs an anova, and the outputs the Likelihood Ratio Statistic, degrees of freedom, and p value to the global environment
-anova_results <- function(model, cmpr_model) {
+anova_results <- function(test_model, full_model) {
   
   # first argument 
-  model_name <- deparse(substitute(model))
+  test_model_name <- deparse(substitute(test_model))
+  full_model_name <- deparse(substitute(full_model))
+
+  if (class(test_model) == "buildmer") test_model <- test_model@model
+  if (class(full_model) == "buildmer") full_model <- full_model@model
   
-  if (class(model) == "buildmer") model <- model@model
-  if (class(cmpr_model) == "buildmer") cmpr_model <- cmpr_model@model
-      
-  anova_output <- anova(model, cmpr_model)
+  anova_output <- anova(test_model, full_model)
   
-  assign(paste0(model_name, ".LR"),
+  assign(paste0(test_model_name, ".Chi"),
          anova_output$Chisq[2],
          envir = .GlobalEnv)
-  assign(paste0(model_name, ".df"),
+  assign(paste0(test_model_name, ".Df"),
          anova_output$Df[2],
          envir = .GlobalEnv)
-  assign(paste0(model_name, ".p"),
+  assign(paste0(test_model_name, ".p"),
          anova_output$`Pr(>Chisq)`[2],
          envir = .GlobalEnv)
   
-  es <- eta_squared(anova(model), partial = TRUE) 
+  es <- eta_squared(anova(full_model), partial = TRUE) 
   
   es %>% pull(Parameter) %>%
-    map(function(x) assign(paste0(model_name, 
+    map(function(x) assign(paste0(full_model_name, 
                                   ".eta.", 
                                   str_replace(x, ":", "_")),
                            es %>%
@@ -175,43 +171,6 @@ get_contrasts <- function(contrast_df, condition) {
   
   combinations <- expand_grid(rows, params)
   pmap(combinations, ~extract_vals(..1, ..2))
-}
-```
-
-```{r}
-#| label: summary-extract-function
-
-# this function extracts test statistics and p values from model summaries
-summary_extract <- function(model, key_term) {
-  
-  params <- c("statistic", "p.value", "df")
-
-  model_name <- deparse(substitute(model))
-  
-  if (class(model) == "buildmer") model <- model@model
-  
-  # get the row for the chosen fixed effect term
-  one_row <- tidy(model) %>% filter(term == key_term)
-
-    get_cols <- function(param) {
-
-    assign(value = one_row %>% pull(param),
-           envir = .GlobalEnv,
-           paste0(model_name, ".", param))
-    }
-
-    lapply(params, get_cols)
-    
-    es <- eta_squared(model, partial = TRUE) 
-  
-    es %>% pull(Parameter) %>%
-      map(function(x) assign(paste0(model_name, 
-                                  ".eta.", 
-                                  str_replace(x, ":", "_")),
-                           es %>%
-                             filter(Parameter == x) %>% 
-                             pull(Eta2_partial),
-                           envir = .GlobalEnv))
 }
 ```
 
@@ -375,18 +334,30 @@ e2_mag <- buildmer(mag_slider.response ~ axis*denominator +
 #| eval: !expr params$eval_models
 #| cache: !expr params$eval_models
 
-e2_mag_cmpr <- lmer(comparison(e2_mag),
-                    data = e2)
+e2_mag_test_int <- lmer(comparison(e2_mag, 
+                                   fixed = "axis + denominator"), 
+                        data = e2)
+e2_mag_test_denom <- lmer(comparison(e2_mag, 
+                                     fixed = "axis + axis:denominator"), 
+                          data = e2)
+e2_mag_test_axis <- lmer(comparison(e2_mag, 
+                                    fixed = "denominator + axis:denominator"),
+                         data = e2)
+
 ```
 
 ```{r}
 #| label: e2-mag-anova
 
-anova_results(e2_mag, e2_mag_cmpr)
+anova_results(e2_mag_test_int, e2_mag)
+anova_results(e2_mag_test_denom, e2_mag)
+anova_results(e2_mag_test_axis, e2_mag)
+
 ```
 
 ```{r}
-# extract estimated marginal means for the interaction model - severity ratings
+#| label: e2-mag-contrasts
+
 e2_mag_emm <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sidak') 
   
 get_contrasts(e2_mag_emm, condition = "denominator")
@@ -396,17 +367,20 @@ emmip(e2_mag@model, denominator ~ axis, CIs = T) +
   scale_color_discrete(labels = c('Truncated', 'Extended'))
 ```
 
-For magnitude ratings, a likelihood ratio test revealed a significant interaction between axis upper bound and denominator information: $\chi^2$(`r in_paren(e2_mag.df)`) = `r printnum(e2_mag.LR)`, p `r printp(e2_mag.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis_denominator)`.
+For magnitude ratings, likelihood ratio tests revealed main effects for both axis upper bound ($\chi^2$(`r in_paren(e2_mag_test_axis.Df)`) = `r printnum(e2_mag_test_axis.Chi)`, p `r printp(e2_mag_test_axis.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis)`) and denominator presence ($\chi^2$(`r in_paren(e2_mag_test_denom.Df)`) = `r printnum(e2_mag_test_denom.Chi)`, p `r printp(e2_mag_test_denom.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.denominator)`). 
 
-Pairwise comparisons reveal that charts with extended and truncated axes were rated differently when the denominator was present, replicating the effect from E1 (`r printnum(e2_mag_emm.pres.z.ratio)`, `r printp(e2_mag_emm.pres.p.value)`), and also when the denominator was absent (`r printnum(e2_mag_emm.abs.z.ratio)`, `r printp(e2_mag_emm.abs.p.value)`). Therefore, the interaction indicates that the degree of difference in magnitude ratings was affected by whether the denominator was present or absent.
+There was also a significant interaction between axis upper bound and denominator information: $\chi^2$(`r in_paren(e2_mag_test_int.Df)`) = `r printnum(e2_mag_test_int.Chi)`, p `r printp(e2_mag_test_int.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis_denominator)`. 
 
-```{r}
-formula(e2_mag@model)
-formula(e2_mag_cmpr)
-```
+Pairwise comparisons reveal that charts with extended and truncated axes were rated differently when the denominator was present, replicating the effect from E1 (z = `r printnum(e2_mag_emm.pres.z.ratio)`, p `r printp(e2_mag_emm.pres.p.value, add_equals = TRUE)`), and also when the denominator was absent (`r printnum(e2_mag_emm.abs.z.ratio)`, `r printp(e2_mag_emm.abs.p.value)`). Therefore, the interaction indicates that the degree of difference in magnitude ratings was affected by whether the denominator was present or absent.
+
+This model employed by-participant and by-item random effects. For each participant, there were random intercepts, plus random slopes for axis upper bounds and denominator presence. For each item, there were random intercepts, plus random slopes for denominator presence. 
 
 ```{r}
 knitr::knit_exit()
+```
+
+```{r}
+formula(e2_mag@model)
 ```
 
 ### Confidence Ratings
@@ -436,6 +410,8 @@ e2 %>%
   
 ```
 
+@fig-e2-con shows the raw data.
+
 ```{r}
 #| label: e2-con
 #| eval: !expr params$eval_models
@@ -457,32 +433,26 @@ e2_con_cmpr <- lmer(comparison(e2_con),
 ```
 
 ```{r}
-formula(e2_con@model)
-formula(e2_con_cmpr)
-```
-
-```{r}
 #| label: e2-con-anova
 
 anova_results(e2_con, e2_con_cmpr)
 ```
 
-p value `r print(e2_con.p)`
-
-Chisq `r print(e2_con.LR)`
-
-df `r print(e2_con.df)`
-
 ```{r}
-
-# extract estimated marginal means for the interaction model - severity ratings
-e2_con_emm <- emmeans(e2_con@model, pairwise ~ axis * denominator, adjust = 'sidak')$emmeans
-
-e2_con_contrast <- emmeans(e2_con@model, pairwise ~ axis * denominator, adjust = 'sidak')$contrasts
+#| label: e2-con-contrasts
+e2_con_emm <- emmeans(e2_con@model, pairwise ~ axis * denominator, adjust = 'sidak') 
+  
+get_contrasts(e2_con_emm, condition = "denominator")
 
 emmip(e2_con@model, axis ~ denominator, CIs = T) +
   scale_x_discrete(labels = c('Absent from text', 'Present in text')) +
   scale_color_discrete(labels = c('Truncated', 'Extended'))
+```
+
+
+```{r}
+#| include: true
+formula(e2_con@model)
 ```
 
 # Magnitude Ratings and Data Visualisation Literacy
