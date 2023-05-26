@@ -146,6 +146,39 @@ anova_results <- function(model, cmpr_model) {
 ```
 
 ```{r}
+#| label: get-contrasts-function
+
+get_contrasts <- function(contrast_df, condition) {
+  
+  extract_vals <- function(one_row, param) {
+    assign(value = (one_row %>% pull(param)),
+           envir = .GlobalEnv,
+           paste0(df_name,
+                  ".",
+                  (one_row %>% pull(!!sym(condition))),
+                  ".",
+                  param))
+    }
+
+  rows <- contrast_df %>% 
+    contrast("consec", 
+             simple = "each", 
+             combine = TRUE, 
+             adjust = "sidak") %>%
+    as_tibble() %>% 
+    filter(!!sym(condition) != ".") %>%
+    group_split(!!sym(condition)) 
+  
+  params <- c("estimate", "SE", "df", "z.ratio", "p.value")
+  
+  df_name <- deparse(substitute(contrast_df))
+  
+  combinations <- expand_grid(rows, params)
+  pmap(combinations, ~extract_vals(..1, ..2))
+}
+```
+
+```{r}
 #| label: summary-extract-function
 
 # this function extracts test statistics and p values from model summaries
@@ -352,13 +385,20 @@ e2_mag_cmpr <- lmer(comparison(e2_mag),
 anova_results(e2_mag, e2_mag_cmpr)
 ```
 
+```{r}
+# extract estimated marginal means for the interaction model - severity ratings
+e2_mag_emm <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sidak') 
+  
+get_contrasts(e2_mag_emm, condition = "denominator")
+
+emmip(e2_mag@model, denominator ~ axis, CIs = T) +
+  scale_x_discrete(labels = c('Absent from text', 'Present in text')) +
+  scale_color_discrete(labels = c('Truncated', 'Extended'))
+```
+
 For magnitude ratings, a likelihood ratio test revealed a significant interaction between axis upper bound and denominator information: $\chi^2$(`r in_paren(e2_mag.df)`) = `r printnum(e2_mag.LR)`, p `r printp(e2_mag.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis_denominator)`.
 
-Pairwise comparisons reveal that charts with extended and truncated axes were rated differently when the denominator was present, replicating the effect from E1, and when the denominator was absent. Therefore, the interaction indicates that the degree of difference in magnitude ratings was affected by whether the denominator was present or absent.
-
-```{r}
-knitr::knit_exit()
-```
+Pairwise comparisons reveal that charts with extended and truncated axes were rated differently when the denominator was present, replicating the effect from E1 (`r printnum(e2_mag_emm.pres.z.ratio)`, `r printp(e2_mag_emm.pres.p.value)`), and also when the denominator was absent (`r printnum(e2_mag_emm.abs.z.ratio)`, `r printp(e2_mag_emm.abs.p.value)`). Therefore, the interaction indicates that the degree of difference in magnitude ratings was affected by whether the denominator was present or absent.
 
 ```{r}
 formula(e2_mag@model)
@@ -366,27 +406,7 @@ formula(e2_mag_cmpr)
 ```
 
 ```{r}
-
-# extract estimated marginal means for the interaction model - severity ratings
-e2_mag_emm <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sidak') 
-
-
-
-get_contrasts <- function(emm, fctor){
-  
-  contrast(emm, "consec", simple = "each", combine = TRUE, adjust = "sidak") %>%
-  as_tibble()  %>%
-  filter({{ fctor }} != ".")
-  
-  
-}
-
-get_contrasts(e2_mag_emm, "axis")
-
-
-emmip(e2_mag@model, denominator ~ axis, CIs = T) +
-  scale_x_discrete(labels = c('Absent from text', 'Present in text')) +
-  scale_color_discrete(labels = c('Truncated', 'Extended'))
+knitr::knit_exit()
 ```
 
 ### Confidence Ratings
