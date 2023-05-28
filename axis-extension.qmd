@@ -367,17 +367,13 @@ emmip(e2_mag@model, denominator ~ axis, CIs = T) +
   scale_color_discrete(labels = c('Truncated', 'Extended'))
 ```
 
-For magnitude ratings, likelihood ratio tests revealed main effects for both axis upper bound ($\chi^2$(`r in_paren(e2_mag_test_axis.Df)`) = `r printnum(e2_mag_test_axis.Chi)`, p `r printp(e2_mag_test_axis.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis)`) and denominator presence ($\chi^2$(`r in_paren(e2_mag_test_denom.Df)`) = `r printnum(e2_mag_test_denom.Chi)`, p `r printp(e2_mag_test_denom.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.denominator)`). 
+For magnitude ratings, likelihood ratio tests revealed main effects for both axis upper bound ($\chi^2$(`r in_paren(e2_mag_test_axis.Df)`) = `r printnum(e2_mag_test_axis.Chi)`, p `r printp(e2_mag_test_axis.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis)`) and denominator presence ($\chi^2$(`r in_paren(e2_mag_test_denom.Df)`) = `r printnum(e2_mag_test_denom.Chi)`, p `r printp(e2_mag_test_denom.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.denominator)`).
 
-There was also a significant interaction between axis upper bound and denominator information: $\chi^2$(`r in_paren(e2_mag_test_int.Df)`) = `r printnum(e2_mag_test_int.Chi)`, p `r printp(e2_mag_test_int.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis_denominator)`. 
+There was also a significant interaction between axis upper bound and denominator information: $\chi^2$(`r in_paren(e2_mag_test_int.Df)`) = `r printnum(e2_mag_test_int.Chi)`, p `r printp(e2_mag_test_int.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis_denominator)`.
 
 Pairwise comparisons reveal that charts with extended and truncated axes were rated differently when the denominator was present, replicating the effect from E1 (z = `r printnum(e2_mag_emm.pres.z.ratio)`, p `r printp(e2_mag_emm.pres.p.value, add_equals = TRUE)`), and also when the denominator was absent (`r printnum(e2_mag_emm.abs.z.ratio)`, `r printp(e2_mag_emm.abs.p.value)`). Therefore, the interaction indicates that the degree of difference in magnitude ratings was affected by whether the denominator was present or absent.
 
-This model employed by-participant and by-item random effects. For each participant, there were random intercepts, plus random slopes for axis upper bounds and denominator presence. For each item, there were random intercepts, plus random slopes for denominator presence. 
-
-```{r}
-knitr::knit_exit()
-```
+This model employed by-participant and by-item random effects. For each participant, there were random intercepts, plus random slopes for axis upper bounds and denominator presence. For each item, there were random intercepts, plus random slopes for denominator presence.
 
 ```{r}
 formula(e2_mag@model)
@@ -387,6 +383,7 @@ formula(e2_mag@model)
 
 ```{r}
 #| label: e2-con-plot
+#| include: true
 
 denom_labs <- c("Denominator Present in Text", 
                  "Denominator Absent from Text")
@@ -428,31 +425,50 @@ e2_con <- buildmer(con_slider.response ~ axis*denominator +
 #| eval: !expr params$eval_models
 #| cache: !expr params$eval_models
 
-e2_con_cmpr <- lmer(comparison(e2_con),
-                    data = e2)
+e2_con_cmpr <- lmer(comparison(e2_con,
+                               fixed = "axis + denominator"), 
+                        data = e2)
 ```
 
 ```{r}
 #| label: e2-con-anova
 
-anova_results(e2_con, e2_con_cmpr)
+anova_results(e2_con_cmpr, e2_con)
+
+e2_con_summ <- anova(e2_con) %>% as_tibble(rownames = "FixEf", .name_repair = make.names) %>%
+  rename("Pr" = "Pr..F.")
 ```
+
+There was also a significant interaction between axis upper bound and denominator information: $\chi^2$(`r in_paren(e2_con_cmpr.Df)`) = `r printnum(e2_con_cmpr.Chi)`, p `r printp(e2_con_cmpr.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_con.eta.denominator_axis)`.
+
+There was a significant difference at different levels of axis: F = `r printnum(e2_con_summ %>% filter(FixEf == 'axis') %>% pull(F.value))`, p `r printp(e2_con_summ %>% filter(FixEf == 'axis') %>% pull(Pr), add_equals = T)`.
+
+and at different levels of denominator: `r printnum(e2_con_summ %>% filter(FixEf == 'denominator') %>% pull(F.value))`, p `r printp(e2_con_summ %>% filter(FixEf == 'denominator') %>% pull(Pr), add_equals = T)`. 
+
+
 
 ```{r}
 #| label: e2-con-contrasts
+
 e2_con_emm <- emmeans(e2_con@model, pairwise ~ axis * denominator, adjust = 'sidak') 
   
 get_contrasts(e2_con_emm, condition = "denominator")
+```
 
+```{r}
+#| include: true
+formula(e2_con@model)
+```
+
+```{r}
+#| include: true
 emmip(e2_con@model, axis ~ denominator, CIs = T) +
   scale_x_discrete(labels = c('Absent from text', 'Present in text')) +
   scale_color_discrete(labels = c('Truncated', 'Extended'))
 ```
 
-
 ```{r}
-#| include: true
-formula(e2_con@model)
+knitr::knit_exit()
 ```
 
 # Magnitude Ratings and Data Visualisation Literacy
