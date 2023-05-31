@@ -196,7 +196,10 @@ print_es <- function(x) {ifelse(x<.01, "< 0.01", paste("=", printnum(x)))}
 
 ```{r}
 #| label: wrangle
-anon_data1 <- read_csv('data/anon_data2.csv')
+anon_data1 <- read_csv('data/anon_data1.csv',
+                       col_types = cols(.default = "?", genderResp2.text = col_character()))
+# correct the coercion of the genderResp2.text to logical
+
 anon_data2 <- read_csv('data/anon_data2.csv')
 
 # perform necessary data wrangling
@@ -258,21 +261,21 @@ durations <- anon_file %>%
 # add literacy and demographic data
 # change data types where appropriate
 # output this file with suffix 'tidy'
-  anon_file %>% 
+anon_file %>% 
   filter(item_type == "E") %>%
-  select("participant",
-         "item_no",
-         "item_type",
-         "axis",
-         "denominator",
-         "mag_slider.response",
-         "con_slider.response",
-         ) %>% 
+  select(matches(c("participant",
+                   "item_no",
+                   "item_type",
+                   "cond",
+                   "axis",
+                   "denominator",
+                   "mag_slider.response",
+                   "con_slider.response"))) %>% 
     inner_join(literacy, by = "participant") %>%
     inner_join(demographics, by = "participant") %>%
     inner_join(durations, by = "participant") %>%
     mutate(total_duration = total_duration / 60) %>%
-    mutate(across(c("axis", "denominator"), as_factor)) %>%
+    mutate(across(matches(c("axis", "denominator", "cond")), as_factor)) %>%
     mutate(across(c("participant", "item_no"), as.character)) %>%
     assign(paste0("e", .y),
            value = ., envir = .GlobalEnv)
@@ -285,6 +288,8 @@ iwalk(list(anon_data1, anon_data2), wrangle)
 contrasts(e2$axis) <- contr.sum(2)
 contrasts(e2$denominator) <- contr.sum(2)
 ```
+
+## Experiment 1 - Analysis
 
 ## Experiment 2 - Analysis
 
@@ -443,9 +448,7 @@ There was also a significant interaction between axis upper bound and denominato
 
 There was a significant difference at different levels of axis: F = `r printnum(e2_con_summ %>% filter(FixEf == 'axis') %>% pull(F.value))`, p `r printp(e2_con_summ %>% filter(FixEf == 'axis') %>% pull(Pr), add_equals = T)`.
 
-and at different levels of denominator: `r printnum(e2_con_summ %>% filter(FixEf == 'denominator') %>% pull(F.value))`, p `r printp(e2_con_summ %>% filter(FixEf == 'denominator') %>% pull(Pr), add_equals = T)`. 
-
-
+and at different levels of denominator: `r printnum(e2_con_summ %>% filter(FixEf == 'denominator') %>% pull(F.value))`, p `r printp(e2_con_summ %>% filter(FixEf == 'denominator') %>% pull(Pr), add_equals = T)`.
 
 ```{r}
 #| label: e2-con-contrasts
