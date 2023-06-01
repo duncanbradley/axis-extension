@@ -438,6 +438,7 @@ get_contrasts(e2_mag_emm, condition = "denominator")
 ```{r}
 #| label: fig-e2-mag-int
 #| include: true
+#| message: false
 
 emmip(e2_mag@model, denominator ~ axis, CIs = T) +
   scale_color_discrete(limits = c('abs', 'pres'), 
@@ -550,7 +551,9 @@ formula(e2_con@model)
 ```
 
 ```{r}
+#| label: fig-e2-con-int
 #| include: true
+#| message: false
 emmip(e2_con@model, axis ~ denominator, CIs = T) +
   scale_x_discrete(labels = c('Absent from text', 'Present in text')) +
   scale_color_discrete(labels = c('Truncated', 'Extended'))
