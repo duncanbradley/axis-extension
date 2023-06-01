@@ -375,7 +375,7 @@ e2 %>%
   geom_jitter(width = 0,
               height = 0.2,
               alpha = 0.1) +
-  scale_y_discrete(breaks = c("full", "trunc"),
+  scale_y_discrete(limits = c("full", "trunc"),
                    labels = c("Extended", "Truncated")) + 
   labs(title = 'Experiment 2',
       y = NULL,
@@ -433,11 +433,30 @@ anova_results(e2_mag_test_axis, e2_mag)
 e2_mag_emm <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sidak') 
   
 get_contrasts(e2_mag_emm, condition = "denominator")
+```
+
+```{r}
+#| label: fig-e2-mag-int
+#| include: true
 
 emmip(e2_mag@model, denominator ~ axis, CIs = T) +
-  scale_x_discrete(labels = c('Absent from text', 'Present in text')) +
-  scale_color_discrete(labels = c('Truncated', 'Extended'))
+  scale_color_discrete(limits = c('abs', 'pres'), 
+                   labels = c('Absent from text', 'Present in text')) +
+  scale_x_discrete(limits = c('full', 'trunc'), 
+                       labels = c('Extended', 'Truncated')) +
+  scale_y_continuous(limits = c(1,2), 
+                     breaks = c(1,2), 
+                     minor_breaks = seq(1,2,0.2),
+                     labels = c('Very low\nmagnitude', 
+                                'Very high\nmagnitude')) + 
+  labs(x = "Axis Upper Bound",
+       y = "Magnitude Rating",
+       color = "Denominator in Text",
+       title = "Experiment 2 - Estimated Marginal Means") + 
+  theme_minimal(base_size = 14)
 ```
+
+@fig-e2-mag-int shows the interaction.
 
 For magnitude ratings, likelihood ratio tests revealed main effects for both axis upper bound ($\chi^2$(`r in_paren(e2_mag_test_axis.Df)`) = `r printnum(e2_mag_test_axis.Chi)`, p `r printp(e2_mag_test_axis.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis)`) and denominator presence ($\chi^2$(`r in_paren(e2_mag_test_denom.Df)`) = `r printnum(e2_mag_test_denom.Chi)`, p `r printp(e2_mag_test_denom.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.denominator)`).
 
@@ -561,5 +580,4 @@ e2_con_l <- lmer(add.terms(formula(e2_con),
 
 summary_extract(e2_mag_l, "axis1:denominator1")
 summary_extract(e2_con_l, "denominator1:axis1")
-
 ```
