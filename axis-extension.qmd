@@ -17,6 +17,7 @@ execute:
 #| label: load-packages
 library(tidyverse)
 library(lme4)
+library(lmerTest)
 library(buildmer)
 library(qwraps2)
 library(emmeans)
@@ -293,7 +294,9 @@ print_es <- function(x) {ifelse(x<.01, "< 0.01", paste("=", printnum(x)))}
 ## Experiment 1 - Analysis
 
 ```{r}
+#| label: fig-e1-mag
 #| include: true
+
 e1 %>%
   ggplot(aes(x = slider.response, y = cond)) +
   geom_jitter(width = 0,
@@ -309,6 +312,8 @@ e1 %>%
     minor_breaks = c()) + 
   theme_minimal()
 ```
+
+@fig-e1-mag shows the raw data.
 
 ```{r}
 #| label: e1-mag
@@ -356,7 +361,7 @@ e1_mag_l <- lmer(add.terms(formula(e1_mag),
 anova_results(e1_mag_l, e1_mag)
 ```
 
-Including data visualisation literacy as an additional fixed effect did not improve the explanation of variance in magnitude ratings: $\chi^2$(`r in_paren(e1_mag_l.Df)`) = `r printnum(e1_mag_l.Chi)`, p `r printp(e1_mag_l.p, add_equals = TRUE)`.
+Including data visualisation literacy as an additional fixed effect did not improve the explanation of variance in magnitude ratings: $\chi^2$(`r in_paren(e1_mag_l.Df)`) = `r printnum(e1_mag_l.Chi)`, p `r printp(e1_mag_l.p, add_equals = TRUE)`. This indicates that data visualisation literacy cannot explain
 
 ## Experiment 2 - Analysis
 
@@ -435,6 +440,10 @@ e2_mag_emm <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sid
 get_contrasts(e2_mag_emm, condition = "denominator")
 ```
 
+For magnitude ratings, likelihood ratio tests revealed main effects for both axis upper bound ($\chi^2$(`r in_paren(e2_mag_test_axis.Df)`) = `r printnum(e2_mag_test_axis.Chi)`, p `r printp(e2_mag_test_axis.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis)`) and denominator presence ($\chi^2$(`r in_paren(e2_mag_test_denom.Df)`) = `r printnum(e2_mag_test_denom.Chi)`, p `r printp(e2_mag_test_denom.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.denominator)`).
+
+There was also a significant interaction between axis upper bound and denominator information: $\chi^2$(`r in_paren(e2_mag_test_int.Df)`) = `r printnum(e2_mag_test_int.Chi)`, p `r printp(e2_mag_test_int.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis_denominator)`.
+
 ```{r}
 #| label: fig-e2-mag-int
 #| include: true
@@ -460,17 +469,9 @@ emmip(e2_mag@model, denominator ~ axis, CIs = T) +
 
 @fig-e2-mag-int shows the interaction.
 
-For magnitude ratings, likelihood ratio tests revealed main effects for both axis upper bound ($\chi^2$(`r in_paren(e2_mag_test_axis.Df)`) = `r printnum(e2_mag_test_axis.Chi)`, p `r printp(e2_mag_test_axis.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis)`) and denominator presence ($\chi^2$(`r in_paren(e2_mag_test_denom.Df)`) = `r printnum(e2_mag_test_denom.Chi)`, p `r printp(e2_mag_test_denom.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.denominator)`).
-
-There was also a significant interaction between axis upper bound and denominator information: $\chi^2$(`r in_paren(e2_mag_test_int.Df)`) = `r printnum(e2_mag_test_int.Chi)`, p `r printp(e2_mag_test_int.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis_denominator)`.
-
-Pairwise comparisons reveal that charts with extended and truncated axes were rated differently when the denominator was present, replicating the effect from E1 (z = `r printnum(e2_mag_emm.pres.z.ratio)`, p `r printp(e2_mag_emm.pres.p.value, add_equals = TRUE)`), and also when the denominator was absent (`r printnum(e2_mag_emm.abs.z.ratio)`, `r printp(e2_mag_emm.abs.p.value)`). Therefore, the interaction indicates that the degree of difference in magnitude ratings was affected by whether the denominator was present or absent.
+Pairwise comparisons reveal that charts with extended and truncated axes were rated differently when the denominator was present, replicating the effect from E1 (z = `r printnum(e2_mag_emm.pres.z.ratio)`, p `r printp(e2_mag_emm.pres.p.value, add_equals = TRUE)`), and also when the denominator was absent (z = `r printnum(e2_mag_emm.abs.z.ratio)`, `r printp(e2_mag_emm.abs.p.value)`). Therefore, the interaction indicates that the degree of difference in magnitude ratings was affected by whether the denominator was present or absent.
 
 This model employed by-participant and by-item random effects. For each participant, there were random intercepts, plus random slopes for axis upper bounds and denominator presence. For each item, there were random intercepts, plus random slopes for denominator presence.
-
-```{r}
-formula(e2_mag@model)
-```
 
 ### Confidence Ratings
 
@@ -532,7 +533,7 @@ e2_con_summ <- anova(e2_con) %>% as_tibble(rownames = "FixEf", .name_repair = ma
   rename("Pr" = "Pr..F.")
 ```
 
-There was also a significant interaction between axis upper bound and denominator information: $\chi^2$(`r in_paren(e2_con_cmpr.Df)`) = `r printnum(e2_con_cmpr.Chi)`, p `r printp(e2_con_cmpr.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_con.eta.denominator_axis)`.
+There was a significant interaction between axis upper bound and denominator information: $\chi^2$(`r in_paren(e2_con_cmpr.Df)`) = `r printnum(e2_con_cmpr.Chi)`, p `r printp(e2_con_cmpr.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_con.eta.denominator_axis)`.
 
 There was a significant difference at different levels of axis: F = `r printnum(e2_con_summ %>% filter(FixEf == 'axis') %>% pull(F.value))`, p `r printp(e2_con_summ %>% filter(FixEf == 'axis') %>% pull(Pr), add_equals = T)`.
 
@@ -568,6 +569,8 @@ emmip(e2_con@model, denominator ~ axis, CIs = T) +
        subtitle =  "Estimated Marginal Means") + 
   theme_minimal(base_size = 14)
 ```
+
+@fig-e2-con-int shows the interaction.
 
 ```{r}
 knitr::knit_exit()
