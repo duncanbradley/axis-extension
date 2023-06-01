@@ -338,6 +338,26 @@ anova_results(e1_mag_cmpr, e1_mag)
 
 There was a significant effect of axis upper bound: $\chi^2$(`r in_paren(e1_mag_cmpr.Df)`) = `r printnum(e1_mag_cmpr.Chi)`, p `r printp(e1_mag_cmpr.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e1_mag.eta.cond)`. Participants awarded higher ratings to charts with truncated axes, compared to charts with extended axes.
 
+### Magnitude Ratings and Literacy
+
+```{r}
+#| label: e1-lit
+#| eval: !expr params$eval_models
+#| cache: !expr params$eval_models
+
+e1_mag_l <- lmer(add.terms(formula(e1_mag),
+"literacy"),
+              data = e1)
+```
+
+```{r}
+#| label: e1-mag-l-anova
+
+anova_results(e1_mag_l, e1_mag)
+```
+
+Including data visualisation literacy as an additional fixed effect did not improve the explanation of variance in magnitude ratings: $\chi^2$(`r in_paren(e1_mag_l.Df)`) = `r printnum(e1_mag_l.Chi)`, p `r printp(e1_mag_l.p, add_equals = TRUE)`.
+
 ## Experiment 2 - Analysis
 
 ### Magnitude Ratings
@@ -434,7 +454,7 @@ formula(e2_mag@model)
 ### Confidence Ratings
 
 ```{r}
-#| label: e2-con-plot
+#| label: fig-e2-con
 #| include: true
 
 denom_labs <- c("Denominator Present in Text", 
