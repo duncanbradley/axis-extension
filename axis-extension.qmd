@@ -453,7 +453,8 @@ emmip(e2_mag@model, denominator ~ axis, CIs = T) +
   labs(x = "Axis Upper Bound",
        y = "Magnitude Rating",
        color = "Denominator in Text",
-       title = "Experiment 2 - Estimated Marginal Means") + 
+       title = "Experiment 2 - Magnitude Ratings",
+       subtitle =  "Estimated Marginal Means") + 
   theme_minimal(base_size = 14)
 ```
 
@@ -546,17 +547,26 @@ get_contrasts(e2_con_emm, condition = "denominator")
 ```
 
 ```{r}
-#| include: true
-formula(e2_con@model)
-```
-
-```{r}
 #| label: fig-e2-con-int
 #| include: true
 #| message: false
-emmip(e2_con@model, axis ~ denominator, CIs = T) +
-  scale_x_discrete(labels = c('Absent from text', 'Present in text')) +
-  scale_color_discrete(labels = c('Truncated', 'Extended'))
+
+emmip(e2_con@model, denominator ~ axis, CIs = T) +
+  scale_color_discrete(limits = c('abs', 'pres'), 
+                   labels = c('Absent from text', 'Present in text')) +
+  scale_x_discrete(limits = c('full', 'trunc'), 
+                       labels = c('Extended', 'Truncated')) +
+  scale_y_continuous(limits = c(1,2), 
+                     breaks = c(1,2), 
+                     minor_breaks = seq(1,2,0.2),
+                     labels = c('Very low\nmagnitude', 
+                                'Very high\nmagnitude')) + 
+  labs(x = "Axis Upper Bound",
+       y = "Magnitude Rating",
+       color = "Denominator in Text",
+       title = "Experiment 2 - Confidence Ratings",
+       subtitle =  "Estimated Marginal Means") + 
+  theme_minimal(base_size = 14)
 ```
 
 ```{r}
