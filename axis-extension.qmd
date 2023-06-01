@@ -32,6 +32,102 @@ lazyload_cache_dir('axis-extension_cache/html')}
 ```
 
 ```{r}
+#| label: wrangle
+anon_data1 <- read_csv('data/anon_data1.csv',
+                       col_types = cols(.default = "?", genderResp2.text = col_character()))
+# correct the coercion of the genderResp2.text to logical
+
+anon_data2 <- read_csv('data/anon_data2.csv')
+
+# perform necessary data wrangling
+wrangle <- function(anon_file, .y) {
+  # .y captures the index of the file in the list supplied to iwalk
+
+# extract literacy data
+# calculate literacy score (sum of five responses)
+literacy <- anon_file %>%
+  filter(!is.na(q1_slider.response)) %>%
+  rowwise() %>%
+  mutate(literacy = sum(c(q1_slider.response, 
+                          q2_slider.response, 
+                          q3_slider.response, 
+                          q4_slider.response, 
+                          q5_slider.response))) %>%
+  select(participant,
+         literacy)
+
+# define education categories 
+edu_labels <- set_names(c('No formal qualications',
+                          'Secondary education (e.g. GED/GCSE)',
+                          'High school diploma/A-levels',
+                          'Technical/community college',
+                          'Undergraduate degree (BA/BSc/other)',
+                          'Graduate degree (MA/MSc/MPhil/other)',
+                          'Doctorate degree (PhD/other)',
+                          'Don\'t know / not applicable'),
+                        seq(8,1,-1))
+
+# define gender categories
+gender_labels <- set_names(c("Prefer not to say", 
+                             "In another way:",
+                             "Non-binary", 
+                             "Man", 
+                             "Woman"),
+                           1:5)
+# extract demographics
+# link slider response numbers to gender categories 
+# link slider response numbers to education categories
+demographics <- anon_file %>%
+  filter(!is.na(genderResp1.response)) %>%
+  mutate(genderResp1.response = 
+           recode(genderResp1.response, !!!gender_labels)) %>%
+  mutate(edu_slider.response =
+           recode(edu_slider.response, !!!edu_labels)) %>%
+  select(participant,
+         ageResp.text,
+         genderResp1.response,
+         edu_slider.response)
+
+# extract duration data (in seconds)
+durations <- anon_file %>%
+  filter(!is.na(total_duration)) %>%
+  select(participant, total_duration)
+  
+# select relevant columns
+# select only experimental items
+# add literacy and demographic data
+# change data types where appropriate
+# output this file with suffix 'tidy'
+anon_file %>% 
+  filter(item_type == "E") %>%
+  select(matches(c("participant",
+                   "item_no",
+                   "item_type",
+                   "cond",
+                   "axis",
+                   "denominator",
+                   "slider.response",
+                   "mag_slider.response",
+                   "con_slider.response"))) %>% 
+    inner_join(literacy, by = "participant") %>%
+    inner_join(demographics, by = "participant") %>%
+    inner_join(durations, by = "participant") %>%
+    mutate(total_duration = total_duration / 60) %>%
+    mutate(across(matches(c("axis", "denominator", "cond")), as_factor)) %>%
+    mutate(across(c("participant", "item_no"), as.character)) %>%
+    assign(paste0("e", .y),
+           value = ., envir = .GlobalEnv)
+}
+
+iwalk(list(anon_data1, anon_data2), wrangle)
+
+
+# set sum contrasts
+contrasts(e2$axis) <- contr.sum(2)
+contrasts(e2$denominator) <- contr.sum(2)
+```
+
+```{r}
 #| label: comparison-function
 # this function takes a model and creates a new model for anova comparison
 # a new set of fixed effects will be specified, but the same random effects structure will be used
@@ -194,102 +290,53 @@ random_str <- function(model) {
 print_es <- function(x) {ifelse(x<.01, "< 0.01", paste("=", printnum(x)))}
 ```
 
+## Experiment 1 - Analysis
+
 ```{r}
-#| label: wrangle
-anon_data1 <- read_csv('data/anon_data1.csv',
-                       col_types = cols(.default = "?", genderResp2.text = col_character()))
-# correct the coercion of the genderResp2.text to logical
-
-anon_data2 <- read_csv('data/anon_data2.csv')
-
-# perform necessary data wrangling
-wrangle <- function(anon_file, .y) {
-  # .y captures the index of the file in the list supplied to iwalk
-
-# extract literacy data
-# calculate literacy score (sum of five responses)
-literacy <- anon_file %>%
-  filter(!is.na(q1_slider.response)) %>%
-  rowwise() %>%
-  mutate(literacy = sum(c(q1_slider.response, 
-                          q2_slider.response, 
-                          q3_slider.response, 
-                          q4_slider.response, 
-                          q5_slider.response))) %>%
-  select(participant,
-         literacy)
-
-# define education categories 
-edu_labels <- set_names(c('No formal qualications',
-                          'Secondary education (e.g. GED/GCSE)',
-                          'High school diploma/A-levels',
-                          'Technical/community college',
-                          'Undergraduate degree (BA/BSc/other)',
-                          'Graduate degree (MA/MSc/MPhil/other)',
-                          'Doctorate degree (PhD/other)',
-                          'Don\'t know / not applicable'),
-                        seq(8,1,-1))
-
-# define gender categories
-gender_labels <- set_names(c("Prefer not to say", 
-                             "In another way:",
-                             "Non-binary", 
-                             "Man", 
-                             "Woman"),
-                           1:5)
-# extract demographics
-# link slider response numbers to gender categories 
-# link slider response numbers to education categories
-demographics <- anon_file %>%
-  filter(!is.na(genderResp1.response)) %>%
-  mutate(genderResp1.response = 
-           recode(genderResp1.response, !!!gender_labels)) %>%
-  mutate(edu_slider.response =
-           recode(edu_slider.response, !!!edu_labels)) %>%
-  select(participant,
-         ageResp.text,
-         genderResp1.response,
-         edu_slider.response)
-
-# extract duration data (in seconds)
-durations <- anon_file %>%
-  filter(!is.na(total_duration)) %>%
-  select(participant, total_duration)
-  
-# select relevant columns
-# select only experimental items
-# add literacy and demographic data
-# change data types where appropriate
-# output this file with suffix 'tidy'
-anon_file %>% 
-  filter(item_type == "E") %>%
-  select(matches(c("participant",
-                   "item_no",
-                   "item_type",
-                   "cond",
-                   "axis",
-                   "denominator",
-                   "mag_slider.response",
-                   "con_slider.response"))) %>% 
-    inner_join(literacy, by = "participant") %>%
-    inner_join(demographics, by = "participant") %>%
-    inner_join(durations, by = "participant") %>%
-    mutate(total_duration = total_duration / 60) %>%
-    mutate(across(matches(c("axis", "denominator", "cond")), as_factor)) %>%
-    mutate(across(c("participant", "item_no"), as.character)) %>%
-    assign(paste0("e", .y),
-           value = ., envir = .GlobalEnv)
-}
-
-iwalk(list(anon_data1, anon_data2), wrangle)
-
-
-# set sum contrasts
-contrasts(e2$axis) <- contr.sum(2)
-contrasts(e2$denominator) <- contr.sum(2)
+#| include: true
+e1 %>%
+  ggplot(aes(x = slider.response, y = cond)) +
+  geom_jitter(width = 0,
+              height = 0.2,
+              alpha = 0.1) +
+  scale_y_discrete(breaks = c("full", "trunc"),
+                   labels = c("Extended", "Truncated")) + 
+  labs(title = 'Experiment 1',
+      y = NULL,
+       x = NULL) + 
+  scale_x_continuous(labels = c('Very low\nmagnitude', 'Very high\nmagnitude'),
+    breaks = c(1,2),
+    minor_breaks = c()) + 
+  theme_minimal()
 ```
 
-## Experiment 1 - Analysis
+```{r}
+#| label: e1-mag
+#| eval: !expr params$eval_models
+#| cache: !expr params$eval_models
+
+e1_mag <- buildmer(slider.response ~ cond +
+                     (1 + cond | participant) + 
+                     (1 + cond | item_no),
+                   data = e1)
+```
+
+```{r}
+#| label: e1-mag-cmpr
+#| eval: !expr params$eval_models
+#| cache: !expr params$eval_models
+
+e1_mag_cmpr <- lmer(comparison(e1_mag, fixed = NULL), 
+                        data = e1)
+```
+
+```{r}
+#| label: e1-mag-anova
+
+anova_results(e1_mag_cmpr, e1_mag)
+```
+
+There was a significant effect of axis upper bound: $\chi^2$(`r in_paren(e1_mag_cmpr.Df)`) = `r printnum(e1_mag_cmpr.Chi)`, p `r printp(e1_mag_cmpr.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e1_mag.eta.cond)`. Participants awarded higher ratings to charts with truncated axes, compared to charts with extended axes.
 
 ## Experiment 2 - Analysis
 
@@ -308,8 +355,8 @@ e2 %>%
   geom_jitter(width = 0,
               height = 0.2,
               alpha = 0.1) +
-  scale_y_discrete(breaks = c("trunc", "full"),
-                   labels = c("Truncated", "Extended")) + 
+  scale_y_discrete(breaks = c("full", "trunc"),
+                   labels = c("Extended", "Truncated")) + 
   labs(title = 'Experiment 2',
       y = NULL,
        x = NULL) + 
@@ -399,8 +446,8 @@ e2 %>%
   geom_jitter(width = 0,
               height = 0.2,
               alpha = 0.1) +
-  scale_y_discrete(breaks = c("trunc", "full"),
-                   labels = c("Truncated", "Extended")) + 
+  scale_y_discrete(breaks = c("full", "trunc"),
+                   labels = c("Extended", "Truncated")) + 
   labs(title = 'Experiment 2',
       y = NULL,
        x = NULL) + 
