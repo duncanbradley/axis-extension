@@ -539,6 +539,8 @@ There was a significant difference at different levels of axis: F = `r printnum(
 
 and at different levels of denominator: `r printnum(e2_con_summ %>% filter(FixEf == 'denominator') %>% pull(F.value))`, p `r printp(e2_con_summ %>% filter(FixEf == 'denominator') %>% pull(Pr), add_equals = T)`.
 
+{{< include test1.md >}}
+
 ```{r}
 #| label: e2-con-contrasts
 
