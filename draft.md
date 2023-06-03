@@ -1,6 +1,6 @@
 # Introduction
 
-The question ‘Is it a big number?’ is often raised on the BBC radio programme _More or Less_ when probing eye-catching statistics. A figure of several million pounds may initially seem large but may represent a small proportion of total government spending. In data visualisation, this contextual information can be displayed, but is often ommited by default. In this study, we investigate how *this design choice* affects interpretations of numbers’ magnitudes. The magnitude of plotted values is interpreted as larger when the y-axis terminates close to these values, and fails to accomodate a denominator. Thus, we evaluate the consequences of default settings in data visualisation software. 
+The question ‘Is it a big number?’ is often raised on the BBC radio programme _More or Less_ when probing eye-catching statistics. A figure of several million pounds may initially seem large, but may represent a small proportion of total government spending. In data visualisation, this contextual information can be displayed, but is often ommited by default. In this study, we investigate how *this design choice* affects interpretations of numbers’ magnitudes. The magnitude of plotted values is interpreted as larger when the y-axis terminates close to these values, and fails to accomodate a denominator. Thus, we evaluate the consequences of default settings in data visualisation software. 
 
 # Overview
 
@@ -95,11 +95,80 @@ We employed a 2x2 Latin-squared design with two factors: axis upper bound and de
 
 # Participants
 
-We recruited __ participants. 
+We recruited 200 participants. 
 
 # Analysis
 
 We acknowledge that our magnitude rating measure may be unreliable becuase of low confidence.
 We acknowledge that our confidence ratings measure may be unreliable becuase of poor introspection.
 By combining these two analyses, we conduct a more robust analysis. It’s more precise and more comprehensive, because it indexes additional aspect of cognition. 
+
+# Discussion
+
+
+
+# General Discussion
+
+Gauging a number’s magnitude can be difficult without sufficient background knowledge. Interpreting the magnitude of certain types of data, such as subsets, requires denominator information. This crucial context can accompany a data visualisation, or can be implied as part of the visualisation’s design. Visual cues to proportion are easily implemented in common visualisation software, but are not required by default. In this set of experiments, we investigated the effects of showing and omitting this denominator information in visualisation designs. Magnitude was interpreted as greater when axes were truncated, rather than extended, particularly when no denominator information accompanied the chart. This provides insight into the cognitive process involved in interpreting magnitude in bar charts, indicating that denominator information is an important aspect in interpretation of charts.
+
+In Experiment 1, we observed that charts with axes that terminated just above the plotted data elicited judgements of greater magnitude, compared to charts with axes that accomodated a much higher denominator value. However, this experiment contained multiple sources of information on the denominator. As well as an implicit visual cue in the extended axes condition, it was explicitly presented in the text in both conditions, avoiding ambiguity. Some extreme responses in the truncated condition appeared to disregard this denominator. Another experiment was necessary in order to understand the role of the denominator in the cognitive processing of magnitude. Specifically, we sought to quantify how denominator information might resolve ambiguity in different chart designs. Could a visual cue alone communicate information in the same way as a textual cue? How much did magnitude judgements depend on successful intergration with the accompanying information?
+
+In Experiment 2, we observed that the presence of denominator infromation affected interpretations of plots with different axes upper bounds. The interaction demonstrates an expermentally induced difference in the size of the effect. Absence of a denominator forced participants to rely on the visual appearance, causing greater variation in magnitude judgements. This demonstrates the powerful implications of axes bounds, which can give very different impressions of magnitude. Conversely, smaller variation when a denominator is provided demonstrates the power of this information, which diminishes these visual implications. The stark difference between responses to truncated charts under different conditions demonstrates the use of external denominator information for ambiguity resolution. The similarity between responses to extended charts demonstrates use of axes bound in magnitude judgements, in the absence of explicit textual cues. 
+
+In E2’s denominator-present conditions, as in E1, we observed a small number of high magnitude ratings for truncated charts only. Similarity between these responses and those observed in the truncated-absent condition suggests that they may be caused by a failure to account for the denominator, even when it is present. 
+
+Additional ratings collected in E2 provide valuable information on self-reported confidence. Although we observed an interaction between denominator information and axis upper bound, its miniscule effect size casts doubt over its practical significance. Thus, we cannot say with any certainty that visual arrangement of a chart affected confidence when denominator was present. However, the presence of a denominator clearly boosted confidence. Overall, this suggests that participants were unwilling to trust the visual appearance alone and required a denominator for increased confidence in their judgements. Confidence is consistently affected by denominator presence, but not by axes.
+
+
+Be clear about what is ambiguous: all, just truncated, just absent?
+A question - is showing a denominator in text equivalent to showing it in an axis only?
+Does showing it in an axis add anything extra?
+
+## Relationship to Prior Work
+
+How do we make sense of this in relation to prior axis manipulation research, which didn’t investigate the role of additional information. We extend this line of research to demonstrate that contextual information can limit an observed bias. We demonstrate that participants are not purely guided by visuals. The observed effects may be mitigated by additional information. 
+
+Relationship to Stone et al. 
+
+Relationship to non-visual work - framing of numbers
+
+## Implications
+
+There are implications for the design and critique of charts
+This is particularly relevant when the intention is to convey magnitude
+However, giving advice is complicated by the fact there were no correct answers here
+But we can at least assume that the informed cases reflect more accurate judgements.
+If this is the case, the truncated, no denominator charts are the most distant from the informed judgements, so should be avoided.
+If it’s not possible to present a denominator in accompanying text, an extended axis should be used instead of a truncated one, in order to convey some context.
+Even when a denominator is present, a truncated axis will elicit more variety in responses. An extended axis would provide insurance against those who do not read the accompanying text. 
+
+In order to improve confidence, denominators should be explicitly provided, regardless of whether the axes upper bound shows this denominator or not.
+
+
+## Limitations and Future Work
+
+The implications will be different when the goal is to convey the differences between values.
+
+A single denominator won’t always be possible. 
+
+Future work could employ a decision-making task
+
+
+
+
+People don’t interpret visualisations in a vacuum. They take into account the data’s context, whether this is pre-existing or presented alongside.
+
+
+## Conclusion
+
+So what are the cognitive processes involved in interpreting magnitude in bar charts?
+What is the role of numerical context in interpretation?
+How can bar charts be designed and presented to facilitate interpretation of magnitude?
+In this set of experiments, we investigate the role of framing in visualisation
+When no denominator information is provided, participants are likely to rely on the visual appearance when interpreting magnitude. When a denominator is provided, the visual appearance exerts less influence on judgements. 
+
+
+
+
+
 
