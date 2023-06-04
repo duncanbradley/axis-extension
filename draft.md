@@ -6,6 +6,15 @@ The question ‘Is it a big number?’ is often raised on the BBC radio programm
 
 # Related Work
 
+That 5/20 is larger than 5/50 is trivial and probably doesn’t require research. Most research (e.g. Burson et al) has looked at more subtle biases where the same proportion is expressed differently (rather than different proportions). However, the cloest thing is perhaps Stone et al.’s foregrounding and backgrounding effect, since this is the same number. 
+
+How is what I’m doing different to Stone?
+
+Pacini and epstein - if you highlight the inverse of the proportion, you change the perception of the same number
+Reyna and Brainerd - insufficient focus on numerators. This is related to Stone et al. studies.
+
+Holford et al - variation on 25% fat; 75% lean - relates to Stone in that the chosen number is foregrounded, leading to relative increase in the salience of its properties
+
 # Experiment 1 - Overview
 
 Experiment 1 investigates the influence of y-axis upper bounds on interpretations of plotted values’ magnitude. Participants viewed bar charts with y-axes which either terminated just above the bars, or extended to a denominator value well above the bars. Thus, the same data is displayed with and without its surrounding context. Comparing participants’ interpretations captures the influence of y-axis limits on magnitude judgements.
@@ -130,7 +139,7 @@ How do we make sense of this in relation to prior axis manipulation research, wh
 
 Relationship to Stone et al. 
 
-Relationship to non-visual work - framing of numbers
+Relationship to non-visual work - framing of numbers. Most of this is obvious but what we’re doing is applying it to visualisations, producing practical recommendations. 
 
 ## Implications
 
