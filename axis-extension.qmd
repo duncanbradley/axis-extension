@@ -134,79 +134,6 @@ contrasts(e2$denominator) <- contr.sum(2)
 ```
 
 ```{r}
-#| label: comparison-function
-# this function takes a model and creates a new model for anova comparison
-# a new set of fixed effects will be specified, but the same random effects structure will be used
-comparison <- function(model, fixed) {
-  
-  form <- formula(model)
-  
-  newfixed <- function(form, fixed) {
-
-    fixedfx <-
-      remove.terms(form,"placeholder") %>% # generate full formula (expand '*')
-      nobars() # get formula for fixed effects only
-
-    fixedterms <-
-      terms.formula(fixedfx) %>% # get terms for fixed effects
-      attr("term.labels") # get character vector of fixed effects terms
-
-    # remove all terms to get only the response
-    response <- remove.terms(fixedfx, fixedterms) %>% remove.terms(fixedterms)
-
-    out <- add.terms(response, fixed)
-    return(out)
-  }
-  
-  getrandom <- function(form) {
-    
-    parens <- function(x) {paste0("(",x,")")}
-    onlyBars <- function(form) {
-      reformulate(
-        sapply(
-          findbars(form), # list of character vector for each random effect
-          function(x)  parens(deparse(x))), # put each character vector in brackets
-        response = form[[2]]) 
-    }
-    
-    out <- onlyBars(form)
-    return(out)
-  }
-  
-  merge.formula <- function(form1, form2, ...){
-    # adapted from https://stevencarlislewalker.wordpress.com/2012/08/06/merging-combining-adding-together-two-formula-objects-in-r/
-    
-    # get character strings of the names for the responses 
-    # (i.e. left hand sides, lhs)
-    lhs1 <- deparse(form1[[2]])
-    #print(lhs1)
-    lhs2 <- deparse(form2[[2]])
-    #print(lhs2)
-    if(lhs1 != lhs2) stop('both formulas must have the same response')
-    
-    # get character strings of the right hand sides
-    rhs1 <- strsplit(paste(form1[3]), " \\+ ")[[1]] 
-    rhs2 <- strsplit(paste(form2[3]), " \\+ ")[[1]] 
-    
-    # put the two sides together with the amazing 
-    # reformulate function
-    out <- reformulate(termlabels = c(rhs1, rhs2), 
-                       response = lhs1)
-    
-    # set the environment of the formula (i.e. where should
-    # R look for variables when data aren't specified?)
-    #environment(out) <- parent.frame()
-    return(out)
-  }
-  
-  newfixedfx <- newfixed(form, fixed)
-  fullranfx <- getrandom(form)
-  merge.formula(newfixedfx, fullranfx)
-  
-}
-```
-
-```{r}
 #| label: anova-results-function
 # this function takes two nested models, runs an anova, and the outputs the Likelihood Ratio Statistic, degrees of freedom, and p value to the global environment
 anova_results <- function(test_model, full_model) {
@@ -233,13 +160,49 @@ anova_results <- function(test_model, full_model) {
   es <- eta_squared(anova(full_model), partial = TRUE) 
   
   es %>% pull(Parameter) %>%
-    map(function(x) assign(paste0(full_model_name, 
+    map(function(x) assign(paste0(model_name, 
                                   ".eta.", 
                                   str_replace(x, ":", "_")),
                            es %>%
                              filter(Parameter == x) %>% 
                              pull(Eta2_partial),
                            envir = .GlobalEnv))
+}
+```
+
+```{r}
+#| label: summary-extract-function
+
+# this function extracts test statistics and p values from model summaries
+summary_extract <- function(model) {
+  
+  model_name <- deparse(substitute(model))
+  
+  if (class(model) == "buildmer") model <- model@model
+  
+  extract_vals <- function(one_row, param) {
+    assign(value = (one_row %>% pull(param)),
+           envir = .GlobalEnv,
+           paste0(model_name,
+                  ".",
+                  (one_row %>% pull(term)),
+                  ".",
+                  param))
+  }
+  
+  es <- eta_squared(anova(model), partial = TRUE) 
+  
+  rows <- model %>% 
+    anova() %>%
+    as_tibble(rownames = "term", .name_repair = make.names) %>%
+    inner_join(es, by = join_by("term" == "Parameter")) %>%
+    group_split(term) 
+  
+  params <- c("NumDF", "DenDF", "F.value", "Pr..F.", "Eta2_partial")
+  
+  combinations <- expand_grid(rows, params)
+  pmap(combinations, ~extract_vals(..1, ..2))
+  
 }
 ```
 
@@ -331,21 +294,6 @@ e1_mag <- buildmer(slider.response ~ cond +
                    data = e1)
 ```
 
-```{r}
-#| label: e1-mag-cmpr
-#| eval: !expr params$eval_models
-#| cache: !expr params$eval_models
-
-e1_mag_cmpr <- lmer(comparison(e1_mag, fixed = NULL), 
-                        data = e1)
-```
-
-```{r}
-#| label: e1-mag-anova
-
-anova_results(e1_mag_cmpr, e1_mag)
-```
-
 There was a significant effect of axis upper bound: $\chi^2$(`r in_paren(e1_mag_cmpr.Df)`) = `r printnum(e1_mag_cmpr.Chi)`, p `r printp(e1_mag_cmpr.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e1_mag.eta.cond)`. Participants awarded higher ratings to charts with default axes, compared to charts with extended axes.
 
 ### Magnitude Ratings and Data Visualisation Literacy
@@ -358,12 +306,6 @@ There was a significant effect of axis upper bound: $\chi^2$(`r in_paren(e1_mag_
 e1_mag_l <- lmer(add.terms(formula(e1_mag),
 "literacy"),
               data = e1)
-```
-
-```{r}
-#| label: e1-mag-l-anova
-
-anova_results(e1_mag_l, e1_mag)
 ```
 
 Including data visualisation literacy as an additional fixed effect did not improve the explanation of variance in magnitude ratings: $\chi^2$(`r in_paren(e1_mag_l.Df)`) = `r printnum(e1_mag_l.Chi)`, p `r printp(e1_mag_l.p, add_equals = TRUE)`. This indicates that data visualisation literacy cannot explain
@@ -409,32 +351,6 @@ e2_mag <- buildmer(mag_slider.response ~ axis*denominator +
                      (1 + axis*denominator | participant) + 
                      (1 + axis*denominator | item_no),
                    data = e2)
-```
-
-```{r}
-#| label: e2-mag-cmpr
-#| eval: !expr params$eval_models
-#| cache: !expr params$eval_models
-
-e2_mag_test_int <- lmer(comparison(e2_mag, 
-                                   fixed = "axis + denominator"), 
-                        data = e2)
-e2_mag_test_denom <- lmer(comparison(e2_mag, 
-                                     fixed = "axis + axis:denominator"), 
-                          data = e2)
-e2_mag_test_axis <- lmer(comparison(e2_mag, 
-                                    fixed = "denominator + axis:denominator"),
-                         data = e2)
-
-```
-
-```{r}
-#| label: e2-mag-anova
-
-anova_results(e2_mag_test_int, e2_mag)
-anova_results(e2_mag_test_denom, e2_mag)
-anova_results(e2_mag_test_axis, e2_mag)
-
 ```
 
 ```{r}
@@ -490,12 +406,6 @@ e2_mag_l <- lmer(add.terms(formula(e2_mag),
               data = e2)
 ```
 
-```{r}
-#| label: e2-mag-l-anova
-
-anova_results(e2_mag_l, e2_mag)
-```
-
 Including data visualisation literacy as an additional fixed effect did not improve the explanation of variance in magnitude ratings: $\chi^2$(`r in_paren(e2_mag_l.Df)`) = `r printnum(e2_mag_l.Chi)`, p `r printp(e2_mag_l.p, add_equals = TRUE)`. This indicates that data visualisation literacy cannot explain
 
 ### Confidence Ratings
@@ -540,19 +450,7 @@ e2_con <- buildmer(con_slider.response ~ axis*denominator +
 ```
 
 ```{r}
-#| label: e2-con-cmpr
-#| eval: !expr params$eval_models
-#| cache: !expr params$eval_models
-
-e2_con_cmpr <- lmer(comparison(e2_con,
-                               fixed = "axis + denominator"), 
-                        data = e2)
-```
-
-```{r}
 #| label: e2-con-anova
-
-anova_results(e2_con_cmpr, e2_con)
 
 e2_con_summ <- anova(e2_con) %>% as_tibble(rownames = "FixEf", .name_repair = make.names) %>%
   rename("Pr" = "Pr..F.")
@@ -612,13 +510,7 @@ e2_con_l <- lmer(add.terms(formula(e2_con),
               data = e2)
 ```
 
-```{r}
-#| label: e2-con-l-anova
-
-anova_results(e2_con_l, e2_con)
-```
-
-Including data visualisation literacy as an additional fixed effect resulted in a worse model fit, and the model without this term was significantly better than the model containing this term: $\chi^2$(`r in_paren(e2_con_l.Df)`) = `r printnum(e2_con_l.Chi)`, p `r printp(e2_con_l.p, add_equals = TRUE)`. This indicates that data visualisation literacy does not sufficiently contribute to the explanation of variance in confidence ratings. 
+Including data visualisation literacy as an additional fixed effect resulted in a worse model fit, and the model without this term was significantly better than the model containing this term: $\chi^2$(`r in_paren(e2_con_l.Df)`) = `r printnum(e2_con_l.Chi)`, p `r printp(e2_con_l.p, add_equals = TRUE)`. This indicates that data visualisation literacy does not sufficiently contribute to the explanation of variance in confidence ratings.
 
 ```{r}
 knitr::knit_exit()
