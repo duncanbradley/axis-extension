@@ -180,28 +180,25 @@ summary_extract <- function(model) {
   
   if (class(model) == "buildmer") model <- model@model
   
-  extract_vals <- function(one_row, param) {
-    assign(value = (one_row %>% pull(param)),
-           envir = .GlobalEnv,
-           paste0(model_name,
-                  ".",
-                  (one_row %>% pull(term)),
-                  ".",
-                  param))
-  }
-  
   es <- eta_squared(anova(model), partial = TRUE) 
-  
-  rows <- model %>% 
+
+  model %>% 
     anova() %>%
-    as_tibble(rownames = "term", .name_repair = make.names) %>%
+    as_tibble(rownames = "term", 
+              .name_repair = make.names) %>%
+    rename("p" = "Pr..F.") %>%
     inner_join(es, by = join_by("term" == "Parameter")) %>%
-    group_split(term) 
-  
-  params <- c("NumDF", "DenDF", "F.value", "Pr..F.", "Eta2_partial")
-  
-  combinations <- expand_grid(rows, params)
-  pmap(combinations, ~extract_vals(..1, ..2))
+    mutate(term = str_replace(term, ":", "_")) %>%
+    group_split(term) %>%
+    map(~ {
+      vals <- as.list(.x)
+      names(vals) <- paste0(model_name, 
+                            "_", 
+                            .x$term, 
+                            "_", 
+                            names(vals))
+      list2env(vals, envir = globalenv())
+    })
   
 }
 ```
@@ -210,32 +207,27 @@ summary_extract <- function(model) {
 #| label: get-contrasts-function
 
 get_contrasts <- function(contrast_df, condition) {
-  
-  extract_vals <- function(one_row, param) {
-    assign(value = (one_row %>% pull(param)),
-           envir = .GlobalEnv,
-           paste0(df_name,
-                  ".",
-                  (one_row %>% pull(!!sym(condition))),
-                  ".",
-                  param))
-    }
 
-  rows <- contrast_df %>% 
+  df_name <- deparse(substitute(contrast_df))
+
+  contrast_df %>% 
     contrast("consec", 
              simple = "each", 
              combine = TRUE, 
              adjust = "sidak") %>%
     as_tibble() %>% 
     filter(!!sym(condition) != ".") %>%
-    group_split(!!sym(condition)) 
+    group_split(!!sym(condition)) %>%
+    map(~ {
+      vals <- as.list(.x)
+      names(vals) <- paste0(df_name, 
+                            "_",
+                            pull(., {{condition}}),
+                            "_", 
+                            names(vals))
+      list2env(vals, envir = globalenv())
+    })
   
-  params <- c("estimate", "SE", "df", "z.ratio", "p.value")
-  
-  df_name <- deparse(substitute(contrast_df))
-  
-  combinations <- expand_grid(rows, params)
-  pmap(combinations, ~extract_vals(..1, ..2))
 }
 ```
 
@@ -256,7 +248,7 @@ random_str <- function(model) {
 ```{r}
 #| label: print-es-function
 # for dealing with effect sizes less than .001
-print_es <- function(x) {ifelse(x<.01, "< 0.01", paste("=", printnum(x)))}
+print_es <- function(x) {ifelse(x<.001, "< 0.001", paste("=", printnum(x)))}
 ```
 
 ## Experiment 1 - Analysis
@@ -292,6 +284,38 @@ e1_mag <- buildmer(slider.response ~ cond +
                      (1 + cond | participant) + 
                      (1 + cond | item_no),
                    data = e1)
+```
+
+```{r}
+summary_extract(e1_mag)
+
+# NumDF  DenDF F.value p Eta2_partial
+
+```
+
+`r printnum(e1_mag_cond_F.value)`
+
+```{r}
+#| label: e2-mag
+#| eval: !expr params$eval_models
+#| cache: !expr params$eval_models
+
+e2_mag <- buildmer(mag_slider.response ~ axis*denominator +
+                     (1 + axis*denominator | participant) + 
+                     (1 + axis*denominator | item_no),
+                   data = e2)
+```
+
+```{r}
+summary_extract(e2_mag)
+
+# e2_mag_denominator_
+```
+
+`r printnum(e2_mag_axis_F.value)`
+
+```{r}
+knitr::knit_exit()
 ```
 
 There was a significant effect of axis upper bound: $\chi^2$(`r in_paren(e1_mag_cmpr.Df)`) = `r printnum(e1_mag_cmpr.Chi)`, p `r printp(e1_mag_cmpr.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e1_mag.eta.cond)`. Participants awarded higher ratings to charts with default axes, compared to charts with extended axes.
@@ -343,22 +367,17 @@ e2 %>%
 @fig-e2-mag shows the raw data.
 
 ```{r}
-#| label: e2-mag
-#| eval: !expr params$eval_models
-#| cache: !expr params$eval_models
-
-e2_mag <- buildmer(mag_slider.response ~ axis*denominator +
-                     (1 + axis*denominator | participant) + 
-                     (1 + axis*denominator | item_no),
-                   data = e2)
-```
-
-```{r}
 #| label: e2-mag-contrasts
 
 e2_mag_emm <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sidak') 
   
 get_contrasts(e2_mag_emm, condition = "denominator")
+
+# e2_mag_emm_abs_z.ratio
+# _SE
+# _p.value
+# _estimate
+# _df
 ```
 
 For magnitude ratings, likelihood ratio tests revealed main effects for both axis upper bound ($\chi^2$(`r in_paren(e2_mag_test_axis.Df)`) = `r printnum(e2_mag_test_axis.Chi)`, p `r printp(e2_mag_test_axis.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.axis)`) and denominator presence ($\chi^2$(`r in_paren(e2_mag_test_denom.Df)`) = `r printnum(e2_mag_test_denom.Chi)`, p `r printp(e2_mag_test_denom.p, add_equals = TRUE)`, partial $\eta^2$ = `r printnum(e2_mag.eta.denominator)`).
