@@ -280,7 +280,9 @@ p_label <- ggplot(tibble()) + geom_point(aes(x = 1, y = 1.5), alpha = 0.2, size 
 ```{r}
 #| label: fig-e1-mag
 #| include: true
-p_label / p_data
+p_label / p_data + plot_annotation(
+  title = "Experiment 1",
+  subtitle = "Magnitude Ratings")
 ```
 
 @fig-e1-mag shows the raw data.
