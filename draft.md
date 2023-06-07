@@ -1,19 +1,56 @@
+Magnitude judgements, axis limits, proportional reasoning, denominator neglect, cognitive mechanisms, cognitive processing, in bar charts
+
 # Introduction
 
-The question ‘Is it a big number?’ is often raised on the BBC radio programme _More or Less_ when probing eye-catching statistics. A figure of several million pounds may initially seem large, but may represent a small proportion of total government spending. In data visualisation, this contextual information can be displayed, but is often ommited by default. In this study, we investigate how *this design choice* affects interpretations of numbers’ magnitudes. The magnitude of plotted values is interpreted as larger when the y-axis terminates close to these values, and fails to accomodate a denominator. Thus, we evaluate the consequences of default settings in data visualisation software. 
+The question ‘Is it a big number?’ is often raised on the BBC radio programme _More or Less_ when probing eye-catching statistics. A figure of several million pounds may initially seem large, but may represent a small proportion of total government spending. Awareness of a denominator value can influence judgement of a number’s magnitude. In data visualisation, this contextual information can be displayed by extending an axis to accomodate the denominator value. However, this option is typically omitted from visualisations, since axis settings are based on plotted data by default. In this study, we investigate how these design settings affect interpretations of how large or small plotted values are.
 
 # Overview
 
+Across two experiments, we investigate the interpretation of magnitudes in bar charts. We plotted ficticious datasets which contained multiple observations of a subset, all with the same denominator values. In the first experiment, we displayed charts with axes which either terminated just above plotted values, or terminated at the denominator value, which was specified in accompanying text. Participants rated values’ magnitudes as higher when default axes were used, compared to extended axes. In the second experiment, we manipulated the axis range, as before, and also the presence of the denominator information in text. The difference in magnitude ratings between the two axis settings was greater when denominator information not supplied. This indicate that this information mitigates the biasing effect of visual appearance.
+
 # Related Work
 
-That 5/20 is larger than 5/50 is trivial and probably doesn’t require research. Most research (e.g. Burson et al) has looked at more subtle biases where the same proportion is expressed differently (rather than different proportions). However, the cloest thing is perhaps Stone et al.’s foregrounding and backgrounding effect, since this is the same number. 
+Stone et al - Further, displaying part-to-whole data meant that the axis limit was extended to a meaningful value, rather than an arbitrary value. Although it’s not necessarily arbitrary, since it’s related to the maximum value in the data. My differences: magnitude rather than difference (risk reduction). Icon arrays not bar charts. One scenario per experiment. Not really thinking about axis extension, which is subtler.
 
-How is what I’m doing different to Stone?
+Hu et al. pie charts - do they look at magnitude or differences?
+
+Research on understanding of denominators
+Research on numerical framing effects
+
+That 5/20 is larger than 5/50 is trivial and probably doesn’t require research. Most research (e.g. Burson et al) has looked at more subtle biases where the same proportion is expressed differently (rather than different proportions). However, the cloest thing is perhaps Stone et al.’s foregrounding and backgrounding effect, since this is the same number. 
 
 Pacini and epstein - if you highlight the inverse of the proportion, you change the perception of the same number
 Reyna and Brainerd - insufficient focus on numerators. This is related to Stone et al. studies.
 
 Holford et al - variation on 25% fat; 75% lean - relates to Stone in that the chosen number is foregrounded, leading to relative increase in the salience of its properties
+
+Explain possible terms: numerator/foreground/subset vs. denominator/background/total (Okan et al 2018)
+
+Okan et al. (2018) - Poor understanding of information (risks) results from insufficient attention to denominator information, which occurs due to a lack of salience. This is also interested in risk-reduction and therefore it’s a *difference* rather than a *magnitude*. By including labels showing the denominator, enhanced understanding in a foreground only display, without sacrificing risk reduction quality. 
+
+Given some minimal measurement of risk perceptions, which isn’t deeply discussed best to mention that authors *focus on* risk reduction.
+
+Okan et al 2018 - add references 23, 60, 61 to Zotero
+
+Reyna, fuzzy trace theory (2008) - suggests a role of larger bars in the perception of larger numbers. 
+
+Numeracy (but not necessarily visualisation literacy) is associated with increased sensitivity to framing effects (Peters et al. 2006)
+
+Li and Chapman note that perception of percentages is rarely explored outside of probabilities. They demonstrate that participants interpret values as larger when they are a higher percentage of a small subset, compared to a smaller percentage of a larger subset (even when numerically equivalent). Related, but not totally accounted for by denominator neglect. Specifically, the denominator infromation was insufficiently weighted, rather than completely overlooked, but also the weighting of percentages is not linear. Didn’t observe an effect of numeracy on bias. 
+
+Difference between denominator neglect and base rate neglect
+
+Basic numerical framing - Tversky Kahneman 1974
+
+Large samples benefit from percentage reporting, small samples benefit from number reporting (Sevilla et al., 2018)
+
+Look at Monga and Bagchi (2012)
+
+# Data Visualisation
+
+Axis truncation is relevant because…
+Framing
+
 
 # Experiment 1 - Overview
 
@@ -67,6 +104,8 @@ In the extended trials, denominator information was available through the text a
 
 Inconsistency in responses to truncated charts indicates variation in their influence on magnitude judgements. Identifying the source of this variation is necessary for understanding how these designs will influence viewers. Experiment 2 seeks to understand this inconsistency. We hypothesise that the influence of the appearance of values in a visualisation will be affected by whether the upper limit is seen as the denominator or not.
 
+The absence of visual cues to numerical context in truncated charts did not totally prohibit recognition of this context. 
+
 # Experiment 2
 
 # Introduction
@@ -111,6 +150,7 @@ We recruited 200 participants.
 We acknowledge that our magnitude rating measure may be unreliable becuase of low confidence.
 We acknowledge that our confidence ratings measure may be unreliable becuase of poor introspection.
 By combining these two analyses, we conduct a more robust analysis. It’s more precise and more comprehensive, because it indexes additional aspect of cognition. 
+Mention that its a 2 (axis) x 2 (denominator) factorial ANOVA
 
 # Discussion
 
@@ -126,18 +166,22 @@ In Experiment 2, we observed that the presence of denominator infromation affect
 
 In E2’s denominator-present conditions, as in E1, we observed a small number of high magnitude ratings for truncated charts only. Similarity between these responses and those observed in the truncated-absent condition suggests that they may be caused by a failure to account for the denominator, even when it is present. 
 
-Additional ratings collected in E2 provide valuable information on self-reported confidence. Although we observed an interaction between denominator information and axis upper bound, its miniscule effect size casts doubt over its practical significance. Thus, we cannot say with any certainty that visual arrangement of a chart affected confidence when denominator was present. However, the presence of a denominator clearly boosted confidence. Overall, this suggests that participants were unwilling to trust the visual appearance alone and required a denominator for increased confidence in their judgements. Confidence is consistently affected by denominator presence, but not by axes.
+Additional ratings collected in E2 provide valuable information on self-reported confidence. Although we observed an interaction between denominator information and axis upper bound, its miniscule effect size casts doubt over its practical significance. Thus, we cannot say with any certainty that visual arrangement of a chart affected confidence when denominator was present. However, the presence of a denominator clearly boosted confidence. Overall, this suggests that participants were unwilling to trust the visual appearance alone and required a denominator for increased confidence in their judgements. Confidence is consistently, but unsurprisingly, affected by denominator presence, but not by axes.
 
 
 Be clear about what is ambiguous: all, just truncated, just absent?
 A question - is showing a denominator in text equivalent to showing it in an axis only?
 Does showing it in an axis add anything extra?
 
+That magnitude ratings for extended charts were also different according to the presence of a denominator is also interesting. Magnitude ratings were lower when the denominator was provided in text. Is this a large enough z value to discuss? How can this be interpreted in relation to salience/proportional reasoning. 
+
+Our manipulations are somewhat crude, but what they do is provide solid evidence on the effects of different designs, expose the mechanism behind magnitude judgements, explore an interesting inconsistency in participants’ responses, and produce recommendations. We didn’t want numerical only conditions, because wasn’t the purpose of the study, which was to explore cognitive processing of visual depicts, and the factors affecting this. 
+
 ## Relationship to Prior Work
 
 How do we make sense of this in relation to prior axis manipulation research, which didn’t investigate the role of additional information. We extend this line of research to demonstrate that contextual information can limit an observed bias. We demonstrate that participants are not purely guided by visuals. The observed effects may be mitigated by additional information. 
 
-Relationship to Stone et al. 
+Relationship to Stone et al. - denominator salience isn’t the same as denominator presence. Does our work provide evidence for the foreground-background theory, or the proportional reasoning theory?
 
 Relationship to non-visual work - framing of numbers. Most of this is obvious but what we’re doing is applying it to visualisations, producing practical recommendations. 
 
@@ -157,13 +201,15 @@ In order to improve confidence, denominators should be explicitly provided, rega
 ## Limitations and Future Work
 
 The implications will be different when the goal is to convey the differences between values.
+Changes in the appearance of plotted datasets’ variability could be seen as a confound. However, there is no way of  avoiding this whilst truncating an axis. It’s not really a confound because we’re not just comparing the resulting height of the two datasets, we’re comparing the entire effect of truncating. It’s about the scope/conceptualisation of what falls in the remit of axis manipulation.
 
 A single denominator won’t always be possible. 
 
 Future work could employ a decision-making task
 
+Naturally, the highest axis break in the extended condition was always higher than the maximum plotted value. Rather than consider this difference a confound, we retained this difference in order to properly compare the custom designs with the typical defaults. Explore how many *datasets* were originally plotted with a gridline above, by looking at which seed values are not +1 greater than the previous seed value.
 
-
+Bias isn’t necessarily bad - we don’t think participants are making any stupid mistakes here, but it’s useful to invstigate because it gives insight into cognitive processing, which is useful because it helps us understand people’s interpretations, and give design recommendations. 
 
 People don’t interpret visualisations in a vacuum. They take into account the data’s context, whether this is pre-existing or presented alongside.
 
