@@ -10,6 +10,8 @@ Across two experiments, we investigate the interpretation of magnitudes in bar c
 
 # Related Work
 
+There is a wealth of research demonstrating that the same number, presented differently, elicits different reactions from readers. First, these studies highlight how numbers are rarely presented alone, with units, denominators, and percentage symbols providing crucial context. However, interpretations of the same value can be massively swayed by presentation format. Human reasoning is susceptible to seemingly minor influences. Even the same information, with relatively different levels of emphasis, can affect interpretations (e.g Sevilla et al.). Classic is the Asian disease problem - different interpretation of same information (gain/loss framing)
+
 Stone et al - Further, displaying part-to-whole data meant that the axis limit was extended to a meaningful value, rather than an arbitrary value. Although it’s not necessarily arbitrary, since it’s related to the maximum value in the data. My differences: magnitude rather than difference (risk reduction). Icon arrays not bar charts. One scenario per experiment. Not really thinking about axis extension, which is subtler.
 
 Hu et al. pie charts - do they look at magnitude or differences?
@@ -38,13 +40,19 @@ Numeracy (but not necessarily visualisation literacy) is associated with increas
 
 Li and Chapman note that perception of percentages is rarely explored outside of probabilities. They demonstrate that participants interpret values as larger when they are a higher percentage of a small subset, compared to a smaller percentage of a larger subset (even when numerically equivalent). Related, but not totally accounted for by denominator neglect. Specifically, the denominator infromation was insufficiently weighted, rather than completely overlooked, but also the weighting of percentages is not linear. Didn’t observe an effect of numeracy on bias. 
 
+Prior work (e.g. Sevilla) has looked at how highlighting denominator/set size information has reducing biasing effects. In the present study we do the opposite. We demonstrate how removing denominator information can increase biasing effects. This also could explain why we see lower ratings when both visual and textual denominator cues are present.
+
+There are two broad classes, concerning irrational judgement of equivalent values and judgement of distinct values. The former are incorrectly judged as different, the latter incorectly judged as the same. Both provide evidence of bias. 
+
 Difference between denominator neglect and base rate neglect
 
 Basic numerical framing - Tversky Kahneman 1974
 
-Large samples benefit from percentage reporting, small samples benefit from number reporting (Sevilla et al., 2018)
+Large samples benefit from percentage reporting, small samples benefit from number reporting (Sevilla et al., 2018). For both small and large set sizes, making the set size salient removes the bias, with both percentage and absolute numerical values rated equally. This study was concerned with different ways of communicating ranked positions. Format neglect is a bias specific to rankings: occurs due to ignorance of set size, and face-value interpretation of numbers. Different to base rate neglect becuase it captures variation in assessment of the equivalent values, rather than an assumption of similarity in assessment of distinct values.
 
-Look at Monga and Bagchi (2012)
+Look at Monga and Bagchi (2012) - the highlighting of units (days/months/years) or numbers results in a greater influence of that aspect during reasoning.
+
+Theories have been developed to explain these effects, such as fuzzy trace theory. Reyna and Brainerd interpret Stone et al.’s study through the lens of fuzzy trace theory, so it’s possible ours is similarly applicable. Reyna and Brainerd’s paper isn’t super clear about how data visualisations fit into gist vs. verbatim. For this theory, avoiding/reducing bias entails representing numbers in a way that makes the relations between numerator and denominator clear, promoting the appropriate gist-level message, rather than an inappropriate one. Gist is a qualitative interpretation, and can often be controlled by salience, thus failing to incorporate denominators. Several studies have denomstrated that those with high numeracy are less susceptible to bias. Suggest it’s not just about making humans more like computers and memorising verbatim detail, it’s about making sure the gist that they do extract captures the true nature of the information.
 
 # Data Visualisation
 
@@ -168,6 +176,9 @@ In E2’s denominator-present conditions, as in E1, we observed a small number o
 
 Additional ratings collected in E2 provide valuable information on self-reported confidence. Although we observed an interaction between denominator information and axis upper bound, its miniscule effect size casts doubt over its practical significance. Thus, we cannot say with any certainty that visual arrangement of a chart affected confidence when denominator was present. However, the presence of a denominator clearly boosted confidence. Overall, this suggests that participants were unwilling to trust the visual appearance alone and required a denominator for increased confidence in their judgements. Confidence is consistently, but unsurprisingly, affected by denominator presence, but not by axes.
 
+Bullet points of contributions:
+  * 
+  * 
 
 Be clear about what is ambiguous: all, just truncated, just absent?
 A question - is showing a denominator in text equivalent to showing it in an axis only?
@@ -213,6 +224,7 @@ Bias isn’t necessarily bad - we don’t think participants are making any stup
 
 People don’t interpret visualisations in a vacuum. They take into account the data’s context, whether this is pre-existing or presented alongside.
 
+Implications for cogntive load on assessment of visualisations - future work should look at this.
 
 ## Conclusion
 
