@@ -257,30 +257,22 @@ print_es <- function(x) {ifelse(x<.001, "< 0.001", paste("=", printnum(x)))}
 ### Magnitude Ratings
 
 ```{r}
-p_data <- e1 %>%
+#| label: fig-e1-mag
+#| include: true
+e1 %>%
   ggplot(aes(x = slider.response, y = cond)) +
   geom_jitter(width = 0,
               height = 0.2,
               alpha = 0.1) +
   scale_y_discrete(breaks = c("extend", "default"),
                    labels = c("Extended", "Default")) + 
-  labs(#title = 'Experiment 1',
+  labs(title = 'Experiment 1',
       y = NULL,
        x = NULL) + 
   scale_x_continuous(labels = c('Very low\nmagnitude', 'Very high\nmagnitude'),
     breaks = c(1,2),
     minor_breaks = c()) + 
   theme_minimal(base_size = 16)
-
-p_label <- ggplot(tibble()) + geom_point(aes(x = 1, y = 1.5), alpha = 0.2, size = 2) + xlim(1, 2) + ylim(1, 2) + coord_fixed(ratio=0.1) + annotate("text", label = " = one rating", x = 1.2, y = 1.5) + theme_void()
-```
-
-```{r}
-#| label: fig-e1-mag
-#| include: true
-p_label / p_data + plot_annotation(
-  title = "Experiment 1",
-  subtitle = "Magnitude Ratings")
 ```
 
 @fig-e1-mag shows the raw data.
