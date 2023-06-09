@@ -10,7 +10,7 @@ Across two experiments, we investigate the interpretation of magnitudes in bar c
 
 # Related Work
 
-There is a wealth of research demonstrating that the same number, presented differently, elicits different reactions from readers. First, these studies highlight how numbers are rarely presented alone, with units, denominators, and percentage symbols providing crucial context. However, interpretations of the same value can be massively swayed by presentation format. Human reasoning is susceptible to seemingly minor influences. Even the same information, with relatively different levels of emphasis, can affect interpretations (e.g Sevilla et al.). Classic is the Asian disease problem - different interpretation of same information (gain/loss framing)
+There is a wealth of research demonstrating that the same number, presented differently, elicits different reactions from readers. First, these studies highlight how numbers are rarely presented alone, with units (Monga and Bagchi), denominators, and percentage symbols providing crucial context. However, interpretations of the same value can be massively swayed by presentation format. Human reasoning is susceptible to seemingly minor influences. Even the same information, with relatively different levels of emphasis, can affect interpretations (e.g Sevilla et al.). Classic is the Asian disease problem - different interpretation of same information (gain/loss framing)
 
 Stone et al - Further, displaying part-to-whole data meant that the axis limit was extended to a meaningful value, rather than an arbitrary value. Although it’s not necessarily arbitrary, since it’s related to the maximum value in the data. My differences: magnitude rather than difference (risk reduction). Icon arrays not bar charts. One scenario per experiment. Not really thinking about axis extension, which is subtler.
 
@@ -50,15 +50,50 @@ Basic numerical framing - Tversky Kahneman 1974
 
 Large samples benefit from percentage reporting, small samples benefit from number reporting (Sevilla et al., 2018). For both small and large set sizes, making the set size salient removes the bias, with both percentage and absolute numerical values rated equally. This study was concerned with different ways of communicating ranked positions. Format neglect is a bias specific to rankings: occurs due to ignorance of set size, and face-value interpretation of numbers. Different to base rate neglect becuase it captures variation in assessment of the equivalent values, rather than an assumption of similarity in assessment of distinct values.
 
-Look at Monga and Bagchi (2012) - the highlighting of units (days/months/years) or numbers results in a greater influence of that aspect during reasoning.
+Okan et al. (2012) - unequal group sizes cause denominator neglect. Icon arrays help to avoid denominator neglect, for those with high- and low-graph literacy, but more so for those with high graph literacy. Consistent with fuzzy-trace theory, this occurs becuase the part-to-whole relationships are explicitly displayed, avoiding confusion due to overlapping classes (those affected/those at risk)/.
 
 Theories have been developed to explain these effects, such as fuzzy trace theory. Reyna and Brainerd interpret Stone et al.’s study through the lens of fuzzy trace theory, so it’s possible ours is similarly applicable. Reyna and Brainerd’s paper isn’t super clear about how data visualisations fit into gist vs. verbatim. For this theory, avoiding/reducing bias entails representing numbers in a way that makes the relations between numerator and denominator clear, promoting the appropriate gist-level message, rather than an inappropriate one. Gist is a qualitative interpretation, and can often be controlled by salience, thus failing to incorporate denominators. Several studies have denomstrated that those with high numeracy are less susceptible to bias. Suggest it’s not just about making humans more like computers and memorising verbatim detail, it’s about making sure the gist that they do extract captures the true nature of the information.
+
+Stone et al. studies - 1 sentence each
+Stone 1997 - risk avoidance increased for icon arrays, compared to textual presentation
+Stone 2003 - why graphical advantage in previous experiment? icon arrays increased salience of the foreground, resulting in less attention to background information which highlights the relatively small reduction in risk. Text, on the other hand, gave an equal weighting to the foreground and background, thus reducing risk avoidance. This study manipulated display of background information using graphical means, to better compare presentation styles. 
+Stone 2015 - Didn’t actually look at effects of displaying background graphically
+Stone 2017
+Stone 2018a
+Stone 2018b
+
+Okan et al. 2012a
+Okan et al. 2012b
+Okan et al. 2016
+Okan et al. 2018
+Okan et al 2020 - probability size matters
+
+Stacked bars are also used to convey proportions, but they plot the values explicitly, rather than just leaving blank space. 
+
+Stacking is useful because it ensures both numerator and denominator are salient and clearly separate (Reyna, 2008), according to fuzzy trace theory, facilitates gist-level message, not swayed too much by numbers. 
+
+Holland and Spence (1998) find that stacked bars are useful for judging proportions. 
+
+In the present study, the task was not described as judging proportion, but magnitude. However, judging magnitude from the presented information involved an implicit proportion judgement, given the ambiguity of the numbers. In real life, magnitudes for certain very familiar topics could be judged without being a proportion. 
 
 # Data Visualisation
 
 Axis truncation is relevant because…
 Framing
 
+Within the field of data visualisation, the effects of extending an axis have not been explored much.  What has been explored a lot is another type of manipulation commonly refered to as axis truncation. This is similar because it involves changing the axis limits to accomodate (or exclude) certain values not containing data. The effect is to change the appearance of the difference between values, and thus influence assessments of this difference. Pandey, correll, witt, yang - . Demonstrates framing of values, display of context.
+
+However, this work has focused on difference judgements, which are different to magnitude judgements. Both require some concept of how big a value ought to be. For difference judgements, these concepts are vague, hence easily swayed by the appearance. It may be true of magnitudes too - without a good idea of what consitutes large of small values, visual design might play a role.  
+
+In the risk literature, much of the research is also focused on the magnitude of differences, since this information is most commonly presented to demonstrate the relative reduction in risk between two choices. 
+
+# Contributions
+
+The contributions of this work are:
+  * Looking at blank space rather than stacked bars - denominator is merely implied
+  * Looking at non-risk scenarios
+  * More trials
+  * Previous look at magnitude has focused on *understanding* whereas we focus on interpretation
 
 # Experiment 1 - Overview
 
@@ -166,6 +201,10 @@ Mention that its a 2 (axis) x 2 (denominator) factorial ANOVA
 
 # General Discussion
 
+  * We identify the visual framing effect (E1, replicated in E2)
+  * We find a source of variability in E1, replicated when studied in E2
+  * We identify the suspected source of that information in E2
+
 Gauging a number’s magnitude can be difficult without sufficient background knowledge. Interpreting the magnitude of certain types of data, such as subsets, requires denominator information. This crucial context can accompany a data visualisation, or can be implied as part of the visualisation’s design. Visual cues to proportion are easily implemented in common visualisation software, but are not required by default. In this set of experiments, we investigated the effects of showing and omitting this denominator information in visualisation designs. Magnitude was interpreted as greater when axes were truncated, rather than extended, particularly when no denominator information accompanied the chart. This provides insight into the cognitive process involved in interpreting magnitude in bar charts, indicating that denominator information is an important aspect in interpretation of charts.
 
 In Experiment 1, we observed that charts with axes that terminated just above the plotted data elicited judgements of greater magnitude, compared to charts with axes that accomodated a much higher denominator value. However, this experiment contained multiple sources of information on the denominator. As well as an implicit visual cue in the extended axes condition, it was explicitly presented in the text in both conditions, avoiding ambiguity. Some extreme responses in the truncated condition appeared to disregard this denominator. Another experiment was necessary in order to understand the role of the denominator in the cognitive processing of magnitude. Specifically, we sought to quantify how denominator information might resolve ambiguity in different chart designs. Could a visual cue alone communicate information in the same way as a textual cue? How much did magnitude judgements depend on successful intergration with the accompanying information?
@@ -195,6 +234,8 @@ How do we make sense of this in relation to prior axis manipulation research, wh
 Relationship to Stone et al. - denominator salience isn’t the same as denominator presence. Does our work provide evidence for the foreground-background theory, or the proportional reasoning theory?
 
 Relationship to non-visual work - framing of numbers. Most of this is obvious but what we’re doing is applying it to visualisations, producing practical recommendations. 
+
+Data visualisation literacy - why was this not significant - Okan et al. (2018) predict that it should be. What about numeracy? Research on individual differences could also look at other factors discussed by Reyna and Brainerd.
 
 ## Implications
 
