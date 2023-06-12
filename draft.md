@@ -10,71 +10,30 @@ Across two experiments, we investigate the interpretation of magnitudes in bar c
 
 # Related Work
 
-There is a wealth of research demonstrating that the same number, presented differently, elicits different reactions from readers. First, these studies highlight how numbers are rarely presented alone, with units (Monga and Bagchi), denominators, and percentage symbols providing crucial context. However, interpretations of the same value can be massively swayed by presentation format. Human reasoning is susceptible to seemingly minor influences. Even the same information, with relatively different levels of emphasis, can affect interpretations (e.g Sevilla et al.). Classic is the Asian disease problem - different interpretation of same information (gain/loss framing)
+1. People have a poor understanding of numbers. There is a wealth of research demonstrating that the same number, presented differently, elicits different reactions from readers. First, these studies highlight how numbers are rarely presented alone, with units (Monga and Bagchi), denominators, and percentage symbols providing crucial context. However, interpretations of the same value can be massively swayed by presentation format. Human reasoning is susceptible to seemingly minor influences. Even the same information, with relatively different levels of emphasis, can affect interpretations (e.g Sevilla et al.). Classic is the Asian disease problem - different interpretation of same information (gain/loss framing). Basic numerical framing - Tversky Kahneman 1974. That 5/20 is larger than 5/50 is trivial and probably doesn’t require research. Most research (e.g. Burson et al) has looked at more subtle biases where the same proportion is expressed differently (rather than different proportions). However, the cloest thing is perhaps Stone et al.’s foregrounding and backgrounding effect, since this is the same number. There are two broad classes, concerning irrational judgement of equivalent values and judgement of distinct values. The former are incorrectly judged as different, the latter incorectly judged as the same. Both provide evidence of bias. Numeracy (but not necessarily visualisation literacy) is associated with increased sensitivity to framing effects (Peters et al. 2006). Difference between denominator neglect and base rate neglect. Pacini and epstein - if you highlight the inverse of the proportion, you change the perception of the same number. Holford et al - variation on 25% fat; 75% lean - relates to Stone in that the chosen number is foregrounded, leading to relative increase in the salience of its properties. Li and Chapman note that perception of percentages is rarely explored outside of probabilities. They demonstrate that participants interpret values as larger when they are a higher percentage of a small subset, compared to a smaller percentage of a larger subset (even when numerically equivalent). Related, but not totally accounted for by denominator neglect. Specifically, the denominator infromation was insufficiently weighted, rather than completely overlooked, but also the weighting of percentages is not linear. Didn’t observe an effect of numeracy on bias. 
+2. Researchers have observed that highlighting denominator/set size information in text has reducing biasing effects associated with format neglect (Sevilla et al., 2018).
+3. Much research has been carried out to investigate the effect of showing the denominators graphically. Holland and Spence (1998) find that stacked bars are useful for judging proportions. Stacking is useful because it ensures both numerator and denominator are salient and clearly separate (Reyna, 2008), according to fuzzy trace theory, facilitates gist-level message, not swayed too much by numbers. Motivated by denominator neglect. 
 
-Stone et al - Further, displaying part-to-whole data meant that the axis limit was extended to a meaningful value, rather than an arbitrary value. Although it’s not necessarily arbitrary, since it’s related to the maximum value in the data. My differences: magnitude rather than difference (risk reduction). Icon arrays not bar charts. One scenario per experiment. Not really thinking about axis extension, which is subtler.
+Icon arrays can be easily manipulated to include or exclude numerical context. By displaying icons corresponding to the focal outcome *and* the non-focal outcome, denominator information becomes visually available. Consequently, these graphics are been frequently studied in order to investigate the role of denominators in risk communication. Presenting icon arrays in addition to purely numerical information helps combat denominator neglect (Garcia-Retamero et al. 2010, Okan et al., 2012). This was particularly the case when denominators in two groups were unequal and for individuals with high graph literacy. Omitting denominator information from icon arrays, and displaying only the focal outcome, reduces performance (what type?) (Garcia-Retamero and Galesic, 2010). This finding was replicated by Okan et al. (2020), with an additional manipulation revealing reduced effects for larger probability sizes.  
 
-Hu et al. pie charts - do they look at magnitude or differences?
+Icon arrays represent both focal outcomes and alternative outcomes using icons. Stacked bar charts function similarly: the lower bar represents the focal outcome, the upper bar represents the alternative outcome, and the combination represents the total. Stacked bar charts also show similar denominator neglect effects as icon arrays (Stone et al., 2003). However, rather than plotting them directly, a bar chart may imply opposite outcomes through the blank space between the bar for the focal outcome and the chart’s axis upper limit. Stone et al. (2017) manipulated bar charts to explore these different methods of conveying the opposite (non-focal) outcome. Charts using blank space increased perceptions of risk likelihood compared to those conveying alternative outcomes using stacked bars. Because the upper axis limit was identical in both conditions, this study did not provide insight into the graphical representation of denominator information. 
 
-Research on understanding of denominators
-Research on numerical framing effects
+Manipulating upper axis limits in bar charts provides insight into the use of cue to denominator information.  Garcia-Retamero and Galesic (2010) showed participants non-stacked bar charts displaying only the foreground information (those affected by a risk). This effect was replicated by Okan et al. (2018), who found increased understanding of risk when the denominator was present, demonstrating that insufficient attention to denominators reduces comprehension of presented information. In addition, inclusion of labels eliminated this effect, increasing comprehension in displays without denominator information on the axis. 
 
-That 5/20 is larger than 5/50 is trivial and probably doesn’t require research. Most research (e.g. Burson et al) has looked at more subtle biases where the same proportion is expressed differently (rather than different proportions). However, the cloest thing is perhaps Stone et al.’s foregrounding and backgrounding effect, since this is the same number. 
+Is the focus on magnitudes really on magnitudes?
+Okan et al. (2018) - DV: 
+Stone et al. (2017) - DV:
+Garcia-Retamero and Galesic (2010) - DV:
+Okan et al. (2018) - Number of trials per experiment:
+Stone et al. (2017) - Number of trials per experiment:
+Garcia-Retamero and Galesic (2010) - Number of trials per experiment:
 
-Pacini and epstein - if you highlight the inverse of the proportion, you change the perception of the same number
-Reyna and Brainerd - insufficient focus on numerators. This is related to Stone et al. studies.
+Furthermore, in these studies, charts without the denominator had an arbitrary axis limit, whereas we employ the default axis limit from a popular visualisation tool, increasing ecological validity.
 
-Holford et al - variation on 25% fat; 75% lean - relates to Stone in that the chosen number is foregrounded, leading to relative increase in the salience of its properties
+3. Hu et al. and Stone et al. (2003) pie charts - also look at comparison between options rather than magnitude of individual options.
 
-Explain possible terms: numerator/foreground/subset vs. denominator/background/total (Okan et al 2018)
+Competing explanations for the facilitatory effects of graphically presenting denominator information either suggest that drawing salience to the denominator, or supporting proportional reasoning, are responsible for the observed effects. Report support for the latter, since increasing the salience of the denominator in text does not influence participants’ responses. It’s not really denominator neglect as it’s been traditionally interpreted, salience alone doesn’t do much, because of poor representation of large numbers (denominators). Yet, graphical representation facilitates generation of an accurate gist - by effectively communicating the scale of the large number, and thus putting the numerator into perspective. Graphically representing the part-to-whole relationship, which conveys the gist of a small numerator magnitude (see also Ancker, 2006). For fuzzy-trace theory, the goal is to promote an appropriate gist-level message, rather than expecting memorisation of verbatim information, since gist takes precedence over verbatim information when it comes to reasoning. Several findings can be interpreted in relation to fuzzy-trace theory. Okan et al. (2012) and Garcia-Retamero and Galesic (2010): consistent with fuzzy-trace theory, this occurs becuase the part-to-whole relationships are explicitly displayed, avoiding the types of errors in reasoning responsible for denominator neglect (class-inclusion errors). Appearance matters for gist representations - physical sizes of the elements on a graph, and relations between these elements, contribute, so foreground only charts may increase perceptions of magnitude (Reyna, 2008). There is lots of evidence that manipulating axes such that the distance between two items increases, results in interpretations of greater difference (Correll, Pandey, Witt, Yang). Demonstrates the influence of physical attributes in gist representations.
 
-Okan et al. (2018) - Poor understanding of information (risks) results from insufficient attention to denominator information, which occurs due to a lack of salience. This is also interested in risk-reduction and therefore it’s a *difference* rather than a *magnitude*. By including labels showing the denominator, enhanced understanding in a foreground only display, without sacrificing risk reduction quality. 
-
-Given some minimal measurement of risk perceptions, which isn’t deeply discussed best to mention that authors *focus on* risk reduction.
-
-Okan et al 2018 - add references 23, 60, 61 to Zotero
-
-Reyna, fuzzy trace theory (2008) - suggests a role of larger bars in the perception of larger numbers. 
-
-Numeracy (but not necessarily visualisation literacy) is associated with increased sensitivity to framing effects (Peters et al. 2006)
-
-Li and Chapman note that perception of percentages is rarely explored outside of probabilities. They demonstrate that participants interpret values as larger when they are a higher percentage of a small subset, compared to a smaller percentage of a larger subset (even when numerically equivalent). Related, but not totally accounted for by denominator neglect. Specifically, the denominator infromation was insufficiently weighted, rather than completely overlooked, but also the weighting of percentages is not linear. Didn’t observe an effect of numeracy on bias. 
-
-Prior work (e.g. Sevilla) has looked at how highlighting denominator/set size information has reducing biasing effects. In the present study we do the opposite. We demonstrate how removing denominator information can increase biasing effects. This also could explain why we see lower ratings when both visual and textual denominator cues are present.
-
-There are two broad classes, concerning irrational judgement of equivalent values and judgement of distinct values. The former are incorrectly judged as different, the latter incorectly judged as the same. Both provide evidence of bias. 
-
-Difference between denominator neglect and base rate neglect
-
-Basic numerical framing - Tversky Kahneman 1974
-
-Large samples benefit from percentage reporting, small samples benefit from number reporting (Sevilla et al., 2018). For both small and large set sizes, making the set size salient removes the bias, with both percentage and absolute numerical values rated equally. This study was concerned with different ways of communicating ranked positions. Format neglect is a bias specific to rankings: occurs due to ignorance of set size, and face-value interpretation of numbers. Different to base rate neglect becuase it captures variation in assessment of the equivalent values, rather than an assumption of similarity in assessment of distinct values.
-
-Okan et al. (2012) - unequal group sizes cause denominator neglect. Icon arrays help to avoid denominator neglect, for those with high- and low-graph literacy, but more so for those with high graph literacy. Consistent with fuzzy-trace theory, this occurs becuase the part-to-whole relationships are explicitly displayed, avoiding confusion due to overlapping classes (those affected/those at risk)/.
-
-Theories have been developed to explain these effects, such as fuzzy trace theory. Reyna and Brainerd interpret Stone et al.’s study through the lens of fuzzy trace theory, so it’s possible ours is similarly applicable. Reyna and Brainerd’s paper isn’t super clear about how data visualisations fit into gist vs. verbatim. For this theory, avoiding/reducing bias entails representing numbers in a way that makes the relations between numerator and denominator clear, promoting the appropriate gist-level message, rather than an inappropriate one. Gist is a qualitative interpretation, and can often be controlled by salience, thus failing to incorporate denominators. Several studies have denomstrated that those with high numeracy are less susceptible to bias. Suggest it’s not just about making humans more like computers and memorising verbatim detail, it’s about making sure the gist that they do extract captures the true nature of the information.
-
-Stone et al. studies - 1 sentence each
-Stone 1997 - risk avoidance increased for icon arrays, compared to textual presentation
-Stone 2003 - why graphical advantage in previous experiment? icon arrays increased salience of the foreground, resulting in less attention to background information which highlights the relatively small reduction in risk. Text, on the other hand, gave an equal weighting to the foreground and background, thus reducing risk avoidance. This study manipulated display of background information using graphical means, to better compare presentation styles. 
-Stone 2015 - Didn’t actually look at effects of displaying background graphically
-Stone 2017
-Stone 2018a
-Stone 2018b
-
-Okan et al. 2012a
-Okan et al. 2012b
-Okan et al. 2016
-Okan et al. 2018
-Okan et al 2020 - probability size matters
-
-Stacked bars are also used to convey proportions, but they plot the values explicitly, rather than just leaving blank space. 
-
-Stacking is useful because it ensures both numerator and denominator are salient and clearly separate (Reyna, 2008), according to fuzzy trace theory, facilitates gist-level message, not swayed too much by numbers. 
-
-Holland and Spence (1998) find that stacked bars are useful for judging proportions. 
-
-In the present study, the task was not described as judging proportion, but magnitude. However, judging magnitude from the presented information involved an implicit proportion judgement, given the ambiguity of the numbers. In real life, magnitudes for certain very familiar topics could be judged without being a proportion. 
 
 # Data Visualisation
 
@@ -235,7 +194,9 @@ Relationship to Stone et al. - denominator salience isn’t the same as denomina
 
 Relationship to non-visual work - framing of numbers. Most of this is obvious but what we’re doing is applying it to visualisations, producing practical recommendations. 
 
-Data visualisation literacy - why was this not significant - Okan et al. (2018) predict that it should be. What about numeracy? Research on individual differences could also look at other factors discussed by Reyna and Brainerd.
+Data visualisation literacy - why was this not significant - Okan et al. (2018) predict that it should be. What about numeracy? Research on individual differences could also look at other factors discussed by Reyna and Brainerd. Reyna and Brainerd report that several studies have denomstrated that those with high numeracy are less susceptible to bias. 
+
+Sevilla et al. find that highlighting the denominator information reduces their bias (format neglect of percentage/top N rankings) - does that explain why we find lower ratings when denominator supplied graphically and textually?
 
 ## Implications
 
