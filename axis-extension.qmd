@@ -274,11 +274,7 @@ get_anomalies <- function(dataset){
 print_es <- function(x) {ifelse(x<.001, "< 0.001", paste("=", printnum(x)))}
 ```
 
-average duration was `r printnum(e1 %>% pull(total_duration) %>% mean())` minutes.
-
 Datasets for `r printnum(get_anomalies(e1), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
-
-average duration was `r printnum(e2 %>% pull(total_duration) %>% mean())` minutes.
 
 Datasets for `r printnum(get_anomalies(e2), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
 
@@ -318,11 +314,13 @@ We employed a within-participants design: participants viewed 16 different chart
 
 ### Participants
 
-Participants were recruited from Prolific.co. The experiment was advertised to fluent English speakers, who had normal-or-corrected to normal vision, who had previously participated in at least 100 studies on the site.
+Participants were recruited using Prolific.co. The experiment was advertised to fluent English speakers, who had normal-or-corrected to normal vision, who had previously participated in at least 100 studies on the site.
 
-Per our pre-registeration, we recruited participants until 150 had successfully completed the experiment, excluding seven individuals who answered more than 1 attention check item incorrectly. Participants with accepted submissions received £3.50.
+Data were returned by 157 participants. Per pre-registered exclusion criteria, seven participants' submissions were rejected because they answered more than one of six attention check questions incorrectly.
 
-For those in the final sample, the average age was x, the average graph literacy score was x. The participnats were x%female, y% male, z% non-binary. j% had completed at least high school education.
+The final sample consisted of 150 participants (\`r printnum(gender_E1\$M)\`% male, \`r printnum(gender_E1\$F)\`% female, \`r printnum(gender_E1\$NB)\`% non-binary). Mean age was \`r printnum(age_E1\$mean)\` (\*SD\* = \`r printnum(age_E1\$sd)\`). The mean data visualisation literacy score was \`r printnum(literacy_E1\$mean)\` (\*SD\* = \`r printnum(literacy_E1\$sd)\`), out of a maximum of 30.
+
+Average completion time was `r printnum(e1 %>% pull(total_duration) %>% mean())` minutes. Participants with accepted submissions received £3.50.
 
 This experiment was approved by the University of Manchester\'s Division of Neuroscience and Experimental Psychology Ethics Committee (ethics code: 2022-11115-24245).
 
@@ -405,19 +403,31 @@ We predicted an interaction between axis limits and denominator presence. Pre-re
 
 We generated bar charts using ggplot2 in R (version 4.2.1), using tidyverse (version 1.3.2) and ggh4x (version 0.2.3). The same scenarios were used as in E1 and bar charts were generated using the same method. We expanded the range of denominators, employing the following values: Consequently, the values plotted in the charts and on the axes, differed from E1.
 
-We added the word \'surveyed\' or \'assessed\' to \[x\] accompanying sentences in items, that were unclear in the absence of a denominator.
+Differences in filler trials.
+
+We added the word \'surveyed\' or \'assessed\' to \[x\] accompanying sentences in items from E1, that were unclear in the absence of a denominator.
 
 ### Procedure
 
-The procedure was identical to Experiment 1. Average completion time was x minutes.
+The procedure was identical to Experiment 1, except for the addition of a confidence rating...
+
+Average completion time was `r printnum(e2 %>% pull(total_duration) %>% mean())` minutes.
 
 ### Design
 
-We employed a 2x2 Latin-squared design with two factors: axis upper bound and denominator presence. Participants viewed 8 different charts for each combination of conditions (32 experimental trials total). We also included 32 filler items and six attention check items.
+We employed a within-participants 2x2 Latin-squared design with two factors: axis upper bound (default vs. extended) and denominator presence (present vs. absent). Participants viewed 8 different charts for each combination of conditions (32 experimental trials total). The correspondence between scenarios and conditions was counterbalanced using four lists. However, all participants saw the same versions of the 32 filler items and six attention check items.
 
 ### Participants
 
-We recruited 200 participants. Individuals who completed E1 were prevented from participating.
+Participants were recruited using Prolific.co, using the same inclusion criteria as Experiment 1. Individuals who completed E1 were prevented from participating.
+
+Data were returned by xxx participants. Per pre-registered exclusion criteria, xxx participants' submissions were rejected because they answered more than one of six attention check questions incorrectly.
+
+The final sample consisted of 200 participants (\`r printnum(gender_E1\$M)\`% male, \`r printnum(gender_E1\$F)\`% female, \`r printnum(gender_E1\$NB)\`% non-binary). Mean age was \`r printnum(age_E1\$mean)\` (\*SD\* = \`r printnum(age_E1\$sd)\`). The mean data visualisation literacy score was \`r printnum(literacy_E1\$mean)\` (\*SD\* = \`r printnum(literacy_E1\$sd)\`), out of a maximum of 30.
+
+Participants with accepted submissions received £5.00.
+
+This experiment was approved by the University of Manchester\'s Division of Neuroscience and Experimental Psychology Ethics Committee (ethics code: 2023-11115-28428).
 
 ## Analysis
 
