@@ -111,7 +111,8 @@ anon_file %>%
                    "denominator",
                    "slider.response",
                    "mag_slider.response",
-                   "con_slider.response"))) %>% 
+                   "con_slider.response",
+                   "seed_no"))) %>% 
     inner_join(literacy, by = "participant") %>%
     inner_join(demographics, by = "participant") %>%
     inner_join(durations, by = "participant") %>%
@@ -247,10 +248,39 @@ random_str <- function(model) {
 ```
 
 ```{r}
+#| label: get-anomalies-function
+
+# returns the proportion of datasets which needed to re-generated for the highest data point to exceed the highest gridline
+
+get_anomalies <- function(dataset){
+  dataset %>%
+  pull(seed_no) %>% # extract column with seed numbers
+  unique() %>% # get unique values
+  na.omit() %>% # omit NAs
+  sort() %>% # ascending order (since they were generated in order)
+  diff() %>% # calculate difference between each pair of values
+  # the while loop was entered on every trial including the first
+  # the first seed value in both experiments is 2
+  # this indicates that a new seed number was not selected for the first chart
+  #c(1, .) %>% # therefore we prepend a 1 to indicate this
+  `>`(1) %>% # count the number of cases where a new seed number was selected
+  mean()*100 # calculate the proportion of TRUE cases as a %
+}
+```
+
+```{r}
 #| label: print-es-function
 # for dealing with effect sizes less than .001
 print_es <- function(x) {ifelse(x<.001, "< 0.001", paste("=", printnum(x)))}
 ```
+
+average duration was `r printnum(e1 %>% pull(total_duration) %>% mean())` minutes.
+
+Datasets for `r printnum(get_anomalies(e1), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
+
+average duration was `r printnum(e2 %>% pull(total_duration) %>% mean())` minutes.
+
+Datasets for `r printnum(get_anomalies(e2), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
 
 ## Experiment 1 - Analysis
 
