@@ -282,7 +282,51 @@ average duration was `r printnum(e2 %>% pull(total_duration) %>% mean())` minute
 
 Datasets for `r printnum(get_anomalies(e2), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
 
-## Experiment 1 - Analysis
+# Experiment 1
+
+Experiment 1 investigates the influence of y-axis upper bounds on interpretations of plotted values\' magnitude. Participants viewed bar charts with y-axes which either terminated just above the bars, or extended to a denominator value well above the bars. Thus, the same data is displayed with and without its surrounding context. Comparing participants\' interpretations captures the influence of y-axis limits on magnitude judgements.
+
+## Pre-Registration
+
+We predicted that bar charts with truncated axes would elicit greater magnitude ratings than bar charts with extended axes. Pre-registration is available at https://osf.io/e9j43.
+
+## Method
+
+### Materials
+
+We developed 40 scenarios relating to fictitious surveys and experiments. Each scenario described a study evaluating a specific outcome in each of five categories (e.g., the number of employees achieving performance targets, in five finance companies). The denominator (e.g., total number of employees) was identical for each category. Participants were asked to make judgements about overall magnitude (e.g., How well did the employees perform?), responding on a visual analogue scale with anchors at the extremes (e.g., \'very poorly\', \'very well\').
+
+We generated bar charts using ggplot2 in R (version 4.1.2), using tidyverse version 1.3.1 and ggh4x version 0.2.1. Both versions of each chart displayed the same five values, but employed different y-axis upper bounds. For extended charts, the denominator from the text description (400, 500, or 600) was used as the y-axis upper bound. The denominators were also used in the generation of the datasets, which employed a normal distribution with a mean equal to 20% or 40% of a given denominator value, and a standard deviation equal to 1% of a given denominator value.
+
+In truncated charts, the y-axis upper bound was dictated by ggplot2\'s default axis settings. These settings automatically identify a set of convenient breaks for each dataset, then slightly extend the plot area, adding 5% of the axis range to the upper axis limit. In both conditions, contrary to the default settings, a smaller expansion factor of 1% was applied to the lower axis limit, eliminating visible space below the 0 baseline.
+
+The default settings tended to produce charts where the highest axis break fell below the tallest bar. For the purposes of consistency, when the opposite situation occured, we automatically generated an alternative dataset to ensure the highest axis break appeared below the tallest bar. This dataset was used in both conditions. In our stimuli set, x alternative datasets were generated in this way.
+
+In experimental trials, plotted values consisted of relatively small proportions of the denominator value specified in the accompanying text (roughly 20% or 40%). To introduce variety and encourage attention, eight filler trials showed plotted values which were around 90% of the corresponding denominator value. The denominators were selected so that numerical labels on the y-axis roughly resembled either extended or truncated experimental trials.
+
+We included six attention check trials to assess participants\' engagement with the task. These trials were similar to experimental and filler trials, comprising of text, a bar chart, question and visual analogue scale. However, participants were instructed to ignore the bar chart and provide a specified response on the visual analogue scale.
+
+### Procedure
+
+PsychoPy version 2022.1.4. Participants were instructed to carry out the experiment using a laptop or desktop computer (not a mobile phone or tablet). After providing informed consent, participants completed a demographic questionnaire and Garcia-Retamero et al.\'s (2016) subjective data visualisation literacy measure. Participants were asked to image they were a researcher tasked with determining the outcome of experiments and surveys. They were instructed to make an overall assessment of all data presented in the graph after studying the text, graph, and question. Items were presented in a random order. There was a total of 46 trials.
+
+Participants were permitted to move the response marker as many times as they liked before proceeding to the next trial, but could not return to previous trials. Finally, they were informed that all data presented was fictitious and were given the option to provide comments on the experiment and describe any strategies used. Average completion time was 19.2 minutes.
+
+### Design
+
+We employed a within-participants design: participants viewed 16 different charts in each of the two conditions (32 experimental trials total). The correspondence between scenarios and conditions was counterbalanced using two lists. However, all participants saw the same versions of the eight filler items and six attention check items.
+
+### Participants
+
+Participants were recruited from Prolific.co. The experiment was advertised to fluent English speakers, who had normal-or-corrected to normal vision, who had previously participated in at least 100 studies on the site.
+
+Per our pre-registeration, we recruited participants until 150 had successfully completed the experiment, excluding seven individuals who answered more than 1 attention check item incorrectly. Participants with accepted submissions received £3.50.
+
+For those in the final sample, the average age was x, the average graph literacy score was x. The participnats were x%female, y% male, z% non-binary. j% had completed at least high school education.
+
+This experiment was approved by the University of Manchester\'s Division of Neuroscience and Experimental Psychology Ethics Committee (ethics code: 2022-11115-24245).
+
+## Analysis
 
 ### Magnitude Ratings
 
@@ -349,7 +393,33 @@ summary_extract(e1_mag_l)
 
 Accounting for differences in data visualisation literacy did not change the significant effect of axis upper bound F(`r printnum(e1_mag_l_cond_NumDF)`, `r printnum(e1_mag_l_cond_DenDF)`) = `r printnum(e1_mag_l_cond_F.value)`, p `r printp(e1_mag_l_cond_p, add_equals = T)`, partial $\eta^2$ = `r printnum(e1_mag_l_cond_Eta2_partial)`.
 
-## Experiment 2 - Analysis
+# Experiment 2
+
+## Pre-Registration
+
+We predicted an interaction between axis limits and denominator presence. Pre-registration is available at https://osf.io/hx9y4.
+
+# Method
+
+### Materials
+
+We generated bar charts using ggplot2 in R (version 4.2.1), using tidyverse (version 1.3.2) and ggh4x (version 0.2.3). The same scenarios were used as in E1 and bar charts were generated using the same method. We expanded the range of denominators, employing the following values: Consequently, the values plotted in the charts and on the axes, differed from E1.
+
+We added the word \'surveyed\' or \'assessed\' to \[x\] accompanying sentences in items, that were unclear in the absence of a denominator.
+
+### Procedure
+
+The procedure was identical to Experiment 1. Average completion time was x minutes.
+
+### Design
+
+We employed a 2x2 Latin-squared design with two factors: axis upper bound and denominator presence. Participants viewed 8 different charts for each combination of conditions (32 experimental trials total). We also included 32 filler items and six attention check items.
+
+### Participants
+
+We recruited 200 participants. Individuals who completed E1 were prevented from participating.
+
+## Analysis
 
 ### Magnitude Ratings
 
@@ -394,6 +464,8 @@ e2_mag <- buildmer(mag_slider.response ~ axis*denominator +
 ```{r}
 summary_extract(e2_mag)
 ```
+
+a 2 (axis) x 2 (denominator) factorial ANOVA
 
 Charts with default axes elicited higher ratings than chart with extended axes (F(`r printnum(e2_mag_axis_NumDF)`, `r printnum(e2_mag_axis_DenDF)`) = `r printnum(e2_mag_axis_F.value)`, p `r printp(e2_mag_axis_p, add_equals = T)`, partial $\eta^2$ = `r printnum(e2_mag_axis_Eta2_partial)`) and charts not accompanied by a denominator in text elicited higher ratings than those accompanied by a denominator (F(`r printnum(e2_mag_denominator_NumDF)`, `r printnum(e2_mag_denominator_DenDF)`) = `r printnum(e2_mag_denominator_F.value)`, p `r printp(e2_mag_denominator_p, add_equals = T)`, partial $\eta^2$ = `r printnum(e2_mag_denominator_Eta2_partial)`).
 
