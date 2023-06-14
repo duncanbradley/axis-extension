@@ -71,11 +71,11 @@ edu_labels <- set_names(c('No formal qualications',
                         seq(8,1,-1))
 
 # define gender categories
-gender_labels <- set_names(c("Prefer not to say", 
-                             "In another way:",
-                             "Non-binary", 
-                             "Man", 
-                             "Woman"),
+gender_labels <- set_names(c("Pnts", 
+                             "Another",
+                             "NB", 
+                             "M", 
+                             "F"),
                            1:5)
 # extract demographics
 # link slider response numbers to gender categories 
@@ -274,13 +274,30 @@ get_anomalies <- function(dataset){
 print_es <- function(x) {ifelse(x<.001, "< 0.001", paste("=", printnum(x)))}
 ```
 
+```{r}
+#| label: gender-proportions
+gender_e1 <- e1 %>%
+    distinct(participant, .keep_all = TRUE) %>% 
+    group_by(genderResp1.response) %>% summarise(cnt = n()) %>%
+    reframe(freq = cnt / sum(cnt) *100, 
+            gender = unique(genderResp1.response)) %>%
+  pivot_wider(names_from = gender, values_from = freq)
+
+gender_e2 <- e2 %>%
+    distinct(participant, .keep_all = TRUE) %>% 
+    group_by(genderResp1.response) %>% summarise(cnt = n()) %>%
+    reframe(freq = cnt / sum(cnt) *100, 
+            gender = unique(genderResp1.response)) %>%
+  pivot_wider(names_from = gender, values_from = freq)
+```
+
 Datasets for `r printnum(get_anomalies(e1), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
 
 Datasets for `r printnum(get_anomalies(e2), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
 
 # Experiment 1
 
-Experiment 1 investigates the influence of y-axis upper bounds on interpretations of plotted values\' magnitude. Participants viewed bar charts with y-axes which either terminated just above the bars, or extended to a denominator value well above the bars. Thus, the same data is displayed with and without its surrounding context. Comparing participants\' interpretations captures the influence of y-axis limits on magnitude judgements.
+Experiment 1 investigates the influence of y-axis upper bounds on interpretations of plotted values' magnitude. Participants viewed bar charts with y-axes which either terminated just above the bars, or extended to a denominator value well above the bars. Thus, the same data is displayed with and without its surrounding context. Comparing participants' interpretations captures the influence of y-axis limits on magnitude judgements.
 
 ## Pre-Registration
 
@@ -290,23 +307,23 @@ We predicted that bar charts with truncated axes would elicit greater magnitude 
 
 ### Materials
 
-We developed 40 scenarios relating to fictitious surveys and experiments. Each scenario described a study evaluating a specific outcome in each of five categories (e.g., the number of employees achieving performance targets, in five finance companies). The denominator (e.g., total number of employees) was identical for each category. Participants were asked to make judgements about overall magnitude (e.g., How well did the employees perform?), responding on a visual analogue scale with anchors at the extremes (e.g., \'very poorly\', \'very well\').
+We developed 40 scenarios relating to fictitious surveys and experiments. Each scenario described a study evaluating a specific outcome in each of five categories (e.g., the number of employees achieving performance targets, in five finance companies). The denominator (e.g., total number of employees) was identical for each category. Participants were asked to make judgements about overall magnitude (e.g., How well did the employees perform?), responding on a visual analogue scale with anchors at the extremes (e.g., 'very poorly', 'very well').
 
 We generated bar charts using ggplot2 in R (version 4.1.2), using tidyverse version 1.3.1 and ggh4x version 0.2.1. Both versions of each chart displayed the same five values, but employed different y-axis upper bounds. For extended charts, the denominator from the text description (400, 500, or 600) was used as the y-axis upper bound. The denominators were also used in the generation of the datasets, which employed a normal distribution with a mean equal to 20% or 40% of a given denominator value, and a standard deviation equal to 1% of a given denominator value.
 
-In truncated charts, the y-axis upper bound was dictated by ggplot2\'s default axis settings. These settings automatically identify a set of convenient breaks for each dataset, then slightly extend the plot area, adding 5% of the axis range to the upper axis limit. In both conditions, contrary to the default settings, a smaller expansion factor of 1% was applied to the lower axis limit, eliminating visible space below the 0 baseline.
+In truncated charts, the y-axis upper bound was dictated by ggplot2's default axis settings. These settings automatically identify a set of convenient breaks for each dataset, then slightly extend the plot area, adding 5% of the axis range to the upper axis limit. In both conditions, contrary to the default settings, a smaller expansion factor of 1% was applied to the lower axis limit, eliminating visible space below the 0 baseline.
 
 The default settings tended to produce charts where the highest axis break fell below the tallest bar. For the purposes of consistency, when the opposite situation occured, we automatically generated an alternative dataset to ensure the highest axis break appeared below the tallest bar. This dataset was used in both conditions. In our stimuli set, x alternative datasets were generated in this way.
 
 In experimental trials, plotted values consisted of relatively small proportions of the denominator value specified in the accompanying text (roughly 20% or 40%). To introduce variety and encourage attention, eight filler trials showed plotted values which were around 90% of the corresponding denominator value. The denominators were selected so that numerical labels on the y-axis roughly resembled either extended or truncated experimental trials.
 
-We included six attention check trials to assess participants\' engagement with the task. These trials were similar to experimental and filler trials, comprising of text, a bar chart, question and visual analogue scale. However, participants were instructed to ignore the bar chart and provide a specified response on the visual analogue scale.
+We included six attention check trials to assess participants' engagement with the task. These trials were similar to experimental and filler trials, comprising of text, a bar chart, question and visual analogue scale. However, participants were instructed to ignore the bar chart and provide a specified response on the visual analogue scale.
 
 ### Procedure
 
-PsychoPy version 2022.1.4. Participants were instructed to carry out the experiment using a laptop or desktop computer (not a mobile phone or tablet). After providing informed consent, participants completed a demographic questionnaire and Garcia-Retamero et al.\'s (2016) subjective data visualisation literacy measure. Participants were asked to image they were a researcher tasked with determining the outcome of experiments and surveys. They were instructed to make an overall assessment of all data presented in the graph after studying the text, graph, and question. Items were presented in a random order. There was a total of 46 trials.
+PsychoPy version 2022.1.4. Participants were instructed to carry out the experiment using a laptop or desktop computer (not a mobile phone or tablet). After providing informed consent, participants completed a demographic questionnaire and Garcia-Retamero et al.'s (2016) subjective data visualisation literacy measure. Participants were asked to image they were a researcher tasked with determining the outcome of experiments and surveys. They were instructed to make an overall assessment of all data presented in the graph after studying the text, graph, and question. Items were presented in a random order. There was a total of 46 trials.
 
-Participants were permitted to move the response marker as many times as they liked before proceeding to the next trial, but could not return to previous trials. Finally, they were informed that all data presented was fictitious and were given the option to provide comments on the experiment and describe any strategies used. Average completion time was 19.2 minutes.
+Participants were permitted to move the response marker as many times as they liked before proceeding to the next trial, but could not return to previous trials. Finally, they were informed that all data presented was fictitious and were given the option to provide comments on the experiment and describe any strategies used. Average completion time was `r printnum(e1 %>% pull(total_duration) %>% mean(), digits = 1)` minutes. 
 
 ### Design
 
@@ -318,11 +335,11 @@ Participants were recruited using Prolific.co. The experiment was advertised to 
 
 Data were returned by 157 participants. Per pre-registered exclusion criteria, seven participants' submissions were rejected because they answered more than one of six attention check questions incorrectly.
 
-The final sample consisted of 150 participants (\`r printnum(gender_E1\$M)\`% male, \`r printnum(gender_E1\$F)\`% female, \`r printnum(gender_E1\$NB)\`% non-binary). Mean age was \`r printnum(age_E1\$mean)\` (\*SD\* = \`r printnum(age_E1\$sd)\`). The mean data visualisation literacy score was \`r printnum(literacy_E1\$mean)\` (\*SD\* = \`r printnum(literacy_E1\$sd)\`), out of a maximum of 30.
+The final sample consisted of 150 participants (`r printnum(gender_e1$M)`% male, `r printnum(gender_e1$F)`% female, `r printnum(gender_e1$NB)`% non-binary). Mean age was `r printnum(e1 %>% pull(ageResp.text) %>% mean())` (*SD* = `r printnum(e1 %>% pull(ageResp.text) %>% sd())`). The mean data visualisation literacy score was `r printnum(e1 %>% pull(literacy) %>% mean())` (*SD* = `r printnum(e1 %>% pull(literacy) %>% sd())`), out of a maximum of 30.
 
-Average completion time was `r printnum(e1 %>% pull(total_duration) %>% mean())` minutes. Participants with accepted submissions received £3.50.
+Participants with accepted submissions received £3.50.
 
-This experiment was approved by the University of Manchester\'s Division of Neuroscience and Experimental Psychology Ethics Committee (ethics code: 2022-11115-24245).
+This experiment was approved by the University of Manchester's Division of Neuroscience and Experimental Psychology Ethics Committee (ethics code: 2022-11115-24245).
 
 ## Analysis
 
@@ -405,13 +422,13 @@ We generated bar charts using ggplot2 in R (version 4.2.1), using tidyverse (ver
 
 Differences in filler trials.
 
-We added the word \'surveyed\' or \'assessed\' to \[x\] accompanying sentences in items from E1, that were unclear in the absence of a denominator.
+We added the word 'surveyed' or 'assessed' to \[x\] accompanying sentences in items from E1, that were unclear in the absence of a denominator.
 
 ### Procedure
 
 The procedure was identical to Experiment 1, except for the addition of a confidence rating...
 
-Average completion time was `r printnum(e2 %>% pull(total_duration) %>% mean())` minutes.
+Average completion time was `r printnum(e2 %>% pull(total_duration) %>% mean(), digits = 1)` minutes. 
 
 ### Design
 
@@ -423,11 +440,11 @@ Participants were recruited using Prolific.co, using the same inclusion criteria
 
 Data were returned by xxx participants. Per pre-registered exclusion criteria, xxx participants' submissions were rejected because they answered more than one of six attention check questions incorrectly.
 
-The final sample consisted of 200 participants (\`r printnum(gender_E1\$M)\`% male, \`r printnum(gender_E1\$F)\`% female, \`r printnum(gender_E1\$NB)\`% non-binary). Mean age was \`r printnum(age_E1\$mean)\` (\*SD\* = \`r printnum(age_E1\$sd)\`). The mean data visualisation literacy score was \`r printnum(literacy_E1\$mean)\` (\*SD\* = \`r printnum(literacy_E1\$sd)\`), out of a maximum of 30.
+The final sample consisted of 150 participants (`r printnum(gender_e2$M)`% male, `r printnum(gender_e2$F)`% female, `r printnum(gender_e2$NB)`% non-binary, `r printnum(gender_e2$Another)`% other, `r printnum(gender_e2$Pnts)`% prefer not say). Mean age was `r printnum(e2 %>% pull(ageResp.text) %>% mean())` (*SD* = `r printnum(e2 %>% pull(ageResp.text) %>% sd())`). The mean data visualisation literacy score was `r printnum(e2 %>% pull(literacy) %>% mean())` (*SD* = `r printnum(e2 %>% pull(literacy) %>% sd())`), out of a maximum of 30.
 
 Participants with accepted submissions received £5.00.
 
-This experiment was approved by the University of Manchester\'s Division of Neuroscience and Experimental Psychology Ethics Committee (ethics code: 2023-11115-28428).
+This experiment was approved by the University of Manchester's Division of Neuroscience and Experimental Psychology Ethics Committee (ethics code: 2023-11115-28428).
 
 ## Analysis
 
