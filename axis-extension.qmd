@@ -337,7 +337,7 @@ Participants were recruited using Prolific.co. The experiment was advertised to 
 
 Data were returned by 157 participants. Per pre-registered exclusion criteria, seven participants' submissions were rejected because they answered more than one of six attention check questions incorrectly.
 
-The final sample consisted of 150 participants (`r printnum(gender_e1$M)`% male, `r printnum(gender_e1$F)`% female, `r printnum(gender_e1$NB)`% non-binary). Mean age was `r printnum(e1 %>% pull(ageResp.text) %>% mean())` (*SD* = `r printnum(e1 %>% pull(ageResp.text) %>% sd())`). The mean data visualisation literacy score was `r printnum(e1 %>% pull(literacy) %>% mean())` (*SD* = `r printnum(e1 %>% pull(literacy) %>% sd())`), out of a maximum of 30.
+The final sample consisted of 150 participants (`r printnum(gender_e1$M)`% male, `r printnum(gender_e1$F)`% female, `r printnum(gender_e1$NB)`% non-binary). Mean age was `r printnum(e1 %>% pull(ageResp.text) %>% mean())` years (*SD* = `r printnum(e1 %>% pull(ageResp.text) %>% sd())`). The mean data visualisation literacy score was `r printnum(e1 %>% pull(literacy) %>% mean())` (*SD* = `r printnum(e1 %>% pull(literacy) %>% sd())`), out of a maximum of 30.
 
 Participants with accepted submissions received £3.50.
 
@@ -442,7 +442,9 @@ Participants were recruited using Prolific.co, using the same inclusion criteria
 
 Data were returned by xxx participants. Per pre-registered exclusion criteria, xxx participants' submissions were rejected because they answered more than one of six attention check questions incorrectly.
 
-The final sample consisted of 150 participants (`r printnum(gender_e2$M)`% male, `r printnum(gender_e2$F)`% female, `r printnum(gender_e2$NB)`% non-binary, `r printnum(gender_e2$Another)`% other, `r printnum(gender_e2$Pnts)`% prefer not say). Mean age was `r printnum(e2 %>% pull(ageResp.text) %>% mean())` (*SD* = `r printnum(e2 %>% pull(ageResp.text) %>% sd())`). The mean data visualisation literacy score was `r printnum(e2 %>% pull(literacy) %>% mean())` (*SD* = `r printnum(e2 %>% pull(literacy) %>% sd())`), out of a maximum of 30.
+The final sample consisted of 150 participants (`r printnum(gender_e2$M)`% male, `r printnum(gender_e2$F)`% female, `r printnum(gender_e2$NB)`% non-binary, `r printnum(gender_e2$Another)`% other, `r printnum(gender_e2$Pnts)`% prefer not say). Mean age was `r printnum(e2 %>% pull(ageResp.text) %>% mean(na.rm = T))` years (*SD* = `r printnum(e2 %>% pull(ageResp.text) %>% sd(na.rm = T))`)[^1]. The mean data visualisation literacy score was `r printnum(e2 %>% pull(literacy) %>% mean())` (*SD* = `r printnum(e2 %>% pull(literacy) %>% sd())`), out of a maximum of 30.
+
+[^1]: Age data was unavailable for `r e2 %>% distinct(participant, .keep_all = TRUE) %>% pull(ageResp.text) %>% is.na() %>% sum()` participants
 
 Participants with accepted submissions received £5.00.
 
