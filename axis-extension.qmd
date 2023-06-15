@@ -422,9 +422,9 @@ We predicted an interaction between axis limits and denominator presence. Pre-re
 
 We generated bar charts using ggplot2 in R (version 4.2.1), using tidyverse (version 1.3.2) and ggh4x (version 0.2.3). The same scenarios were used as in E1 and bar charts were generated using the same method. We expanded the range of denominators, employing the following values: Consequently, the values plotted in the charts and on the axes, differed from E1.
 
-Differences in filler trials.
+Differences in filler trials - 32 not 8
 
-We added the word 'surveyed' or 'assessed' to \[x\] accompanying sentences in items from E1, that were unclear in the absence of a denominator.
+We added the word 'surveyed' or 'assessed' to seven accompanying sentences in items from E1, that were unclear in the absence of a denominator.
 
 ### Procedure
 
