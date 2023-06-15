@@ -440,7 +440,7 @@ We employed a within-participants 2x2 Latin-squared design with two factors: axi
 
 Participants were recruited using Prolific.co, using the same inclusion criteria as Experiment 1. Individuals who completed E1 were prevented from participating.
 
-Data were returned by xxx participants. Per pre-registered exclusion criteria, xxx participants' submissions were rejected because they answered more than one of six attention check questions incorrectly.
+Data were returned by 208 participants. Per pre-registered exclusion criteria, eight participants' submissions were rejected because they answered more than one of six attention check questions incorrectly.
 
 The final sample consisted of 150 participants (`r printnum(gender_e2$M)`% male, `r printnum(gender_e2$F)`% female, `r printnum(gender_e2$NB)`% non-binary, `r printnum(gender_e2$Another)`% other, `r printnum(gender_e2$Pnts)`% prefer not say). Mean age was `r printnum(e2 %>% pull(ageResp.text) %>% mean(na.rm = T))` years (*SD* = `r printnum(e2 %>% pull(ageResp.text) %>% sd(na.rm = T))`)[^1]. The mean data visualisation literacy score was `r printnum(e2 %>% pull(literacy) %>% mean())` (*SD* = `r printnum(e2 %>% pull(literacy) %>% sd())`), out of a maximum of 30.
 
