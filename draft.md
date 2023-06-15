@@ -3,30 +3,6 @@ Magnitude judgements, axis limits, proportional reasoning, denominator neglect, 
 # Abstract
 Gauging a number’s magnitude can be difficult without sufficient background knowledge. Interpreting the magnitude of certain types of data requires awareness of a denominator. This contextual information can be implied through the visualisation’s design, or can be included in text accompanying a data visualisation. 
 
-# Introduction
-
-The question ‘Is it a big number?’ is often raised on the BBC radio programme _More or Less_ when probing eye-catching statistics. A figure of several million pounds may initially seem large, but may represent a small proportion of total government spending. Awareness of a denominator value can influence judgement of a number’s magnitude. In data visualisation, this contextual information can be displayed by extending an axis to accomodate the denominator value. However, this option is typically omitted from visualisations, since axis settings are typically based on plotted data by default. In this study, we investigate how these design settings affect interpretations of how large or small plotted values are.
-
-# Overview
-
-Across two experiments, we investigate the interpretation of magnitudes in bar charts. We plotted ficticious datasets which contained multiple observations of a subset, all with the same denominator values. In the first experiment, we displayed charts with axes which either terminated just above plotted values, or terminated at the denominator value, which was specified in accompanying text. Participants rated values’ magnitudes as higher when default axes were used, compared to extended axes. In the second experiment, we manipulated the axis range, as before, and also the presence of the denominator information in text. The difference in magnitude ratings between the two axis settings was greater when denominator information not supplied. This indicate that this information mitigates the biasing effect of visual appearance.
-
-# Related Work
-
-A wealth of research demonstrates biases in the interpretation of numbers. A disease’s survival rate elicits different judgements compared to its corresponding mortality rate (Tversky & Kahneman, 1981), the fat content of meat elicits different judgements compared to its corresponding lean content (Levin, 1987). The units used to express the same values (e.g., months vs. years) affect comparisons (Burson, Monga and Bagchi) and also interpretations of precision and accuracy (Zhang and Schwarz). 
-
-Various biases in magnitude judgements reveal the importance of accounting for numerical context. Base rate neglect describes difficulty acknowledging population-level characteristics when making judgements about a sample (Cosmides and Tooby). Format neglect describes a bias against incorporating set size information when judging percentage formats (top 20%) and numerical formats (top 10, Sevilla et al., 2018). Denominator neglect occurs in judgements which overweight numerator information at the expense of denominator information (Reyna and Brainerd, 2008). The latter also leads (in part) to large percentages of a small number appearing greater than the *numerically equivalent* smaller percentages of a larger number (Li and Chapman, 2013). The general mechanism responsible for these biases is a failure to properly acknowledge numerical context.
-
-Visualisations can help combat biases. Denominator information becomes visually available when icon arrays present both focal outcomes (e.g., number deceased) *and also* alternative outcomes (e.g., number survived). Research suggests that the combined array acts as a visual cue to the denominator, facilitating reasoning. For example, including alternative outcomes in an icon array, and therefore displaying denominator information, reduces denominator neglect, increasing comprehension of relative risk (Garcia-Retamero and Galesic, 2010). Icon arrays displaying both types of outcome are particularly helpful for understanding datasets with unequal denominators, and for individuals with high graph literacy (Okan et al., 2012). However, these effects are largest when depicting small probabilities (Okan et al. 2020). 
-
-Stacked bar charts function similarly to icon arrays: lower bars represent the focal outcome, upper bar represent the alternative outcome, and their combination represents the denominator. Like icon arrays, stacked bar charts lessen the influence of denominator neglect (Stone et al., 2003). However, denominator information can be displayed in bar charts without using additional stacked bars to represent alternative outcomes. Extending an axis to incorporate the denominator value also communicates relevant numerical context. In this case, the blank space between the bars for focal outcomes and the upper axis limit corresponds to the alternative outcomes. Research has denonstrated that bar charts representing alternative outcomes with blank space increase perceptions of risk likelihood compared to those representing alternative outcomes with stacked bars (Stone et al., 2017). This research did not examine how presenting *denominator information* influences interpretation, since identical axis limits were employed across conditions.
-
-Directly manipulating bar charts’ upper axis limits provides insight into use of this source of denominator information. Bar charts with axes which extended to the denominator value produces more accurate estimates of changes in risk (Garcia-Retamero and Galesic, 2010). This design also elicits decreased ratings of risk perception (Okan et al., 2018). In both studies, accompanying text included the denominator value. These studies demonstrate that extending axes to incorporate denominator values influences interpretation of risk. However, they do not provide specific evidence on how interpretations of *plotted values’ magnitudes* are affected. Garcia-Retamero and Galesic (2010) measured risk understanding: how faithfully participants represented the exact numbers displayed. Only assessing comprehension fails to capture individuals’ *impressions* of plotted information (Feldman-Stewart et al., 2007). Understanding the ‘gist’ obtained from a visualisation is crucial since this takes precedence over ‘verbatim’ information when making decisions (Reyna, 2008). Reyna (2008) argues that assessing gist requires consideration of how plotted values’ magnitudes are interpreted, since plotted values’ relative differences are only one aspect of a dataset conveyed by a visualisation. Indeed, Okan et al. (2018) collected magnitude ratings, yet these cannot be examined in isolation, since they were assimilated into a combined measure of perceived risk, along with ratings of the degree of *difference between* plotted values. Outside the risk communication literature, a substantial body of research has demonstrated that judgements of the difference between values change as a function of axis range (Pandey, Correll, Witt, Yang). In spite of this, research has neglected the effects of axis range on judgements of the magnitude of *the values themselves*. This is the focus of experiments in this work.
-
-Various accounts have sought to explain the consequences of including denominator information in visualisations. Depicting denominators may facilitate understanding of part-to-whole relationships, diminishing class-inclusion errors associated with denominator neglect (Reyna, 2008). This argument is consistent with Fuzzy Trace Theory, which also predicts the influence of physical attributes in gist representations, such that the appearance of short bars in charts with extended axes may contribute to smaller magnitude judgements (Reyna, 2008). Additionally, Stone et al. (2018) suggest facilitation of proportional reasoning may be largely responsible for observed effects. Increasing the salience of the denominator in text fails to affect judgements, yet a graphical representation effectively communicates the true scale of the denominator, helping put numerators into perspective. 
-
-Prior work on extending axes, discussed above, did not disclose methods for determining axis limits in charts without denominators. The values used as upper limits appear to be arbitrary. In the present study, we increase ecological validity by employing default axis limits from ggplot2, a popular visualisation tool. Furthermore, previous studies’ statistical power and generalisability have been limited by the use of one (Okan et al. 2018) or two (Garcia-Retamero and Galesic, 2010) trials per participant. Our experiments explore a range of scenarios (32 experimental trials per participant). The data presented are also unrelated to risk judgements, the domain of this prior work.
-
 # Experiment 1
 
 # Discussion
@@ -59,7 +35,7 @@ Finally, repeated exposure to relatively low magnitudes in experimental trials m
 
 # General Discussion
 
-Visual cues to denominator are easily implemented in common data visualisation software, but are not included by default. We demonstrate that magnitude was interpreted as smaller when a bar chart’s axes were extended to the denominator value, rather than the default settings. This was particularly true when no denominator information accompanied the chart. This provides insight into the cognitive process involved in interpreting magnitude in bar charts, indicating that denominator information is an important aspect in interpretation of charts.
+A visual cue to denominator information can be easily implemented in common data visualisation software. However, the default is based on the data, which often omits denominator information. We demonstrate that magnitude was interpreted as smaller when a bar chart’s axes were extended to the denominator value, rather than the default settings. This was particularly true when no denominator information accompanied the chart. This provides insight into the cognitive process involved in interpreting magnitude in bar charts, indicating that denominator information is an important aspect in interpretation of charts.
 
 In Experiment 1, we identified a framing effect, wherein charts with axes that terminated just above the plotted data elicited judgements of greater magnitude, compared to charts with axes that accomodated a much higher denominator value. The extended axes condition had a visual cue to denominator, but in both conditions denominator was explicitly presented in the text in both conditions. However, some extreme responses in the default condition appeared to disregard this denominator. Given the apparent importance of denominator information, we conducted another experiment in order to experimentally examine the denominator’s role in the cognitive processing of magnitude. We examined how interpretations were affected by the absence of denominator information, quantifying the influence of integrating external denominator information in resolving ambiguity in different chart designs. 
 
@@ -69,33 +45,6 @@ Third, we replicated the pattern of responses observed in E1 for the condition w
 
 Fourth, additional ratings collected in E2 provide insight into participants’ confidence. Although analysis of these ratings indicated an interaction between denominator information and axis setting, the minuscule associated effect size casts doubt over its practical significance. In spite of this, absence of a denominator clearly lowered confidence, compared to when a denominator was present. This suggests that participants were hesitant to form magnitude judgements based solely on a bar chart’s appearance. Textual confirmation of a denominator was prefered regardless of graphical cues to context.
 
-## Relationship to Prior Work
-
-For fuzzy-trace theory, the goal is to promote an appropriate gist-level message, rather than expecting memorisation of verbatim information, since gist takes precedence over verbatim information when it comes to reasoning. 
-
-We contribute a broad body of literature demonstrating biases in the interpretation of numerical information (). Our results resemble a type of framing effect, where presentation format elicit different interpretations of the same values. 
-
-They demonstrate that insufficient attention to denominators reduces comprehension of presented information (Okan et al., 2018).
-
-
-Like others, we found 
-  * the role of axis limits
-  * the importance of denominator information
-… In addition, we Reveal + investigate inconsistency - we demonstrate that variability in ratings, and explore.
-Our findings are consistent with foreground-background theory/proportional reasoning theory.
-
-Much prior research has observed that manipulating axis limits can change interpretations of the difference between values. We contribute to a smaller body of related work on the effect of axis limits on the interpretation of the magnitude of values. Even those studies which have looked at magnitude, have tended to use composite measures, or have investigate related concepts, such as understanding. The benefit of looking at interpretations is that they are closest to gist - the takeaway message, rather the verbatim information which is unlikely to stick in the mind. Look at justification in Stone et al. 2015.  
-
-Some (no) prior work has investigated the role of additional information. We demonstrate that contextual information can limit a bias. The observed effects may be mitigated by additional information. 
-
-Whereas much prior research has been limited to interpretation of risk probability information (), we demonstrate that biases in interpretation exist for a range of non-risk scenarios. This provides confidence that these findings are widely applicable. This work also tends to use a single trial. With multiple trials per condition, we have enhanced statistical power, increasing confidence in our results. 
-
-When similar explorations of the visual denominator displays developed charts without denominator information, they appeared to use abitrary upper bounds. By using the upper bounds selected by the ggplot2 visualisation tool, we increase ecoloical validity. Our results are more relevant to charts people create, consequently creating better practical recommendations.
-
-Okan et al. (2018) suggest that biases related to axis limits will be affected by data visualisation literacy. They found… We did not find evidence that data visualisation literacy affected our results. It’s possible that this measure captures whether people have sufficient ability to extract information but can’t predict the degree to which they’ll be influenced by subtler design choices (Yang et al., 2021). Reyna and Brainerd report that several studies have denomstrated that those with high numeracy are less susceptible to bias. Gauging magnitude by calculating at proprotions would certainly rely on numeracy, so this is perhaps a better candidate for understanding individual differences. Numeracy (but not necessarily visualisation literacy) is associated with increased sensitivity to framing effects (Peters et al. 2006). 
-
-Appearance matters for gist representations - physical sizes of the elements on a graph, and relations between these elements, contribute, so foreground only charts may increase perceptions of magnitude (Reyna, 2008).
-
 ## Implications
 
 For visualisations intended to convey magnitudes, both the axis upper bound and accompanying text warrant consideration from data visualisation designers. Where it is not possible to present a denominator in accompanying text, an extended axis should be used, in order to display plotted data in context. Even when a denominator is present, a default axis will elicit more variation in responses. Not all participants will interpret the chart in the same way as they would if it was displayed graphically. An extended axis provides insurance against those failing to take account of denominator information in the accompanying text. 
@@ -104,13 +53,52 @@ We also found that *confidence* ratings are consistently high in the absence of 
 
 It is also worth considering situations which are likely to accentuate this bias. Even when denominator information is supplied in text, cognitive load may prevent participants from taking it into account. We suspect that ratings would resemble those where it is absent in E2. Under high cognitive load, participants’ ratings are most likely to resemble their best guess if an extended axis is used. Pelham et al (1994) find issues 
 
+## Relationship to Prior Work
+
+We contribute a broad body of literature demonstrating biases in the interpretation of numerical information (). Our results resemble a type of framing effect, where presentation format elicit different interpretations of the same values ().
+
+### Comparison of findings
+Specifically, our findings are consistent with work demonstrating that insufficient attention to denominators reduces comprehension of presented information (Stone, 2003?).
+
+Demonstrate that axis bounds influence interpretation (G-R and Galesic, 2010), Okan et al. (2018)
+
+Demonstrate that blank space can affect magnitude judgements (Stone 2017)
+
+How does it fit with Okan et al. (2018) labels?
+
+How does it relate to foreground only display of Stone 2015?
+
+### Improvements on Similar Work
+
+Some (no) prior work has investigated the role of additional information. We demonstrate that contextual information can limit a bias. The observed effects may be mitigated by additional information. 
+
+Much prior research has observed that manipulating axis limits can change interpretations of the difference between values. We contribute to a smaller body of related work on the effect of axis limits on the interpretation of the magnitude of values. Even those studies which have looked at magnitude, have tended to use composite measures, or have investigate related concepts, such as understanding. The benefit of looking at interpretations is that they are closest to gist - the takeaway message, rather the verbatim information which is unlikely to stick in the mind. Look at justification in Stone et al. 2015.  
+
+Whereas much prior research has been limited to interpretation of risk probability information (), we demonstrate that biases in interpretation exist for a range of non-risk scenarios. This provides confidence that these findings are widely applicable. This work also tends to use a single trial. With multiple trials per condition, we have enhanced statistical power, increasing confidence in our results. When similar explorations of the visual denominator displays developed charts without denominator information, they appeared to use abitrary upper bounds. By using the upper bounds selected by the ggplot2 visualisation tool, we increase ecoloical validity. Our results are more relevant to charts people create, consequently creating better practical recommendations. More easily able to evaluate the quality of charts plotted using defaults. 
+
+### Relation to Existing Theory
+
+Appearance matters for gist representations - physical sizes of the elements on a graph, and relations between these elements, contribute, so foreground only charts may increase perceptions of magnitude (Reyna, 2008).
+
+For fuzzy-trace theory, the goal is to promote an appropriate gist-level message, rather than expecting memorisation of verbatim information, since gist takes precedence over verbatim information when it comes to reasoning. 
+
+Proportional reasoning:
+Denominator neglect:
+Fuzzy-trace theory and gist:
+
+### Data Visualisation Literacy, Numeracy, and Individual Differences
+
+Read Okan et al 2012: Individual Differences in Graph Literacy: Overcoming Denominator Neglect in Risk Comprehension
+
+We did not find evidence that data visualisation literacy affected our results. This mirrors Okan et al.’s findings. It’s possible that this measure captures whether people have sufficient ability to extract information but can’t predict the degree to which they’ll be influenced by subtler design choices (Yang et al., 2021). Reyna and Brainerd report that several studies have denomstrated that those with high numeracy are less susceptible to bias. Gauging magnitude by calculating at proprotions would certainly rely on numeracy, so this is perhaps a better candidate for understanding individual differences. Numeracy (but not necessarily visualisation literacy) is associated with increased sensitivity to framing effects (Peters et al. 2006). 
+
 ## Limitations and Future Work
 
 In this work, we are concerned with charts which are designed to convey plotted values’ magnitudes. However, when designing charts to convey differences between values, design considerations will be different. Differences will be easiest to see when a smaller axis range is used. Indeed, this is why the default settings are so defined. Blank space is unhelpful when it comes to identifying differences. Therefore, we don’t claim that extended axes are suitable for all communicative scenarios. However, we illustrate what will happen if denominator information is not supplied. 
 
 The charts used in this experiment employ a single denominator, corresponding to the denominator for each bar. Our experiment applies best to controlled scenarios, such as surveys and experiments, where each category plotted shares a single denominator. Our findings may also extend to cases with variation in denominators, depicted using proportions or percentages. However, we recognise that this is not always possible. Also releveant is that magnitude judgements are not only informed by proportions, the subject might play a role in interpretation. Future work could explore these points. 
 
-This work employed magnitude ratings, to assess interpretations. This captures the type of assessment likely to precede decision-making. It’s distinct and valuable. However, future work could employ a decision-making task, to explore the effects on behaviour. 
+Although our manipulation is crude, we want to know what happens what you remove denominator information altogether. Bias is not an indicator of faulty reasoning, but provides insight into cognitive mechanisms. This work employed magnitude ratings, to assess interpretations. This captures the type of assessment likely to precede decision-making. It’s distinct and valuable. However, future work could employ a decision-making task, to explore the effects on behaviour. 
 
 Our investigation was interested in interpretations of the types of default plots produced by default settings. Obviously we only looked at the plots produced using ggplot2, though we expected interpretations for other tools’ default charts to elicit similar responses. For uniformity in our materials, we used only default charts where the highest gridlines fell below the highest value. So, whilst we do investigate the most common scenario, we cannot therefore make comparisons between those where the highest gridline is above the highest value. Future work should explore this. 
 
