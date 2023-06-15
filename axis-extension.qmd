@@ -291,6 +291,8 @@ gender_e2 <- e2 %>%
   pivot_wider(names_from = gender, values_from = freq)
 ```
 
+{{< include text_body/introduction.md >}}
+
 Datasets for `r printnum(get_anomalies(e1), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
 
 Datasets for `r printnum(get_anomalies(e2), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
@@ -323,7 +325,7 @@ We included six attention check trials to assess participants' engagement with t
 
 PsychoPy version 2022.1.4. Participants were instructed to carry out the experiment using a laptop or desktop computer (not a mobile phone or tablet). After providing informed consent, participants completed a demographic questionnaire and Garcia-Retamero et al.'s (2016) subjective data visualisation literacy measure. Participants were asked to image they were a researcher tasked with determining the outcome of experiments and surveys. They were instructed to make an overall assessment of all data presented in the graph after studying the text, graph, and question. Items were presented in a random order. There was a total of 46 trials.
 
-Participants were permitted to move the response marker as many times as they liked before proceeding to the next trial, but could not return to previous trials. Finally, they were informed that all data presented was fictitious and were given the option to provide comments on the experiment and describe any strategies used. Average completion time was `r printnum(e1 %>% pull(total_duration) %>% mean(), digits = 1)` minutes. 
+Participants were permitted to move the response marker as many times as they liked before proceeding to the next trial, but could not return to previous trials. Finally, they were informed that all data presented was fictitious and were given the option to provide comments on the experiment and describe any strategies used. Average completion time was `r printnum(e1 %>% pull(total_duration) %>% mean(), digits = 1)` minutes.
 
 ### Design
 
@@ -428,7 +430,7 @@ We added the word 'surveyed' or 'assessed' to \[x\] accompanying sentences in it
 
 The procedure was identical to Experiment 1, except for the addition of a confidence rating...
 
-Average completion time was `r printnum(e2 %>% pull(total_duration) %>% mean(), digits = 1)` minutes. 
+Average completion time was `r printnum(e2 %>% pull(total_duration) %>% mean(), digits = 1)` minutes.
 
 ### Design
 
@@ -606,8 +608,6 @@ e2_con <- buildmer(con_slider.response ~ axis*denominator +
 e2_con_summ <- anova(e2_con) %>% as_tibble(rownames = "FixEf", .name_repair = make.names) %>%
   rename("Pr" = "Pr..F.")
 ```
-
-{{< include test1.md >}}
 
 ```{r}
 #| label: e2-con-contrasts
