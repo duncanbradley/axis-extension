@@ -418,6 +418,12 @@ summary_extract(e1_mag_l)
 
 Accounting for differences in data visualisation literacy did not change the significant effect of axis upper bound F(`r printnum(e1_mag_l_cond_NumDF)`, `r printnum(e1_mag_l_cond_DenDF)`) = `r printnum(e1_mag_l_cond_F.value)`, p `r printp(e1_mag_l_cond_p, add_equals = T)`, partial $\eta^2$ = `r printnum(e1_mag_l_cond_Eta2_partial)`.
 
+## Discussion
+
+This experiment explored the consequences of including graphical cues to denominators through bar charts\' axes. We observed that plotted values\' magnitudes were interpreted as smaller when a default axis limit was used, compared to an axis limit equal to the dataset\'s denominator value. Therefore, assessments of data were biased by presence or absence of numerical context in bar charts.
+
+Denominator information informs magnitude judgements. In bar charts with extended axes, denominator information was available through the accompanying text and through axes. Comparison with bar charts employing default axes, where denominator information was *only* available through text, reveals the contribution of the graphical cue to the denominator value. Varied differences between conditions illustrate variation in interpretation. The similarity of lower magnitude ratings across conditions indicates some attention to denominator information in the absence of a graphical cue. However, some extreme high magnitude ratings in response to default axes only indicate a failure to account for denominator information in the absence of a graphical cue. Extreme high magnitude ratings suggest that the appearance of tall bars terminating above the highest gridline carried the implication of large values.
+
 # Experiment 2
 
 ## Pre-Registration
