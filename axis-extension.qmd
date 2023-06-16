@@ -1,5 +1,5 @@
 ---
-title: "axis-extension"
+title: "Magnitude judgements, axis limits, proportional reasoning, denominator neglect, cognitive mechanisms, cognitive processing, in bar charts"
 format: html
 editor: visual
 
@@ -14,7 +14,7 @@ execute:
 ---
 
 ```{r}
-#| label: load-packages
+#| label: setup
 library(tidyverse)
 library(lme4)
 library(lmerTest)
@@ -27,6 +27,8 @@ library(papaja)
 library(patchwork)
 library(insight)
 library(knitr)
+
+set.seed(45789)
 ```
 
 ```{r}
@@ -292,11 +294,13 @@ gender_e2 <- e2 %>%
   pivot_wider(names_from = gender, values_from = freq)
 ```
 
+Axis limit (default/extended)
+
+Denominator information (present/absent)
+
+{{< include text_body/abstract.md >}}
+
 {{< include text_body/introduction.md >}}
-
-Datasets for `r printnum(get_anomalies(e1), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
-
-Datasets for `r printnum(get_anomalies(e2), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
 
 # Experiment 1
 
@@ -316,7 +320,7 @@ We generated bar charts using ggplot2 in R (version 4.1.2), using tidyverse vers
 
 In truncated charts, the y-axis upper bound was dictated by ggplot2's default axis settings. These settings automatically identify a set of convenient breaks for each dataset, then slightly extend the plot area, adding 5% of the axis range to the upper axis limit. In both conditions, contrary to the default settings, a smaller expansion factor of 1% was applied to the lower axis limit, eliminating visible space below the 0 baseline.
 
-The default settings tended to produce charts where the highest axis break fell below the tallest bar. For the purposes of consistency, when the opposite situation occured, we automatically generated an alternative dataset to ensure the highest axis break appeared below the tallest bar. This dataset was used in both conditions. In our stimuli set, x alternative datasets were generated in this way.
+The default settings tended to produce charts where the highest axis break fell below the tallest bar. For the purposes of consistency, when the opposite situation occured, we automatically generated an alternative dataset to ensure the highest axis break appeared below the tallest bar. This dataset was used in both conditions. Datasets for `r printnum(get_anomalies(e1), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
 
 In experimental trials, plotted values consisted of relatively small proportions of the denominator value specified in the accompanying text (roughly 20% or 40%). To introduce variety and encourage attention, eight filler trials showed plotted values which were around 90% of the corresponding denominator value. The denominators were selected so that numerical labels on the y-axis roughly resembled either extended or truncated experimental trials.
 
@@ -426,11 +430,19 @@ Denominator information informs magnitude judgements. In bar charts with extende
 
 # Experiment 2
 
+## Introduction
+
+Experiment 1 found differences in interpretations of data presented using different axes limits. Overall, plotted data were associated with lower magnitudes when presenting using axes which extended to a denominator value. Compared to bar charts with extended axes, charts with no graphical cue to a denominator value elicited a wider variety of responses. This variety appears to reflect differences in how the denominator information supplied in accompanying text used in magnitude judgements. This raises questions about how text including denominator information influences the interpretation of different chart designs.
+
+By manipulating the presence of denominator information in accompanying text, in addition to axis range, we investigate how these graphical and textual cues inform assessments of data. This allows us to understand how different chart designs are interpreted with and without additional numerical context. This 2x2 design also allows us to replicate the findings from Experiment 1 and explore whether ratings in the absence of denominator information correspond to the previously observed pattern of extreme ratings.
+
+This follow-up experiment requires minor adaptations to materials and procedure. First, there is a risk that highly ambiguous trials without denominator information supplied in text will elicit unreliable random ratings. Therefore, we collect additional confidence ratings to directly indexing of this aspect of participants\' evaluations. This provides a more comprehensive view of participants\' cognitive states and interpretations. Second, when denominators are not supplied in text, participants may use denominator values supplied in previous trials to inform their judgements. A limited range of denominators (as in E1) would artificially diminish uncertainty regarding possible values, inhibiting authentic, spontaneous judgements. Therefore, we expand the range of denominators values in E2. Third, increasing the number of fillers (which depict relatively high magnitudes) to match the number of experimental items (which depict relatively low magnitudes) will avoiding priming effects by ensuring high and low magnitudes seem equally plausible.
+
 ## Pre-Registration
 
 We predicted an interaction between axis limits and denominator presence. Pre-registration is available at https://osf.io/hx9y4.
 
-# Method
+## Method
 
 ### Materials
 
@@ -439,6 +451,8 @@ We generated bar charts using ggplot2 in R (version 4.2.1), using tidyverse (ver
 Differences in filler trials - 32 not 8
 
 We added the word 'surveyed' or 'assessed' to seven accompanying sentences in items from E1, that were unclear in the absence of a denominator.
+
+Datasets for `r printnum(get_anomalies(e2), digits = 0)`% of items were recreated to ensure that the highest value exceeded the highest gridline when the default axis setting was used.
 
 ### Procedure
 
@@ -685,3 +699,5 @@ e2_con_l <- lmer(add.terms(formula(e2_con),
 "literacy"),
               data = e2)
 ```
+
+## Discussion
