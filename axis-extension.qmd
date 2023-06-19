@@ -2,6 +2,11 @@
 title: "Axis Limits and Denominator Information Influence Magnitude Ratings in Bar Charts"
 format: html
 editor: visual
+author:
+  - name: Duncan Bradley
+  - name: Harvey Schneider
+  - name: Caroline Jay
+  - name: Andrew Stewart
 
 params: 
   eval_models: true
@@ -716,6 +721,6 @@ Accounting for differences in data visualisation literacy did not change the pat
 
 ## Discussion
 
-This experiment manipulated bar charts' axis limits, and the presence of denominator values in accompanying text. The results demonstrate that (interaction)
+This experiment manipulated bar charts' axis limits, and the presence of denominator values in accompanying text. The results demonstrate that values presented in charts with default axis limits are associated with higher magnitudes, than charts with extended axes, in both the presence and absence of denominator information. However, the absence of denominator information amplifies this bias. These results also suggest that extreme high magnitude ratings for default charts in the presence of a denominator value may be driven by a failure to incorporate that value into reasoning. Finally, confidence in judgements is reliably affected by the inclusion of denominator information in text.
 
 {{< include text_body/discussion.md >}}
