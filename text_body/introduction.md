@@ -10,7 +10,7 @@ The question 'Is it a big number?' is often raised on the BBC radio programme *M
 
 Across two experiments, we investigate the interpretation of magnitudes in bar charts. We plotted fictitious datasets which contained multiple observations, all with the same denominator values. In the first experiment, we displayed charts with default axes which terminated just above plotted values, or axes which extended to the denominator value specified in accompanying text. Participants rated values' magnitudes as higher when default axes were used, compared to extended axes. In the second experiment, we manipulated the axis range, as before, and also the presence of the denominator information in accompanying text. The difference in magnitude ratings between the two axis settings was greater when denominator information not supplied. This indicates that this information influences the biasing effect of a chart's appearance.
 
-# Related Work
+## Related Work
 
 A wealth of research demonstrates biases in the interpretation of numbers. A survival rate elicits different judgements of a disease compared to its corresponding mortality rate [@tversky_framing_1981], the fat content of a meat product elicits different judgements of the meat compared to its corresponding lean content [@levin_associative_1987]. The units used to express the same values (e.g., months vs. years) affect comparisons [@burson_six_2009; @monga_years_2012] and also interpretations of precision and accuracy [@zhang_how_2012].
 
@@ -25,3 +25,7 @@ Directly manipulating bar charts' upper axis limits provides insight into use of
 Various accounts have sought to explain the consequences of including denominator information in visualisations. Depicting denominators may facilitate understanding of part-to-whole relationships, diminishing class-inclusion errors associated with denominator neglect [@reyna_theory_2008]. This argument is consistent with Fuzzy Trace Theory, which also predicts the influence of physical attributes in gist representations, such that the appearance of short bars in charts with extended axes may contribute to smaller magnitude judgements [@reyna_theory_2008]. Additionally, [@stone_salience_2018] suggest facilitation of proportional reasoning may be largely responsible for observed effects. Increasing the salience of the denominator in text fails to affect judgements, yet a graphical representation effectively communicates the true scale of the denominator, helping put numerators into perspective.
 
 Prior work on extending axes, discussed above, did not disclose methods for determining axis limits in charts without denominators. The values used as upper limits appear to be arbitrary. In the present study, we increase ecological validity by employing default axis limits from {ggplot2} [@wickham_ggplot2_2016], a popular visualisation tool used in the R programming environment. Furthermore, previous studies' statistical power and generalisability have been limited by the use of one [@okan_designing_2018] or two [@garcia-retamero_who_2010] trials per participant. Our experiments explore a range of scenarios (32 experimental trials per participant). The data presented are also unrelated to risk judgements, the domain of this prior work.
+
+#### Open Research Statement
+
+Data, analysis code, and pre-registrations are available at osf.io/854uc/.

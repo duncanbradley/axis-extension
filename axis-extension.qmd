@@ -299,8 +299,6 @@ gender_e2 <- e2 %>%
 
 {{< include text_body/introduction.md >}}
 
-https://osf.io/e9j43 https://osf.io/hx9y4
-
 # Experiment 1
 
 ## Introduction
