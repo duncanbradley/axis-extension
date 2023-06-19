@@ -1,5 +1,5 @@
 ---
-title: "Bar Charts, Magnitude Judgements, and Denominator Information"
+title: "Axis Limits and Denominator Information Influence Magnitude Ratings in Bar Charts"
 format: html
 editor: visual
 
@@ -313,7 +313,7 @@ This experiment investigates the influence of axis limits on interpretations of 
 
 We developed 40 scenarios about fictitious studies. Each study evaluated a specific outcome across five categories (e.g., the number of items produced without defects, for five manufacturing methods). The denominator (e.g., total number of items produced) was identical for each category.
 
-We generated bar charts in R using {ggplot2} (version 4.1.2), {tidyverse} (version 1.3.1) and {ggh4x} (version 0.2.1). The two versions of each chart displayed the same five values, but employed different y-axis limits. Denominator values (400, 500, or 600) were used to generate datasets: data were sampled from normal distribution with a mean equal to either 20% or 40% of a given denominator value, and a standard deviation equal to 1% of the denominator value.
+We generated bar charts in R [@r_core_team_r_2022] using {ggplot2} (version 4.1.2), {tidyverse} (version 1.3.1) and {ggh4x} (version 0.2.1). The two versions of each chart displayed the same five values, but employed different y-axis limits. Denominator values (400, 500, or 600) were used to generate datasets: data were sampled from normal distribution with a mean equal to either 20% or 40% of a given denominator value, and a standard deviation equal to 1% of the denominator value.
 
 For charts with extended axes, the denominator value y-axis upper limit. The other charts used a y-axis upper limit was dictated by ggplot2's default axis settings. These settings automatically identify a set of convenient breaks for each dataset, then slightly extend the plot area, adding an additional 5% of the axis range. In both conditions, a smaller expansion factor of 1% was applied to the lower axis limit, contrary to the default settings, in order to eliminate visible space below the 0 baseline. @fig-example-charts shows example charts for both conditions.
 
@@ -347,7 +347,7 @@ This experiment was approved by the University of Manchester's Division of Neuro
 
 ### Procedure
 
-We programmed the experiment using PsychoPy (version 2022.1.4, [@peirce_psychopy2_2019]). Participants were instructed to carry out the experiment using a laptop or desktop computer (not a mobile phone or tablet). After providing informed consent, participants completed a demographic questionnaire and Garcia-Retamero et al.'s (2016) five-item subjective data visualisation literacy scale.
+We programmed the experiment using PsychoPy (version 2022.1.4, [@peirce_psychopy2_2019]). Participants were instructed to carry out the experiment using a laptop or desktop computer (not a mobile phone or tablet). After providing informed consent, participants completed a demographic questionnaire and Garcia-Retamero et al.'s [@garcia-retamero_measuring_2016] five-item subjective data visualisation literacy scale.
 
 Participants were asked to imagine they were a researcher tasked with determining the outcome of experiments and surveys. They were instructed, to make an overall assessment of all data presented in a graph after studying the text, graph, and question. All questions asked about plotted values' magnitudes (e.g., 'How successful were the manufacturing methods?'), with participants responding on visual analogue scales with anchors at the extremes (e.g., 'very unsuccessful', 'very successful'). @fig-e1-trial shows an example trial.
 
@@ -361,6 +361,8 @@ include_graphics("images/trial_e1.png")
 Participants were permitted to move the response marker as many times as they liked before proceeding to the next trial, but could not return to previous trials. The response scale's granularity was altered for each attention check item, such that participants could only respond at the extremes or the middle of the scale. Finally, participants were informed that all data presented was fictitious and were given the option to provide comments on the experiment and describe any strategies used. Average completion time was `r printnum(e1 %>% pull(total_duration) %>% mean(), digits = 1)` minutes.
 
 ## Analysis
+
+We conducted analysis using R [@r_core_team_r_2022] (version 4.2.1). Linear mixed models were built using {lme4} [@bates_fitting_2015]. Each model was based on a maximal model with by-participant and by-item random effects [@barr_random_2013], and {buildmer} [@voeten_buildmer_2022] was used to identify the final random effects structure, ensuring convergence and removing terms not significantly contributing to explaining variance.
 
 ### Magnitude Ratings
 
@@ -426,7 +428,7 @@ e1_mag_l <- lmer(add.terms(formula(e1_mag),
 summary_extract(e1_mag_l)
 ```
 
-Accounting for differences in data visualisation literacy did not change the significant effect of Axis Limit: F(`r printnum(e1_mag_l_cond_NumDF)`, `r printnum(e1_mag_l_cond_DenDF)`) = `r printnum(e1_mag_l_cond_F.value)`, p `r printp(e1_mag_l_cond_p, add_equals = T)`, partial $\eta^2$ = `r printnum(e1_mag_l_cond_Eta2_partial)`.
+Accounting for differences in data visualisation literacy did not change the significant effect of axis limits: F(`r printnum(e1_mag_l_cond_NumDF)`, `r printnum(e1_mag_l_cond_DenDF)`) = `r printnum(e1_mag_l_cond_F.value)`, p `r printp(e1_mag_l_cond_p, add_equals = T)`, partial $\eta^2$ = `r printnum(e1_mag_l_cond_Eta2_partial)`.
 
 ## Discussion
 
@@ -546,7 +548,7 @@ e2_mag_emm <- emmeans(e2_mag@model, pairwise ~ axis * denominator, adjust = 'sid
 get_contrasts(e2_mag_emm, condition = "denominator")
 ```
 
-Pairwise comparisons revealed that charts with extended and default axes were rated differently when the denominator was present, replicating the effect from Experiment 1 (z = `r printnum(e2_mag_emm_pres_z.ratio)`, p `r printp(e2_mag_emm_pres_p.value, add_equals = TRUE)`), and also when the denominator was absent (z = `r printnum(e2_mag_emm_abs_z.ratio)`, p `r printp(e2_mag_emm_abs_p.value)`). Therefore, the interaction indicates that the magnitude of influence exerted by a bar chart's axis varied according to whether the denominator was present or absent.
+Pairwise comparisons produced using {emmeans} [@lenth_emmeans_2021] revealed that charts with extended and default axes were rated differently when the denominator was present, replicating the effect from Experiment 1 (z = `r printnum(e2_mag_emm_pres_z.ratio)`, p `r printp(e2_mag_emm_pres_p.value, add_equals = TRUE)`), and also when the denominator was absent (z = `r printnum(e2_mag_emm_abs_z.ratio)`, p `r printp(e2_mag_emm_abs_p.value)`). Therefore, the interaction indicates that the magnitude of influence exerted by a bar chart's axis varied according to whether the denominator was present or absent.
 
 ```{r}
 #| include: false
@@ -713,5 +715,9 @@ summary_extract(e2_con_l)
 ```
 
 Accounting for differences in data visualisation literacy did not change the pattern of results. There was a main effect associated with axis limits (F(`r printnum(e2_con_l_axis_NumDF)`, `r printnum(e2_con_l_axis_DenDF)`) = `r printnum(e2_con_l_axis_F.value)`, p `r printp(e2_con_l_axis_p, add_equals = T)`, partial $\eta^2$ = `r printnum(e2_con_l_axis_Eta2_partial)`) and a main effect associated with denominator presence (F(`r printnum(e2_con_l_denominator_NumDF)`, `r printnum(e2_con_l_denominator_DenDF)`) = `r printnum(e2_con_l_denominator_F.value)`, p `r printp(e2_con_l_denominator_p, add_equals = T)`, partial $\eta^2$ = `r printnum(e2_con_l_denominator_Eta2_partial)`) and an interaction F(`r printnum(e2_con_l_denominator_axis_NumDF)`, `r printnum(e2_con_l_denominator_axis_DenDF)`) = `r printnum(e2_con_l_denominator_axis_F.value)`, p `r printp(e2_con_l_denominator_axis_p, add_equals = T)`, partial $\eta^2$ = `r printnum(e2_con_l_denominator_axis_Eta2_partial)`.
+
+## Discussion
+
+This experiment manipulated bar charts' axis limits, and the presence of denominator values in accompanying text. The results demonstrate that (interaction)
 
 {{< include text_body/discussion.md >}}
