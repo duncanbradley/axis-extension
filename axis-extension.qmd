@@ -1,6 +1,6 @@
 ---
 title: "Axis Limits and Denominator Information Influence Magnitude Ratings in Bar Charts"
-format: docx
+format: pdf
 editor: visual
 author:
   - name: Duncan Bradley
@@ -318,12 +318,12 @@ We developed 40 scenarios about fictitious studies. Each study evaluated a speci
 
 We generated bar charts in R [@r_core_team_r_2022] using {ggplot2} (version 4.1.2), {tidyverse} (version 1.3.1) and {ggh4x} (version 0.2.1). The two versions of each chart displayed the same five values, but employed different y-axis limits. Denominator values (400, 500, or 600) were used to generate datasets: data were sampled from normal distribution with a mean equal to either 20% or 40% of a given denominator value, and a standard deviation equal to 1% of the denominator value.
 
-For charts with extended axes, the denominator value y-axis upper limit. The other charts used a y-axis upper limit was dictated by ggplot2's default axis settings. These settings automatically identify a set of convenient breaks for each dataset, then slightly extend the plot area, adding an additional 5% of the axis range. In both conditions, a smaller expansion factor of 1% was applied to the lower axis limit, contrary to the default settings, in order to eliminate visible space below the 0 baseline. @fig-example-charts shows example charts for both conditions.
+For charts with extended axes, the denominator value was used as the y-axis upper limit. The other charts used a y-axis upper limit which was dictated by ggplot2's default axis settings. These settings automatically identify a set of convenient breaks for each dataset, then slightly extend the plot area, adding an additional 5% of the axis range. In both conditions, a smaller expansion factor of 1% was applied to the lower axis limit, in order to eliminate visible space below the 0 baseline. @fig-example-charts shows example charts for both conditions.
 
 ```{r}
 #| label: fig-example-charts
 #| include: true
-#| fig-cap: Example charts for Experiment 1. The same data appears in both charts. The chart with the default axes (left) employs an upper limit determined by ggplot2. The chart with the extended axes (right) employes an upper limit equal to the dataset's denominator value.
+#| fig-cap: Example charts for Experiment 1. The same data appears in both charts. The chart with the default axes (left) employs an upper limit determined by ggplot2. The chart with the extended axes (right) employs an upper limit equal to the dataset's denominator value.
 img1 <- image_read("images/E14trunc.png")
 img2 <- image_read("images/E14full.png")
 image_append(c(img1, img2))
@@ -333,7 +333,7 @@ For the majority of datasets generated, the default settings produced charts whe
 
 In experimental trials (32 total), plotted values consisted of relatively small proportions of the dataset's denominator value (roughly 20% or 40%). To introduce variety and encourage attention, eight filler trials showed plotted values which were roughly 90% of the corresponding denominator value. Denominators for filler trials were selected so that numerical labels on the y-axis would approximately resemble either extended or default bar charts from experimental trials.
 
-We included six attention check trials to assess participants' engagement with the task. These trials were similar to experimental and filler trials, consisting of text, a bar chart, a question and an visual analogue scale. However, participants were instructed to ignore the bar chart and provide a specified response on the visual analogue scale.
+We included six attention check trials to assess participants' engagement with the task. These trials were similar to experimental and filler trials, consisting of text, a bar chart, a question and a visual analogue scale. However, participants were instructed to ignore the bar chart and provide a specified response on the visual analogue scale.
 
 ### Design
 
@@ -445,11 +445,11 @@ Denominator information informs magnitude judgements. In bar charts with extende
 
 ## Introduction
 
-Experiment 1 found differences in interpretations of data presented using different axes limits. Overall, plotted data were associated with lower magnitudes when presenting using axes which extended to a denominator value. Compared to bar charts with extended axes, charts with no graphical cue to a denominator value elicited a wider variety of responses. This variety appears to reflect differences in how the denominator information supplied in accompanying text used in magnitude judgements. This raises questions about how text including denominator information influences the interpretation of different chart designs.
+Experiment 1 found differences in interpretations of data presented using different axes limits. Overall, plotted data were associated with lower magnitudes when presenting using axes which extended to a denominator value. Compared to bar charts with extended axes, charts with no graphical cue to a denominator value elicited a wider variety of responses. This variety appears to reflect differences in how the denominator information supplied in accompanying text is used in magnitude judgements. This raises questions about how text, including denominator information, might influence the interpretation of different chart designs.
 
-By manipulating the presence of denominator information in accompanying text, in addition to manipulating axis limits, we investigate how these textual and graphical cues inform assessments of data. This allows us to understand how different chart designs are interpreted with and without additional numerical context. This 2x2 design also allows us to replicate the findings from Experiment 1 and explore whether ratings in the absence of denominator information correspond to the previously observed pattern of extreme ratings.
+By manipulating the presence of denominator information in accompanying text, in addition to manipulating axis limits, we investigate how these textual and graphical cues inform assessments of data. This allows us to understand how different chart designs are interpreted with and without additional numerical context. This 2x2 design also allows us to determine whether we can replicate the findings from Experiment 1 and also gives us the opportunity to explore whether ratings in the absence of denominator information correspond to the previously observed pattern of extreme ratings.
 
-This follow-up experiment requires minor adaptations to materials and procedure. First, there is a risk that highly ambiguous trials without denominator information supplied in text will elicit unreliable random ratings. Therefore, we collect additional confidence ratings to directly index this aspect of participants' evaluations. This provides a more comprehensive view of participants' cognitive states and interpretations. Second, when denominators are not supplied in text, participants may use denominator values supplied in previous trials to inform their judgements. A limited range of denominators (as in Experiment 1) would artificially diminish uncertainty regarding possible values, inhibiting authentic, spontaneous judgements. Therefore, we expand the range of denominators values in Experiment 2. Third, increasing the number of fillers (which depict relatively high magnitudes) to match the number of experimental items (which depict relatively low magnitudes) will avoid priming effects by ensuring high and low magnitudes seem equally plausible.
+This second experiment requires minor adaptations to materials and procedure. First, there is a risk that highly ambiguous trials without denominator information supplied in text will elicit unreliable random ratings. Therefore, we collect additional confidence ratings to directly index this aspect of participants' evaluations. This provides a more comprehensive view of participants' cognitive states and interpretations. Second, when denominators are not supplied in text, participants may use denominator values supplied in previous trials to inform their judgements. A limited range of denominators (as in Experiment 1) would artificially diminish uncertainty regarding possible values, inhibiting authentic, spontaneous judgements. Therefore, we expand the range of denominator values in Experiment 2. Third, increasing the number of fillers (which depict relatively high magnitudes) to match the number of experimental items (which depict relatively low magnitudes) will avoid priming effects by ensuring high and low magnitudes seem equally plausible.
 
 ## Method
 
@@ -457,11 +457,11 @@ This follow-up experiment requires minor adaptations to materials and procedure.
 
 We generated bar charts in R using {ggplot2} (version 4.2.1), {tidyverse} (version 1.3.2) and {ggh4x} (version 0.2.3).
 
-Bar charts were generated using the same method as in Experiment 1. We used the same scenarios from Experiment 1, and generated 24 new scenarios for use as additional filler items, thus employing 32 experimental items and 32 filler items. To increase variation across datasets, we employed a wider range of denominators (200, 400, 600, and 800), therefore the plotted values differed from Experiment 1.
+Bar charts were generated using the same method as in Experiment 1. We used the same scenarios from Experiment 1, and generated 24 new scenarios for use as additional filler items, thus employing 32 experimental items and 32 filler items. To increase variation across datasets, we employed a wider range of denominators (200, 400, 600, and 800) meaning the plotted values differed from Experiment 1.
 
-We added the word 'surveyed' or 'assessed' to accompanying text for seven items where the absence of a denominator may have implied that data were collected for the entire population under study. For example, where the study concerned data collected in five towns, the final sentence read 'The graph shows, for each town, how many people *surveyed* used public transport regularly', to avoid the implication that the denominator was equal to an entire town's population. This ensured that the inclusion of denominator values was equally informative across all scenarios.
+We added the word 'surveyed' or 'assessed' to the accompanying text for seven items where the absence of a denominator may have implied that data were collected for the entire population under study. For example, where the study concerned data collected in five towns, the final sentence read 'The graph shows, for each town, how many people *surveyed* used public transport regularly', to avoid the implication that the denominator was equal to an entire town's population. This ensured that the inclusion of denominator values was equally informative across all scenarios.
 
-`r printnum(get_anomalies(e2), digits = 0)`% of datasets used were re-generated to ensure that highest gridline of a default axis did not exceed the highest plotted value.
+`r printnum(get_anomalies(e2), digits = 0)`% of datasets used were re-generated to ensure that the highest gridline of a default axis did not exceed the highest plotted value.
 
 ### Design
 
