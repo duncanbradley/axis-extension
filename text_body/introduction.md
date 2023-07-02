@@ -8,7 +8,8 @@ The question 'Is it a big number?' is often raised on the BBC radio programme *M
 
 #### Overview
 
-Across two experiments, we investigate the interpretation of magnitudes in bar charts. We plotted fictitious datasets which contained multiple observations, all with the same denominator values. In the first experiment, we displayed charts with default axes which terminated just above plotted values, or axes which extended to the denominator value specified in accompanying text. Participants rated values' magnitudes as higher when default axes were used, compared to extended axes. In the second experiment, we manipulated the axis range, as before, and also the presence of the denominator information in accompanying text. The difference in magnitude ratings between the two axis settings was greater when denominator information not supplied. This indicates that this information influences the biasing effect of a chart's appearance.
+Across two experiments, we investigate the interpretation of magnitudes in bar charts. We plotted fictitious datasets which contained multiple observations, all with the same denominator values. In the first experiment, we displayed charts with default axes which terminated just above plotted values, or axes which extended to the denominator value specified in accompanying text. Participants rated values' magnitudes as higher when default axes were used, compared to extended axes. In the second experiment, we manipulated the axis limits, as before, and also the presence of the denominator information in accompanying text. 
+Variation in responses to the two difference axis settings was starker when denominator information was not supplied. This indicates that this information influences the biasing effect of a chart’s appearance.
 
 ## Related Work
 
